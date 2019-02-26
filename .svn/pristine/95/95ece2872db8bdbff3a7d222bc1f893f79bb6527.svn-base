@@ -1,0 +1,90 @@
+$(document).ready(function(){		
+	if(true){
+		switchHtml("/TanTimaServices/html/login/login.html");
+	}else{
+		
+	}
+	
+	window.onresize = function(event) { //畫面resize時			
+		userHeight = window.innerHeight
+				|| document.documentElement.clientHeight
+				|| document.body.clientHeight;
+		
+		userWidth = window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;	
+		
+		resizeGrid(); //resizeGrid 如果畫面size更動
+		
+		var totalWidth = $(".PatientInfoBar").width(); 
+		if(totalWidth){
+			var eachLiWidth = (totalWidth/9);
+//		    $("ul.tabs li").css('min-width', eachLiWidth +'px').css('max-width', eachLiWidth +'px');
+//		    $("#ul-TPRTabSwitch > li").css('min-width', (eachLiWidth+0.7) +'px').css('max-width', (eachLiWidth+0.7) +'px');
+		}
+		
+		//Container Height 
+		var PatientInfoBarHeight = $(".PatientInfoBar").height();
+	    var pageTabSwitchHeight = $("#ul-pageTabSwitch").height();
+	    var RadioBgStyle  =  $(".RadioBgStyle").height();
+	    var tabContainerHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+20);
+		$(".tab_container").css('min-height', tabContainerHeight +'px').css('max-height', tabContainerHeight +'px');
+		
+		var outNoteBodyHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+160); 
+		$(".outNoteBodyBg").css('min-height', (outNoteBodyHeight) +'px').css('max-height', (outNoteBodyHeight) +'px');
+		
+		var xrayBodyHeight =  userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+90);
+		console.log("XrayList index:"+(xrayBodyHeight));
+//		$("#XrayListBody").css('min-height', xrayBodyHeight +'px').css('max-height', xrayBodyHeight +'px');
+
+//		 var xrayDetailReasonHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+RadioBgStyle+230);
+//		 $("#xrayDetailReason").css('min-height', xrayDetailReasonHeight +'px').css('max-height', xrayDetailReasonHeight +'px');
+		
+		var xrayDetailReasonHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+50+285);
+		$("#XrayListBody").css('min-height', (xrayBodyHeight) +'px').css('max-height', (xrayBodyHeight) +'px');
+  	    $("#xrayDetailReason").css('min-height', xrayDetailReasonHeight +'px').css('max-height', xrayDetailReasonHeight +'px');
+//  	  console.log("xrayDetailReasonHeight"+xrayDetailReasonHeight);
+  	  
+  	   var FocusDARTAreaHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+41+86+45);
+//	   console.log("FocusDARTAreaHeight Resize:"+FocusDARTAreaHeight);
+	   resizePanelBody("FocusDARTArea",FocusDARTAreaHeight);  
+	   
+	   //Lab	   
+	   var labTxtContentHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+RadioBgStyle+70+85);
+	   var LabContentPanelHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+90);
+	   resizePanelBody("LabContentPanel",(LabContentPanelHeight));
+	   
+	   resizePanelBody("is_txt_content",(labTxtContentHeight));//文字型
+	   
+	   var PatientRecordListHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+45); 
+	    //病人歷史紀錄 高度
+	    resizePanelBody("searchHistory",PatientRecordListHeight);
+		
+
+	    
+		
+	};
+	
+//	window.onload = function(){
+//		  
+//		
+//		};
+	
+	
+	
+		
+});
+
+var PatInfoObj = { 
+		empNo : "",
+		sessionID:0,
+		chartNo:"",
+		serno:0,
+		ptName:"",
+		sex:"",
+		ckinDate:"",
+		dischargeDate:"",
+		zone:"",
+		ptName:"",
+		birthDate:""
+			
+	};
+

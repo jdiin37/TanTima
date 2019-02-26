@@ -1,0 +1,65 @@
+<div class="container-fluid container-noPadding">
+	<button class="btn btn-default" id="btn_logout">登出</button>
+	   <div id="queryBlock1" class="col-sm-12 well well-sm" >
+		<div class="col-sm-12 form-inline" >
+		    <div class="form-group">
+			<!-- <label class="checkbox-inline EMRLabel"><input type="checkbox" id="chk_queryOPD" checked>門診 </label>-->
+			<input class="EMRCheckBox" type="checkbox" id="chk_queryOPD" checked/><label class="EMRLabel" for="chk_queryOPD"><span></span>門診</label>
+		    </div>
+		<div class="form-group">
+		    <input type="text" class="form-control input-sm input-center"  placeholder="" id="input_OPDdays" value="1"><label for="input_OPDdays" class="EMRLabel">&nbsp;天 &nbsp;</label>
+		</div>
+		<div class="form-group">
+		  <!--  <label class="checkbox-inline EMRLabel"><input type="checkbox" id="chk_queryINP" checked>住院</label>-->
+		  <input class="EMRCheckBox" type="checkbox" id="chk_queryINP" checked/><label class="EMRLabel" for="chk_queryINP"><span></span>住院</label>
+		</div>
+		<div class="form-group">
+		  <!--  <label class="checkbox-inline EMRLabel"><input type="checkbox" id="chk_queryDIS">出院</label>-->
+		  <input class="EMRCheckBox" type="checkbox" id="chk_queryDIS"/><label class="EMRLabel" for="chk_queryDIS"><span></span>出院</label>
+	          </div>
+		<div class="form-group">
+		   <input type="text" class="form-control input-sm input-center" placeholder="" id="input_DISdays"><label for="input_DISdays" class="EMRLabel">&nbsp;天 </label>
+		</div>
+		   <button type="button" class="btn btn-img40 img40_query" id="btn_query1"></button>
+		</div>
+	       				
+		<div class="col-sm-12 form-inline" >
+		  <div class="form-group">
+		    <label for="query_ptName" class="EMRLabel">姓名 </label> <input type="text" class="form-control input-sm EMRLabel queryPatientInputWidth" placeholder="" id="query_ptName" value="">
+		  </div>
+		  <div class="form-group">
+		   <label for="query_birth" class="EMRLabel">生日 </label> <input type="text" class="form-control input-sm EMRLabel queryPatientInputWidth" placeholder="" id="query_birth" value="">
+		  </div>
+		 <div class="form-group">
+		   <label for="query_tel" class="EMRLabel">電話 </label> <input type="text" class="form-control input-sm EMRLabel queryPatientInputWidth" placeholder="" id="query_tel" value="">
+		 </div>
+		 <div class="form-group">
+		   <label for="query_chartNo" class="EMRLabel">病歷號 </label> <input type="text" class="form-control input-sm EMRLabel queryPatientInputWidth" placeholder="" id="query_chartNo" value="">
+		</div>
+		 <button type="button" class="btn btn-img40 img40_query" id="btn_query2"></button>
+		</div>
+	      	
+	  </div>
+		
+		<div class="row" id="currentList">
+		    <div class="col-sm-12">
+			<table id="PatList" class="table-hover"></table>
+			<div id="PatList_Pager"></div>
+	              </div>
+		</div>
+	         <div class="row" id="chartBaseList">
+	              <div class="col-sm-12">
+		      <table id="PatList2" class="table-hover"></table>
+		      <div id="PatList2_Pager"></div>
+		   </div>
+                  </div>
+				
+				
+		
+	
+</div>	
+<script src="/TanTimaServices/html/inpPatList/inpPatList.js"></script>
+
+
+
+	

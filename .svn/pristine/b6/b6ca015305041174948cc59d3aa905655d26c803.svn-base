@@ -1,0 +1,90 @@
+		<!-- 護理紀錄  build by IvyLin -->		      
+		      <div class="row" id="FocusCol">
+			<div class="col-sm-3 jqGridAcnt_BgStyle">
+			    <table id="FocusList" class="table-hover"></table>
+			    <div id="FocusList_Pager"></div>
+			</div>
+			<div class="col-sm-9">
+			   <div class="panel panel-info">
+		                <div class="panel-heading PurpleTitle text-center" id="FocusListHead">Progress Note</div>
+			         <div class="panel-body" id="FocusListBody">								
+				 <!-- 護理紀錄內容 start -->
+				 
+				 <!-- 護理紀錄修改  1070316-->
+				 <div class="row">				   
+				  
+				  <div class="col-sm-12 form-inline form-group">
+				   <div class="col-sm-4"><span class="EMRLabelBold" >Date:&nbsp; </span><span class="grayContentText" id="focusDate"></span></div>
+				   <div class="col-sm-4"><span class="EMRLabelBold" >Time:&nbsp; </span><span class="grayContentText" id="focusTime"></span></div>
+				   <div class="col-sm-4"><span class="EMRLabelBold" >Focus:&nbsp; </span><span class="grayContentText" id="focusNote"></span></div>
+				  </div>
+				  <div class="col-sm-12 form-inline form-group">
+				    <div class="col-sm-6"><span class="EMRLabelBold" >護士:&nbsp; </span><span class="grayContentText" id="focusNurse"></span></div> 
+				    <div class="col-sm-6"><span class="EMRLabelBold" >訪視醫師:&nbsp; </span><span class="grayContentText" id="focusDoctor"></span></div>				    				  
+				  </div>				  
+				 </div>
+				 
+				  
+				 
+				 
+			       
+	     
+	            <!-- DART -->
+	           <div class="col-sm-12 row pre-scrollable" id="FocusDARTArea">
+	               <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">D:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_D" ></div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">A:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_A" ></div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">R:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_R" ></div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline  form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">T:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_T" ></div></div>					
+		  </div>	              	             
+	          </div>          
+	            
+		  
+		   <!--  <fieldset >		   
+	             <div class="form-group">
+                         <label class="EMRLabel" for="D">Content:</label>
+                         <div style="white-space:normal;" class="DARTOutline EMRContentFont"  id="content_D" >   
+                         </div>
+                          <textarea class="form-control DARTOutline" rows="4"></textarea>
+                         
+                          <label for="A" style="display:none;">A:</label>
+                          <div style="display:none;white-space:pre;" class="DARTOutline" id="content_A">
+                          </div>
+                         <textarea class="form-control DARTOutline" rows="4"></textarea>
+                         
+                         <label for="R"  style="display:none;">R:</label>
+                         <div style="display:none; white-space:pre;" class="DARTOutline" id="content_R" >
+                         </div>
+                         <textarea class="form-control DARTOutline" rows="4"></textarea>
+                         
+                         <label for="T" style="display:none;">T:</label>
+                         <div style="white-space:pre; display:none;" class="DARTOutline" id="content_T" >
+                         </div>
+                        <textarea class="form-control DARTOutline" rows="4"></textarea>  
+                       </div>              
+                     </fieldset>-->
+                     
+		   <!-- 護理紀錄內容 end -->
+		</div>
+							</div>
+							<!--區塊3外框結尾-->
+						</div>
+						<!--區塊3結尾-->
+		    </div>
+			
+				<!-- </div> -->
+		
+		

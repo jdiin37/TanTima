@@ -1,0 +1,215 @@
+package library.utility;
+
+import library.dateutility.DateComputeUtil;
+import model.Admit;
+import model.Bed;
+import model.Payment;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import static library.dateutility.DateUtil.dateToROCDateString;
+import static library.dateutility.DateUtil.rocDateStringToDate;
+import static library.utility.MapUtil.*;
+
+/**
+ * Created by jeffy on 2018/5/8.
+ */
+
+public class PTListUtil {
+    private Connection con;
+
+    public PTListUtil(Connection con) {
+        this.con = con;
+    }
+
+    public Map<String, Object> getLinkedAdmitDays(int chartNo, int serno) {
+        List<Map<String, Object>> admitMapList;
+        Map<String, Object> result = new LinkedHashMap<>();
+
+        try {
+            Admit admit = new Admit(con);
+            admitMapList = admit.querylinkedAdmitDataByChartNoSerno(chartNo, serno);
+
+            if (!admitMapList.isEmpty()) {
+                int baseLinkSerno = 0;
+                int currentLinkSerno = 0;
+                int currentSerno = 0;
+                int emgDays = 0;
+                int chronicDays = 0;
+
+                baseLinkSerno = castToInt(admitMapList.get(0).get("link_serno")); // latest link_serno
+                emgDays = castToInt(admitMapList.get(0).get("emg_days"));
+                chronicDays = castToInt(admitMapList.get(0).get("chronic_days"));
+
+                // remove last admit data
+                admitMapList.remove(0);
+
+                for (Map<String, Object> object : admitMapList) {
+                    currentSerno = castToInt(object.get("serno"));
+                    currentLinkSerno = castToInt(object.get("link_serno")); // if link_serno is null then currentLinkSerno = 0
+
+                    if (currentSerno == baseLinkSerno) {
+                        emgDays += castToInt(object.get("emg_days"));
+                        chronicDays += castToInt(object.get("chronic_days"));
+                        baseLinkSerno = currentLinkSerno;
+                    }
+
+                    if (currentLinkSerno == 0) break;
+                }
+
+                result.put("chart_no", chartNo);
+                result.put("serno", serno);
+                result.put("emg_days", emgDays);
+                result.put("chronic_days", chronicDays);
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        }
+
+        return result;
+    }
+
+    public String getGuaranteeDepositByChartNoSerno(int chartNo, int serno) {
+        Map<String, Object> resultMap;
+        Long guaranteeDeposit = 0L;
+
+        try {
+            Payment payment = new Payment(con);
+            resultMap = payment.queryGuaranteeDepositByChartNoSerno(chartNo, serno);
+            resultMap.putIfAbsent("guarantee_deposit", 0);
+            guaranteeDeposit = MapUtil.castToLong(resultMap.get("guarantee_deposit"));
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        }
+
+        // format guarantee_deposit ex. 1200 -> 1,200
+        return NumberFormat.getInstance().format(guaranteeDeposit);
+    }
+
+    public String getAcntDate(String ckinDate, String closeAcntDate) {
+        if (closeAcntDate != null && !closeAcntDate.isEmpty()) {
+            LocalDate date = rocDateStringToDate(closeAcntDate).plusDays(1);
+            return dateToROCDateString(date);
+        } else {
+            return ckinDate;
+        }
+    }
+
+    public String getPatinpStatus(Map<String, Object> admitMap) {
+        if (admitMap.isEmpty()) throw new IllegalArgumentException("getPatinpStatus the parameter is NULL");
+
+        // input parameters
+        int chartNo = castToInt(admitMap.get("chart_no"));
+        int serno = castToInt(admitMap.get("serno"));
+        String ckinDate = castToStr(admitMap.get("ckin_date"));
+        String dischargeDate = castToStr(admitMap.get("discharge_date"));
+        String status = castToStr(admitMap.get("status"));
+        int priceType = castToInt(admitMap.get("price_type"));
+        String partNo = castToStr(admitMap.get("part_no"));
+        String cardSeq = castToStr(admitMap.get("card_seq"));
+        String brainFlag = castToStr(admitMap.get("brain_flag"));
+        String dischargeReason = castToStr(admitMap.get("discharge_reason"));
+        String drgCode = castToStr(admitMap.get("drg_code"));
+
+        long admitDays = 0;
+        int emgDays = 0;
+        int chronicDays = 0;
+        String statusString = "";
+
+        // 住院天數
+        if (emptyToNull(dischargeDate) == null) dischargeDate = dateToROCDateString(LocalDate.now());
+        admitDays = DateComputeUtil.getAdmitDays(ckinDate, dischargeDate);
+        admitDays = admitDays == 0 ? 1 : admitDays;
+        statusString += "目前住院共" + admitDays + "天";
+
+        // 急性慢性病房天數
+        Map<String, Object> objectMap = getLinkedAdmitDays(chartNo, serno);
+        emgDays = castToInt(objectMap.get("emg_days"));
+        chronicDays = castToInt(objectMap.get("chronic_days"));
+        statusString += emgDays != 0 ? "<急性病房 " + emgDays + " 天>" : "";
+        statusString += chronicDays != 0 ? "<慢性病房 " + chronicDays + " 天>" : "";
+
+        statusString += status.equals("1") ? "未開處方" : "";
+        statusString += status.equals("2") ? "住 院 中" : "";
+        statusString += status.equals("3") ? "準備出院" : "";
+        statusString += status.equals("4") ? "等待結帳" : "";
+
+        statusString += (priceType == 2 && "--".equals(cardSeq)) ? "<欠卡$" + getGuaranteeDepositByChartNoSerno(chartNo, serno) + ">" : "";
+        statusString += (priceType == 2 && "---".equals(partNo)) ? "<負擔方式未定>" : "";
+
+
+        statusString += "Y".equals(nullToEmpty(brainFlag)) ? "<急性腦中風>" : "";
+        statusString += emptyToNull(drgCode) != null ? "DRG病人:" + drgCode : "";
+
+        statusString += "Z".equals(nullToEmpty(dischargeReason)) ? "<押保證金出院>" : "";
+
+        statusString += emptyToNull(dischargeReason) != null ? "<關帳未列帳單>" : "";
+
+        statusString += emptyToNull(dischargeReason) == null && !"".equals(nullToEmpty(dischargeDate)) ? "<已列帳單可補批>" : "";
+
+        return statusString;
+    }
+
+
+    public static void main(String[] args) {
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        Connection myConnection = null;
+        String resultString = null;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            PTListUtil ptList = new PTListUtil(myConnection);
+            Admit admit = new Admit(myConnection);
+            Bed bed = new Bed(myConnection);
+
+            int chartNo = 0;
+            int serno = 0;
+            String ckinDate = "1070510";
+
+            chartNo = 174513;
+            serno = 141539;
+            System.out.printf("\nPTListUtil.getLinkedAdmitDays chart_no=%d serno=%d String:%s ",
+                    chartNo, serno, ptList.getLinkedAdmitDays(chartNo, serno));
+
+            chartNo = 139739;
+            serno = 116159;
+            System.out.printf("\nPTListUtil.getGuaranteeDepositByChartNoSerno chart_no=%d serno=%d String:%s ",
+                    chartNo, serno, ptList.getGuaranteeDepositByChartNoSerno(chartNo, serno));
+
+
+//
+//            chartNo = 176221;
+//            serno = 142866;
+//            System.out.printf("\nPTListUtil.getAdmitData chart_no=%d serno=%d JsonObject:%s ",
+//                    chartNo, serno, mapToJsonObject(ptList.getAdmitData(chartNo, serno)));
+
+
+            ckinDate = "1040515";
+            String closeAcntDate = "";
+            System.out.printf("\nPTListUtil.getAcntDate ckinDate=%s closeAcntDate=%s String:%s ",
+                    ckinDate, closeAcntDate, ptList.getAcntDate(ckinDate, closeAcntDate));
+
+
+//            System.out.println( "getPatinpStatus: " +
+//                    ptList.getPatinpStatus(139739, 116159,"1040510", "1040515",
+//                            "1070508","5", 2, "002",
+//                            "0008", " ", "3", null));
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) {
+                JDBCUtilities.closeConnection(myConnection);
+            }
+        }
+    }
+
+}

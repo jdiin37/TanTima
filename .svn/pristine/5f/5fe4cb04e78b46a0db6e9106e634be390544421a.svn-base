@@ -1,0 +1,373 @@
+
+function randerOutNote(){
+	
+	
+	
+	
+
+	setTimeout(function(){ 
+		ajax_getOutNoteData("OutNoteService");	
+    }, 600);
+		
+	
+}		
+		
+
+
+function getOutNoteInputObj(empNo,sessionID,chartNo,serno,method){
+	this.empNo = empNo;
+	this.sessionID = sessionID;
+	this.chartNo = chartNo;
+	this.serno = serno;
+	this.method = method;
+	
+};
+
+
+function ajax_getOutNoteData(serviceName){
+	clearOutNoteData();
+	
+	var outNoteParam = new getOutNoteInputObj(PatInfoObj.empNo,PatInfoObj.sessionID,PatInfoObj.chartNo,PatInfoObj.serno,"getOutNoteDataByPrimaryKeys");
+
+	 var request = $.when(ajax_Post(serviceName,JSON.stringify(outNoteParam))).done(
+				function(data) {
+					if (data.status == "Success") {
+//						showLoading();
+						
+						$.each(data.resultSet, function(index, obj) {		
+							render_getOutNote(index, obj);									
+								});	
+				
+						
+						
+					} else {
+						var ajaxErrMsg = data.errorMessage;	
+//						 if(ajaxErrMsg.includes('No Data Found')){
+							clearOutNoteData();
+							//清空資料
+//						  }
+					}
+//					hideLoading();
+					var outNoteBodyHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+160); 
+//					console.log("outNoteBodyHeight:"+outNoteBodyHeight);
+					resizePanelBody('outNoteBodyBg',(outNoteBodyHeight)); //重設 OutNoteBody
+											
+
+				});
+	 
+	    request.onreadystatechange = null;
+		request.abort = null;
+		request = null;
+		
+		
+	
+};
+
+function render_getOutNote(index, value) {
+	$("#outNote_ptName").html(PatInfoObj.ptName);//患者姓名
+//	$("#outNote_idNo").html(PatObj.id_no);//身分證字號
+	$("#outNote_birthDate").html(formatDateTime(PatInfoObj.birthDate));//生日
+
+
+	switch(index){
+		case "chart_no":
+		setHtml("outNote_chartNo",filterNull(value));
+		break;
+		
+		case "serno":
+		setHtml("outNote_serno",filterNull(value));
+		break;
+	
+		case "trans_in":
+		setHtml("outNote_transIn",filterNull(value));
+//		setHtml("outNote_transIn",(value));
+		break;
+		
+		case "source":
+		setHtml("outNote_sourceName",transSource(value));
+		break;
+		
+		
+		
+//		case "address":
+//		setHtml("outNote_address",filterNull(value));
+//		break;
+		
+		
+		case "vs_complete_date":
+		setHtml("outNote_mfinishDay",filterNull(formatDateTime(value)));//主治醫師完成日期
+		break;
+		
+		case "r_complete_date":
+		setHtml("outNote_ifinishDay",filterNull(formatDateTime(value)));//住院醫師完成日期
+		break;
+		
+		case "ckin_date":
+		setHtml("outNote_ckinDate",filterNull(formatDateTime(value)));//入院日期
+		break;
+			
+		case "div_name":
+		setHtml("outNote_divName",filterNull(value));//主治醫師
+		break;
+		
+		case "bed_no":
+		setHtml("outNote_bedNo",filterNull(value));//床位
+		break;
+		
+		case "discharge_date":
+		setHtml("outNoteDisDate",filterNull(formatDateTime(value)));//出院日期
+		break;
+			
+		case "inout_day":
+		setHtml("outNoteInoutDay",filterNull(value));//住院天數
+		break;
+			
+		case "out_status":
+		setHtml("outNoteOutName",transOutStatus(filterNull(value)));//出院時情況
+		break;
+			
+		case "in_diagnosis":
+			setHtml("outNoteInDia",filterNull(value));//入院診斷
+		break;
+			
+		case "out_diagnosis":
+		setHtml("outNoteOutDia",filterNull(value));//出院診斷
+		break;
+		
+		case "cc":
+		setHtml("outNoteCC",filterNull(value));//主訴
+		break;
+			
+		case "ph":
+		setHtml("outNotePH",filterNull(value));//病史
+		break;
+			
+//		case "ph1":
+//		setHtml("outNotePH1",filterNull(value));
+//		break;
+			
+		case "pe":
+		setHtml("outNotePE",filterNull(value));//體檢發現
+		break;
+		
+		case "or_desc":
+		setHtml("outNoteOrDesc",filterNull(value));//手術日期
+		break;
+			
+		case "treatment":
+		setHtml("outNoteTreatment",filterNull(value));//住院治療經過
+		break;
+			
+		case "complication":
+		setHtml("outNoteComp",filterNull(value));//合併症
+		break;
+			
+		case "general_lab":
+		setHtml("outNoteGeneraLab",filterNull(value));//一般檢查
+		break;
+			
+		case "special_lab":
+		setHtml("outNoteSpecialLab",filterNull(value));//特殊檢查
+		break;
+
+		case "xray_rep":
+		setHtml("outNoteXrayRep",filterNull(value));//放射線報告
+		break;
+		
+//		case "xray_rep2":
+//		setHtml("outNoteXrayRep2",filterNull(value));//放射線報告2
+//		break;
+//			
+//		case "xray_rep3":
+//		setHtml("outNoteXrayRep3",filterNull(value));//放射線報告3
+//		break;
+			
+		case "pathologic_rep":
+		setHtml("outNotePathologicRep",filterNull(value));//病理報告
+		break;
+			
+		case "other":
+		setHtml("outNoteOther",filterNull(value));//其他
+		break;
+			
+		case "out_directory":
+		setHtml("outNoteOutDirec",filterNull(value));//出院指示
+		break;	
+		
+		case "vs_name":
+		setHtml("outNote_vsName",filterNull(value));//主治醫師
+		break;
+		
+		case "r_name":
+		setHtml("outNote_rName",filterNull(value));//住院醫師
+		break;
+		
+		case "begin_date":
+		setHtml("outNote_beginDay",filterNull(formatDateTime(value)));//申報起日
+		break;
+		
+		case "end_date":
+		setHtml("outNote_endDay",filterNull(formatDateTime(value)));//申報迄日
+		break;
+		
+//		case "end_date":
+//		setHtml("outNote_endDay",filterNull(value));//申報天數
+//		break;
+		
+		
+			
+default:
+break;
+			
+	}
+}
+
+function clearOutNoteData(){
+	$("#outNote_ptName").html("");//患者姓名
+	$("#outNote_idNo").html("");//身分證字號
+	$("#outNote_birthDate").html("");//生日	
+	$("#outNoteOutName").html("");//出院時情況	
+	$("#outNote_sourceName").html("");//住院來源
+	
+
+	$('#outNote_chartNo').html(""); //病歷號
+	$('#outNote_serno').html(""); //住院序號
+	$('#outNote_transIn').html("");//轉入醫院
+	$('#outNote_mfinishDay').html("");//主治醫師完成日期
+	$('#outNote_ifinishDay').html("");//住院醫師完成日期
+	$('#outNote_ckinDate').html("");//入院日期
+	$('#outNote_divName').html("");//主治醫師
+	$('#outNote_bedNo').html("");//床位
+	$('#outNoteDisDate').html("");//出院日期
+	$('#outNoteInoutDay').html("");//住院天數
+	$('#outNoteInDia').html("");//入院診斷
+	$('#outNoteOutDia').html("");//出院診斷	
+	$('#outNoteCC').html("");//主訴
+	$('#outNotePH').html("");//病史
+	$('#outNotePE').html("");//體檢發現	
+	$('#outNoteOrDesc').html("");//手術日期
+	$('#outNoteTreatment').html("");//住院治療經過
+	$('#outNoteComp').html("");//合併症	
+	$('#outNoteGeneraLab').html("");//一般檢查	
+	$('#outNoteSpecialLab').html("");//特殊檢查
+	
+	$('#outNoteXrayRep').html("");//放射線報告
+//	$('#outNoteXrayRep2').html("");//放射線報告
+//	$('#outNoteXrayRep3').html("");//放射線報告
+	
+	$('#outNotePathologicRep').html("");//病理報告
+	$('#outNoteOther').html("");//其他
+	$('#outNoteOutDirec').html("");//出院指示
+	$("#outNote_vsName").html("");//主治醫師
+	$("#outNote_rName").html("");//住院醫師
+	$("#outNote_beginDay").html("");//申報起日
+	$("#outNote_endDay").html("");//申報迄日
+	$("#outNote_duringDay").html("");//申報天數 
+
+	
+};
+
+
+//轉換 出院時情況為中文
+var transOutStatus = function(status){
+	var outStatus="";
+	
+	if(status!=null||status!=""||status!=undefined){
+		
+		switch(status){
+		case '0':
+		outStatus = "其它";	
+		break;
+		
+		case '1':
+		outStatus = "治療出院";	
+		break;
+		
+		case '2':
+		outStatus = "繼續住院";
+		break;
+		
+		case '3':
+		outStatus = "改門診治療出院";
+		break;
+		
+		case '4':
+		outStatus =	"死亡";
+		break;
+		
+		case '5':
+		outStatus =	"一般自動出院";
+		break;
+		
+		case '6':
+		outStatus =	"轉院";
+		break;
+		
+		case '7':
+		outStatus =	"身份變更";
+		break;
+		
+		case '8':
+		outStatus =	"潛逃";
+		break;
+		
+		case '9':
+		outStatus =	"自殺";
+		break;
+		
+		case 'A':
+		outStatus =	"病危自動出院";
+		break;
+		
+		case 'B':
+		outStatus =	"淨死亡";
+		break;
+		
+		case 'C':
+		outStatus =	"粗死亡";	
+		break;
+		default:
+		
+		}
+	}else{
+		outStatus =  "";
+	}
+	
+	return outStatus;
+	
+};
+
+
+//轉換住院來源為中文
+var transSource = function(source){
+	
+	var sourceName = "";
+	
+	if(source!=null||source!=""||source!=undefined){
+		
+		switch(source){
+		case '1':
+		sourceName = "門診住院";	
+		break;
+		
+		case '2':
+		sourceName = "急診住院";	
+		break;
+		
+		case '3':
+		sourceName = "轉院";	
+		break;
+		
+		case '4':
+		sourceName = "同一疾病14天內住院";	
+		break;
+		default:
+		
+		}
+				
+	}else{
+		sourceName = "";
+	}
+	
+	return sourceName;
+};

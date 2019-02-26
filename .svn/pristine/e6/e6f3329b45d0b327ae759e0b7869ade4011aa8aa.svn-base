@@ -1,0 +1,52 @@
+ 
+ 
+ <div class="RadioBgStyle col-sm-12 form-inline pull-right">
+ 
+   <input class="EMRRadioButton" type="radio" name="labRadio" checked="checked" value="month" id="labMonth"/><label class="purpleLabel" for="labMonth"><span></span>1個月</label>
+   <input class="EMRRadioButton" type="radio" name="labRadio" value="season" id="labSeason"/><label class="purpleLabel" for="labSeason"><span></span>3個月</label>
+   <input class="EMRRadioButton" type="radio" name="labRadio" value="halfYear" id="labHalfYear"/><label class="purpleLabel" for="labHalfYear"><span></span>半年</label>
+   <input class="EMRRadioButton" type="radio" name="labRadio" value="year" id="labYear"/><label class="purpleLabel" for="labYear"><span></span>1年</label>                                                   			                                                       			
+   <input class="EMRRadioButton" type="radio" name="labRadio" value="自訂" id="labCustom"/><label class="purpleLabel" for="labCustom"><span></span>自訂</label>
+   <input  id="inputLabSDate" type="text" name="labStart" class="form-inline form-control EMRLabel inputDateRange">
+   <input  id="inputLabEDate" type="text" name="labEnd" class="form-inline form-control EMRLabel inputDateRange">
+   <span class="img-search36" id="searchLabRange"></span>
+   
+ </div>
+ 
+  <div class="row" id="LabCol" >
+	     <div class="col-sm-3">
+		<table id="LabList" class="table-hover"></table>
+		<div id="LabList_Pager"></div>
+	     </div>
+						
+	     <div class="col-sm-9">
+	     
+								
+								
+	    <div id="LabListBody">
+	     <!-- 檢驗 畫面調整 1070319 -->
+	     
+	     <div id="labBodyTitle col-sm-12">
+	     hello
+	     </div>
+	      <div class="row form-group DataBgTopStyle">				   
+	        <div class="col-sm-12 form-inline">
+	         
+		
+		
+	        </div>
+	     </div>						
+								
+																		
+	           
+	           
+	           
+		 
+	</div>
+	
+							
+       </div>
+						
+    </div>
+ 
+ 

@@ -1,0 +1,104 @@
+package model;
+
+import library.dateutility.DateComputeUtil;
+import library.dateutility.DateUtil;
+import library.utility.EntityFactory;
+import library.utility.JDBCUtilities;
+import library.utility.MapUtil;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * Created by jeffy on 2018/4/23.
+ */
+public class Chart {
+    private Connection con;
+
+    public Chart(Connection con) {
+        this.con = con;
+    }
+
+    public Map<String, Object> queryChartByChartNo(int chartNo) throws SQLException {
+        String queryString =
+                "SELECT a.chart_no, a.pt_name, a.id_no, a.birth_date, 0 age, a.sex, " +
+                "       CASE WHEN a.sex = 1 THEN '男' " +
+                "            WHEN a.sex = 2 THEN '女' " +
+                "            ELSE '未知' " +
+                "       END AS sex_name " +
+                "  FROM chart a " +
+                " WHERE a.chart_no = ? ";
+
+        EntityFactory chartEntity = new EntityFactory(con, queryString);
+        Map<String, Object> result = chartEntity.findSingle(new Object[]{chartNo});
+        if (result.get("birth_date") != null) {
+            result.put("age", DateComputeUtil.getAgesReal(MapUtil.castToStr(result.get("birth_date")),
+                    DateUtil.dateToROCDateString(LocalDate.now())));
+        }
+
+        return result;
+    }
+
+    public List<Map<String, Object>> queryChartByChartNoPtNameBirthDateTel(int chartNo, String ptName, String birthDate, String tel) throws SQLException {
+        String queryString =
+                "SELECT a.chart_no, a.pt_name, a.sex, " +
+                "       CASE WHEN a.sex = 1 THEN '男' WHEN a.sex = 2 THEN '女' ELSE '未知' END AS sex_name, " +
+                "       0 age, a.id_no, a.birth_date " +
+                "  FROM chart a " +
+                " WHERE (   ( ? <> 0 AND chart_no = ? ) " +
+                "        OR ( ? = 0 AND chart_no = chart_no)) " +
+                "   AND (   ( ? IS NOT NULL AND pt_name like ? ) " +
+                "        OR ( ? IS NULL AND pt_name = pt_name)) " +
+                "   AND (   ( ? IS NOT NULL AND birth_date = ? ) " +
+                "        OR ( ? IS NULL AND birth_date = birth_date)) " +
+                "   AND (   ( ? IS NOT NULL AND a.chart_no IN (SELECT b.chart_no  " +
+                "                                                FROM chtcontact b  " +
+                "                                               WHERE b.contact_no = 'HTEL'  " +
+                "                                                 AND b.content like ?))  " +
+                "        OR ( ? IS NULL AND 1 = 1))  " +
+                " ORDER BY a.chart_no ";
+
+
+        EntityFactory chartEntity = new EntityFactory(con, queryString);
+        return chartEntity.findMultiple(new Object[]{chartNo,chartNo, chartNo, ptName, ptName, ptName,
+                birthDate, birthDate, birthDate, tel, tel, tel});
+    }
+
+    public static void main(String[] args) {
+        Connection myConnection = null;
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        String resultStrng;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            Chart chart = new Chart(myConnection);
+
+            System.out.println("\nChart.queryChartByChartNo chartNo=170869 JsonObject: " +
+                    MapUtil.mapToJsonObject(chart.queryChartByChartNo(170869)));
+
+//            System.out.println("\nChart.queryChartByChartNoPtNameBirthDateTel chartNo=170869 JsonArray: " +
+//                    MapUtil.listMapToJsonArray(chart.queryChartByChartNoPtNameBirthDateTel(170869, null, null, null)));
+
+//            System.out.println("\nChart.queryChartByChartNoPtNameBirthDateTel ptName like '劉' JsonArray: " +
+//                    MapUtil.listMapToJsonArray(chart.queryChartByChartNoPtNameBirthDateTel(0, "%劉%", null, null)));
+
+//            System.out.println("\nChart.queryChartByChartNoPtNameBirthDateTel birthDate='0620409' JsonArray: " +
+//                    MapUtil.listMapToJsonArray(chart.queryChartByChartNoPtNameBirthDateTel(0, null, "0620409", null)));
+
+//            System.out.println("\nChart.queryChartByChartNoPtNameBirthDateTel tel like '582' JsonArray: " +
+//                    MapUtil.listMapToJsonArray(chart.queryChartByChartNoPtNameBirthDateTel(0, null, null, "%582%")));
+
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) {
+                JDBCUtilities.closeConnection(myConnection);
+            }
+        }
+    }
+}

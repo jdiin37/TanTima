@@ -1,0 +1,8 @@
+<div class="container">
+	住院病人清單
+	<button class="btn btn-default" id="btn_logout">test</button>
+</div>	
+<script src="/TanTimaServices/html/inpPatList/inpPatList.js"></script>
+
+
+	

@@ -1,0 +1,297 @@
+package service;
+
+import abstracts.ServletAdapter;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import library.utility.JDBCUtilities;
+import library.utility.MapGroupingUtil;
+import library.utility.MapUtil;
+import library.utility.TableUtil;
+import model.TPRRecord;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by jeffy on 2018/5/15.
+ */
+public class TPRRecordService extends ServletAdapter {
+    private List<Map<String, Object>> objects;
+    private Map<String, Object> object;
+    private JsonObject jsonObject = new JsonObject();
+    private TPRRecord tprRecord;
+    //private TableUtil tableUtil;
+    private List<String> pkColNames;
+    private List<String> noNullColNames;
+    private List<String> tableColNames;
+    private List<Map<String, Object>> tableMetaData;
+    private String resultString;
+
+    public String getTPRRecordByChartNoSerno(int chartNo, int serno) {
+        try {
+            objects = tprRecord.queryTPRRecordByChartNoSerno(chartNo, serno);
+
+            if (objects.size() > 0) {
+                jsonObject = MapUtil.getSuccessResult(MapUtil.listMapToJsonArray(objects));
+            } else {
+                jsonObject = MapUtil.getFailureResult("TPRRecord.queryTPRRecordByChartNoSerno No Data Found ");
+            }
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+        return jsonObject.toString();
+    }
+
+    public String getTPRRecordDataByChartNoSerno(int chartNo, int serno, List<String> masterCols, List<String> detailCols) {
+        try {
+            objects = tprRecord.queryTPRRecordDataByChartNoSerno(chartNo, serno);
+
+            if (objects.size() > 0) {
+                JsonArray resultJsArray = MapGroupingUtil.groupListMapToJsonArray(MapGroupingUtil.getGroupingResultMap(objects, masterCols, detailCols));
+                jsonObject = MapUtil.getSuccessResult(resultJsArray);
+            } else {
+                jsonObject = MapUtil.getFailureResult("TPRRecord.queryTPRRecordByChartNoSerno No Data Found ");
+            }
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+        return jsonObject.toString();
+
+    }
+
+    public String getTPRRecordAllDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList(
+                "assess_time", "temperature", "systolic_pressure", "diastolic_pressure", "pulse",
+                "respiration", "weight", "iv_fluids", "urine", "stool", "bleed", "amniotic_fluid",
+                "drainage_l", "drainage_r", "height");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordTPRDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "temperature", "pulse", "respiration");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordTEMPDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "temperature");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordPulseDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "pulse");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordRespireDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "respiration");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordBPDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "systolic_pressure", "diastolic_pressure");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordWeightDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "weight");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordIVFluidsDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "iv_fluids");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordUrineDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "urine");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+    public String getTPRRecordBleedDataByChartNoSerno(int chartNo, int serno) {
+        List<String> masterCols = Arrays.asList("chart_no", "serno", "assess_date");
+        List<String> detailCols = Arrays.asList("assess_time", "bleed");
+        return getTPRRecordDataByChartNoSerno(chartNo, serno, masterCols, detailCols);
+    }
+
+
+    public void getTableConstrains(String tableName, TableUtil tableUtil) throws SQLException {
+        pkColNames = tableUtil.getPKColNames(tableName);
+        tableMetaData =  tableUtil.getTableMetaData(tableName);
+        noNullColNames = tableUtil.getNoNullColNames(tableMetaData);
+        tableColNames = tableUtil.getTableColNames(tableMetaData);
+    }
+
+    @Override
+    public String run(JsonObject parametersJsObj) {
+        Connection myConnection = null;
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        String result = null;
+        int chartNo;
+        int serno;
+        JsonObject dataParametersJsObj;
+        Map<String, Object> dataParametersMap;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            //tableUtil = new TableUtil(myConnection);
+            tprRecord = new TPRRecord(myConnection);
+
+            String method = parametersJsObj.get("method").getAsString();
+
+
+            if (method.equals("getTPRRecordByChartNoSerno")) {
+                chartNo = parametersJsObj.get("chartNo").getAsInt();
+                serno = parametersJsObj.get("serno").getAsInt();
+                result = getTPRRecordByChartNoSerno(chartNo, serno);
+            }
+
+            if (method.equals("getTPRRecordAllDataByChartNoSerno")) {
+                chartNo = parametersJsObj.get("chartNo").getAsInt();
+                serno = parametersJsObj.get("serno").getAsInt();
+                result = getTPRRecordAllDataByChartNoSerno(chartNo, serno);
+            }
+
+//            if (method.equals("getTPRRecordTPRDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordTPRDataByChartNoSerno(chartNo, serno);
+//            }
+//
+//            if (method.equals("getTPRRecordTEMPDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordTEMPDataByChartNoSerno(chartNo, serno);
+//            }
+//
+//            if (method.equals("getTPRRecordPulseDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordPulseDataByChartNoSerno(chartNo, serno);
+//            }
+//
+//            if (method.equals("getTPRRecordRespireDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordRespireDataByChartNoSerno(chartNo, serno);
+//            }
+//
+//            if (method.equals("getTPRRecordBPDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordBPDataByChartNoSerno(chartNo, serno);
+//            }
+//
+//            if (method.equals("getTPRRecordWeightDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordWeightDataByChartNoSerno(chartNo, serno);
+//            }
+//
+//            if (method.equals("getTPRRecordIVFluidsDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordIVFluidsDataByChartNoSerno(chartNo, serno);
+//            }
+//
+//            if (method.equals("getTPRRecordUrineDataByChartNoSerno")) {
+//                chartNo = parametersJsObj.get("chartNo").getAsInt();
+//                serno = parametersJsObj.get("serno").getAsInt();
+//                result = getTPRRecordUrineDataByChartNoSerno(chartNo, serno);
+//            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) { JDBCUtilities.closeConnection(myConnection); }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        JsonObject jsonObject = new JsonObject();
+        JsonObject dataJsonObject = new JsonObject();
+        //Map<String, String> map = new LinkedHashMap<>();
+        TPRRecordService tprRecordService = new TPRRecordService();
+        String resultStrng;
+
+        int chartNo = 158689;
+        int serno = 133162;
+
+        jsonObject = new JsonObject();
+        jsonObject.addProperty("empNo", "ORCL");
+        jsonObject.addProperty("sessionID", 1);
+        jsonObject.addProperty("chartNo", chartNo);
+        jsonObject.addProperty("serno", serno);
+        jsonObject.addProperty("method", "getTPRRecordByChartNoSerno");
+        resultStrng = tprRecordService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nTPRRecordService.run getTPRRecordByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+
+
+        jsonObject = new JsonObject();
+        jsonObject.addProperty("empNo", "ORCL");
+        jsonObject.addProperty("sessionID", 1);
+        jsonObject.addProperty("chartNo", chartNo);
+        jsonObject.addProperty("serno", serno);
+        jsonObject.addProperty("method", "getTPRRecordAllDataByChartNoSerno");
+        resultStrng = tprRecordService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nTPRRecordService.run getTPRRecordAllDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+
+//        jsonObject.addProperty("method", "getTPRRecordTPRDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordTPRDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+//
+//        jsonObject.addProperty("method", "getTPRRecordTEMPDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordTEMPDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+//
+//        jsonObject.addProperty("method", "getTPRRecordPulseDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordPulseDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+//
+//        jsonObject.addProperty("method", "getTPRRecordRespireDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordRespireDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+//
+//        jsonObject.addProperty("method", "getTPRRecordBPDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordBPDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+//
+//        jsonObject.addProperty("method", "getTPRRecordWeightDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordWeightDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+//
+//        jsonObject.addProperty("method", "getTPRRecordIVFluidsDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordIVFluidsDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+//
+//        jsonObject.addProperty("method", "getTPRRecordUrineDataByChartNoSerno");
+//        resultStrng = tprRecordService.run(jsonObject);
+//        System.out.println("\nParameters JsonObject string: " + jsonObject);
+//        System.out.println("\nTPRRecordService.run getTPRRecordUrineDataByChartNoSerno chartNo=" + chartNo + " serno=" + serno + " : " + resultStrng);
+
+    }
+
+}

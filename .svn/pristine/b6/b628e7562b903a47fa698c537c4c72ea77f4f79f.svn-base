@@ -1,0 +1,564 @@
+//判斷是新增還是編輯狀態
+var TPRFlagObj = {
+	AddOrEdit:""
+		}
+
+$(document).ready(function(){
+	
+	
+	
+
+    var tprTotalWidth = $(".tabs").width(); 
+    
+    var PatientInfoBarHeight = $(".PatientInfoBar").height();
+    var pageTabSwitchHeight = $("#ul-pageTabSwitch").height();
+
+//    var tprEachLiWidth = (tprTotalWidth/9)+0.7;
+//    var tprEachLiWidth = (100/9);
+
+//    $("#ul-TPRTabSwitch > li").css('min-width', eachLiWidth +'px').css('max-width', eachLiWidth +'px');
+    $("#ul-TPRTabSwitch > li").css('width', '11%');
+    
+	
+	
+	// 預設顯示第一個 Tab
+	var showTab = 8;
+	var defaultLi = $('#ul-TPRTabSwitch > li').eq(showTab).addClass('active');
+	$(defaultLi.find('a').attr('href')).siblings().hide();
+    
+	// 當 li 頁籤被點擊時...
+	// 若要改成滑鼠移到 li 頁籤就切換時, 把 click 改成 mouseover
+	$('#ul-TPRTabSwitch > li').click(function() {
+				
+		// 找出 li 中的超連結 href(#id)
+		var $this = $(this),
+			clickTab = $this.find('a').attr('href');
+		// 把目前點擊到的 li 頁籤加上 .active
+		// 並把兄弟元素中有 .active 的都移除 class
+		
+		if(clickTab=="#Add"){
+			TPRFlagObj.AddOrEdit = "Add";	
+			$("#AddTPRHead").html("新增 TPR 生命徵象紀錄單");
+			$(".tprTabs").hide();
+			clearAllTPRInputData("1050518","16:19");
+			var AddTPRBodyHeight =  userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+60); 
+			resizePanelBody("AddTPRPanel",AddTPRBodyHeight);
+		}else{
+			$(".tprTabs").show();
+		}
+		$this.addClass('active').siblings('.active').removeClass('active');
+		// 淡入相對應的內容並隱藏兄弟元素
+		$(clickTab).stop(false, true).fadeIn().siblings().hide();
+ 
+		return false;
+	}).find('a').focus(function(){
+		this.blur();
+	});
+	
+	
+    var tabContainerHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+20);
+	$(".tab_container").css('min-height', tabContainerHeight +'px').css('max-height', tabContainerHeight +'px');
+	
+	renderTPR();
+//	$("#common_chartNo").html(PatInfoObj.chartNo+"/"+PatInfoObj.ptName+"/"+PatInfoObj.sex);
+//	$("#common_ckinDate").html((PatInfoObj.ckinDate)+" ~ "+(PatInfoObj.dischargeDate));
+//	$("#common_zone").html(PatInfoObj.zone);
+		
+	//取消 
+	$(document).on('click', '#btnCancel', function(event) {
+		$(".tprTabs").show();
+		showTab = 8;
+		var defaultLi = $('#ul-TPRTabSwitch > li').eq(showTab).addClass('active');
+		$(defaultLi.find('a').attr('href')).siblings().hide();
+		$("#TPRRecord").show();
+		
+		});	
+	
+	//送出
+	$(document).on('click', '#btnSend', function(event) {
+		
+		if(TPRFlagObj.AddOrEdit=="Add"){ //新增紀錄
+			console.log("btnSend:"+TPRFlagObj.AddOrEdit);
+			ajax_insertTPRRecord("TPRRecordMADService");
+		}else{
+			console.log("btnSend:"+TPRFlagObj.AddOrEdit);
+			ajax_updateTPRRecord("TPRRecordMADService");
+		}
+		
+		$(".tprTabs").show();
+		showTab = 8;
+		var defaultLi = $('#ul-TPRTabSwitch > li').eq(showTab).addClass('active');
+		$(defaultLi.find('a').attr('href')).siblings().hide();
+		$("#TPRRecord").show();
+		
+	});	
+	
+	//點下新增頁籤
+	/**$(document).on('click', '#li-Add', function(event) {
+		
+		TPRFlagObj.AddOrEdit = "Add";
+		
+	});**/
+	
+	
+	
+	
+
+});
+
+function renderTPR(){
+	ajax_getTPRRecordList("TPRRecordService");
+}
+
+
+
+
+function clearAllTPRInputData(assess_date,assess_time){
+	
+	$("#editRecordDate").val(assess_date);
+	$("#editRecordTime").val(assess_time);	    	
+	$("#editTemp").val("");
+	$("#editPulse").val("");	    	
+	$("#editResp").val("");	    	
+	$("#editWeight").val("");
+	$("#editSP").val("");
+  	$("#editDP").val("");
+  	$("#editHeight").val("");
+  	$("#editIFluids").val("");      	
+  	$("#editBleed").val("");
+  	$("#editDraL").val("");	      	
+  	$("#editDraR").val("");	      	
+  	$("#editAFluid").val("");	      	
+  	$("#editUrine").val("");
+  	$("#editStool").val("");
+}
+
+function TPRRecordListInputObj(empNo,sessionID,chartNo,serno,method){
+	this.empNo = empNo;
+	this.sessionID = sessionID;
+	this.chartNo = chartNo;
+	this.serno = serno;
+	this.method = method;
+};
+
+//TPR CRU  
+// insertTPRRecord
+// updateTPRRecordByPrimaryKeys
+function TPRCRUDInputObj(empNo,sessionID,dataParameters,method){
+	this.empNo = empNo;
+	this.sessionID = sessionID;
+	this.dataParameters = dataParameters;
+	this.method = method;
+	
+}
+
+//TPR insert Parameter
+function TPRInsertParameterInputObj(chart_no,serno,assess_date,assess_time,temperature,systolic_pressure,diastolic_pressure,pulse,respiration,weight
+		,iv_fluids,urine,stool,bleed,amniotic_fluid,drainage_l,drainage_r,height,keyin_clerk){                                                     
+	this.chart_no = chart_no;
+	this.serno = serno;
+	this.assess_date = assess_date;
+	this.assess_time = assess_time;
+	this.temperature = temperature;
+	this.systolic_pressure = systolic_pressure;
+	this.diastolic_pressure = diastolic_pressure;
+	this.pulse = pulse;
+	this.respiration =respiration;
+	this.weight = weight;
+	this.iv_fluids =iv_fluids;
+	this.urine = urine;
+	this.stool = stool;
+	this.bleed = bleed;
+	this.amniotic_fluid = amniotic_fluid;
+	this.drainage_l = drainage_l;
+	this.drainage_r = drainage_r;
+	this.height = height;
+	this.keyin_clerk = keyin_clerk;
+	
+}
+
+//TPR update Parameter
+function TPRUpdateParameterInputObj(chart_no,serno,assess_date,assess_time,temperature,systolic_pressure,diastolic_pressure,pulse,respiration,weight
+		,iv_fluids,urine,stool,bleed,amniotic_fluid,drainage_l,drainage_r,height,modify_clerk){                                                     
+	this.chart_no = chart_no;
+	this.serno = serno;
+	this.assess_date = assess_date;
+	this.assess_time = assess_time;
+	this.temperature = temperature;
+	this.systolic_pressure = systolic_pressure;
+	this.diastolic_pressure = diastolic_pressure;
+	this.pulse = pulse;
+	this.respiration =respiration;
+	this.weight = weight;
+	this.iv_fluids =iv_fluids;
+	this.urine = urine;
+	this.stool = stool;
+	this.bleed = bleed;
+	this.amniotic_fluid = amniotic_fluid;
+	this.drainage_l = drainage_l;
+	this.drainage_r = drainage_r;
+	this.height = height;
+	this.modify_clerk = modify_clerk;
+	
+}
+
+
+
+//deleteTPRRecordByPrimaryKeys
+function TPRDeleteParmeterInputObj(chart_no,serno,assess_date,assess_time){
+	this.chart_no = chart_no;
+	this.serno = serno;
+	this.assess_date = assess_date;
+	this.assess_time = assess_time;
+	
+}
+
+
+/***TPR insert ajax  TPRRecordMADService ***/
+function ajax_insertTPRRecord(serviceName){
+	
+   var assess_date= $("#editRecordDate").val();    
+    assess_date = replaceAll(assess_date,"/",'');
+    
+	var assess_time = $("#editRecordTime").val();	
+	assess_time = replaceAll(assess_time,":",'');
+	
+	console.log("insert ajax: assess_date=>"+assess_date+" ;assess_time=>"+assess_time);
+	
+	var temperature = $("#editTemp").val();
+	var systolic_pressure = $("#editSP").val();
+	var diastolic_pressure = $("#editDP").val();
+	var pulse = $("#editPulse").val();
+	var respiration = $("#editResp").val();
+	var weight = $("#editWeight").val();
+	var iv_fluids = $("#editIFluids").val();
+	var urine = $("#editUrine").val();
+	var stool = $("#editStool").val();
+	var bleed = $("#editBleed").val();
+	var amniotic_fluid = $("#editAFluid").val();
+	var drainage_l = $("#editDraL").val();
+	var drainage_r = $("#editDraR").val();
+	var height = $("#editHeight").val();
+	var keyin_clerk = PatInfoObj.chartNo;
+	
+
+	var dataParameters = new TPRInsertParameterInputObj(PatInfoObj.chartNo,PatInfoObj.serno,assess_date,assess_time,temperature,systolic_pressure,diastolic_pressure,pulse,respiration,weight
+			,iv_fluids,urine,stool,bleed,amniotic_fluid,drainage_l,drainage_r,height,keyin_clerk);
+	
+	var insertTPRParm = new TPRCRUDInputObj(PatInfoObj.empNo,PatInfoObj.sessionID,dataParameters,"insertTPRRecord");
+	console.log(JSON.stringify(insertTPRParm));
+	/**$.when(ajax_Post(serviceName,JSON.stringify(insertTPRParm))).done(
+			function(dataInp) {
+	
+					if (dataInp.status == "Success") {
+						
+						console.log(dataInp.status);
+						
+					} else {
+						var ajaxErrMsg = dataInp.errorMessage;
+						alert(ajaxErrMsg);
+					}
+
+					
+				
+			
+			});**/
+	
+}
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
+
+/***TPR update ajax  TPRRecordMADService ***/
+function ajax_updateTPRRecord(serviceName){
+	
+    var assess_date= $("#editRecordDate").val();
+    
+    assess_date = replaceAll(assess_date,"/",'');
+    
+	var assess_time = $("#editRecordTime").val();
+	
+	assess_time = replaceAll(assess_time,":",'');
+	
+	console.log("update ajax: assess_date=>"+assess_date+" ;assess_time=>"+assess_time);
+	
+	var temperature = $("#editTemp").val();
+	var systolic_pressure = $("#editSP").val();
+	var diastolic_pressure = $("#editDP").val();
+	var pulse = $("#editPulse").val();
+	var respiration = $("#editResp").val();
+	var weight = $("#editWeight").val();
+	var iv_fluids = $("#editIFluids").val();
+	var urine = $("#editUrine").val();
+	var stool = $("#editStool").val();
+	var bleed = $("#editBleed").val();
+	var amniotic_fluid = $("#editAFluid").val();
+	var drainage_l = $("#editDraL").val();
+	var drainage_r = $("#editDraR").val();
+	var height = $("#editHeight").val();
+	var modify_clerk = PatInfoObj.chartNo;
+	
+
+	var dataParameters = new TPRUpdateParameterInputObj(PatInfoObj.chartNo,PatInfoObj.serno,assess_date,assess_time,temperature,systolic_pressure,diastolic_pressure,pulse,respiration,weight
+			,iv_fluids,urine,stool,bleed,amniotic_fluid,drainage_l,drainage_r,height,modify_clerk);
+	
+	var updateTPRParm = new TPRCRUDInputObj(PatInfoObj.empNo,PatInfoObj.sessionID,dataParameters,"updateTPRRecordByPrimaryKeys");
+	console.log(JSON.stringify(updateTPRParm));
+	/**$.when(ajax_Post(serviceName,JSON.stringify(updateTPRParm))).done(
+			function(dataInp) {
+	
+					if (dataInp.status == "Success") {
+						
+						console.log(dataInp.status);
+						
+					} else {
+						var ajaxErrMsg = dataInp.errorMessage;
+						alert(ajaxErrMsg);
+					}
+
+					
+				
+			
+			});**/
+	
+}
+
+//刪除TPR
+/***TPR update ajax  TPRRecordMADService ***/
+function ajax_deleteTPRRecord(serviceName,assess_date,assess_time){
+	
+
+	var dataParameters = new TPRDeleteParmeterInputObj(PatInfoObj.chartNo,PatInfoObj.serno,assess_date,assess_time);
+	
+	var deleteTPRParm = new TPRCRUDInputObj(PatInfoObj.empNo,PatInfoObj.sessionID,dataParameters,"deleteTPRRecordByPrimaryKeys");
+	console.log(JSON.stringify(deleteTPRParm));
+	/**$.when(ajax_Post(serviceName,JSON.stringify(deleteTPRParm))).done(
+			function(dataInp) {
+	
+					if (dataInp.status == "Success") {
+						
+						console.log(dataInp.status);
+						
+					} else {
+						var ajaxErrMsg = dataInp.errorMessage;
+						alert(ajaxErrMsg);
+					}
+
+					
+				
+			
+			});**/
+	
+}
+
+
+
+
+
+//{"empNo":"ORCL","sessionID":1,"chartNo":158689,"serno":133162,"method":"getTPRRecordByChartNoSerno"} TPRRecordService
+function ajax_getTPRRecordList(serviceName){
+	
+
+	var TPRListParam = new TPRRecordListInputObj(PatInfoObj.empNo,PatInfoObj.sessionID,PatInfoObj.chartNo,PatInfoObj.serno,"getTPRRecordByChartNoSerno");
+	
+	$.when(ajax_Post(serviceName,JSON.stringify(TPRListParam))).done(
+			function(dataInp) {
+			 var TPRRecordArray =[];
+					if (dataInp.status == "Success") {
+						$.each(dataInp.resultSet, function(index, obj) {
+							TPRRecordArray.push(obj);
+						});
+					} else {
+						var ajaxErrMsg = dataInp.errorMessage;
+						clearGridData("TPRRecordList");
+						jqGrid_TPRRecordList("#TPRRecordList","#TPRRecordList_Pager",TPRRecordArray);	
+					}
+
+					jqGrid_TPRRecordList("#TPRRecordList","#TPRRecordList_Pager",TPRRecordArray);	
+				
+			
+			});
+	
+}
+
+/***編輯 **/
+function editTPRBtn(keyin_clerk){
+	console.log("keyin_clerk:"+keyin_clerk);
+	if(keyin_clerk!==PatInfoObj.empNo){
+		
+		alert("您並非 "+PatInfoObj.empNo+" 輸入者， 無修改權限");
+	}else{
+		TPRFlagObj.AddOrEdit = "Edit";	
+		$(".tprTabs").hide();
+		showTab = 0;
+		var defaultLi = $('#ul-TPRTabSwitch > li').eq(showTab).addClass('active');
+		$(defaultLi.find('a').attr('href')).siblings().hide();
+		$("#AddTPRHead").html("編輯 TPR 生命徵象紀錄單");
+		$("#Add").show();
+	}
+	
+	
+}
+//{"empNo":"ORCL","sessionID":1,"dataParameters":{"chart_no":158689,"serno":133162,"assess_date":"1070515","assess_time":"1615"},"method":"deleteTPRRecordByPrimaryKeys"}
+function deleteTPRBtn(keyin_clerk){
+	
+	console.log("delete_clerk:"+keyin_clerk);
+	if(keyin_clerk!==PatInfoObj.empNo){
+		
+		alert("您並非 "+PatInfoObj.empNo+" 輸入者， 無刪除權限");
+	}else{
+		
+		 var assess_date= $("#editRecordDate").val();
+		 assess_date = replaceAll(assess_date,"/",'');
+		 var assess_time = $("#editRecordTime").val();
+		 assess_time = replaceAll(assess_time,":",'');
+	
+		ajax_deleteTPRRecord("TPRRecordMADService",assess_date,assess_time);
+		
+		/**以下需放進 ajax_deleteTPRRecord 方法中 ***/
+		$(".tprTabs").show();
+		showTab = 8;
+		var defaultLi = $('#ul-TPRTabSwitch > li').eq(showTab).addClass('active');
+		$(defaultLi.find('a').attr('href')).siblings().hide();		
+		$("#TPRRecord").show();
+	}
+	
+}
+
+
+function jqGrid_TPRRecordList(tableName,pagerName,dataArray){	//門診住院出院
+//	 var navbar = $(".navbar").height(); 
+//	 var PatListGridHeight = userHeight - (navbar+150);
+//	 $(".jqGridPatList_BgStyle").css('min-height', (PatListGridHeight+120) +'px').css('max-height', (PatListGridHeight+120) +'px')
+//		 .css('min-width', (userWidth-25) +'px').css('max-width', (userWidth-25) +'px');
+	
+	$(tableName).jqGrid({
+	    datatype: "local",
+	    height: 400,
+	    colModel: [
+	        { label: '日期', name: 'assess_date', width: 100,align:'center',formatter: formatDateTime},
+	        { label: '時間', name: 'assess_time', width: 90,align:'center',formatter: formatDateTime},
+	        { label: '體溫<br/>(°C)', name: 'temperature', width: 55,align:'center'},
+	        { label: '脈搏<br/>(次/分)', name: 'pulse', width: 76,align:'center'},
+	        { label: '呼吸<br/>(次/分)', name: 'respiration', width: 76,align:'center' },
+	        { label: '血壓(mmHg)<br/>收縮/舒張壓', name: 'systolic_pressure', width: 115,align:'center',formatter: function(cellvalue, options, rowobject){
+	            return '<span class="EMRLabel">'+filterNull(rowobject.systolic_pressure)+" / "+filterNull(rowobject.diastolic_pressure)+'</span>';	        	
+	        	        } },
+	        { label: '身高<br/>(cm)', name: 'height', width: 75,align:'center'},
+	        { label: '體重<br/>(kg)', name: 'weight', width: 75,align:'center'},	     
+	        { label: '注射量<br/>(cc)', name: 'iv_fluids', width: 80,align:'center'},
+	        { label: '出血量<br/>(cc)', name: 'bleed', width: 80,align:'center'},
+	        { label: 'Urine<br/>尿(cc)', name: 'urine', width: 80,align:'center'},
+	        { label: '引流(左/右)<br/>(cc)', name: 'drainage_l', width: 130,align:'center',formatter: function(cellvalue, options, rowobject){
+	            return '<span class="EMRLabel">'+filterNull(rowobject.drainage_l)+" / "+filterNull(rowobject.drainage_r)+'</span>';	        	
+	        }},	        
+	        { label: '羊水量<br/>(cc)', name: 'amniotic_fluid', width: 80,align:'center'},
+	        { label: 'Stool大便<br>(次)', name: 'stool', width: 150,align:'center',hidden:false},
+	        { label: '編', name: 'keyin_clerk', width: 45,align:'left',hidden:false,formatter: function(cellvalue, options, rowobject){
+	            return '<img src="/TanTimaServices/css/img/modify_36.png" onclick="editTPRBtn('+"\'"+rowobject.keyin_clerk+"\'"+');" class="toolbar-img-style modify-tpr alt="修改" title="修改"/>';	     
+	        }},//編輯button
+	        { label: '刪', name: 'keyin_clerk', width: 45,align:'center',hidden:false,formatter: function(cellvalue, options, rowobject){
+	            return '<img src="/TanTimaServices/css/img/delete_36.png" onclick="deleteTPRBtn('+"\'"+rowobject.keyin_clerk+"\'"+');" class="toolbar-img-style delete-tpr alt="刪除" title="刪除"/>';	     
+	        }},//delete button
+	        
+	        { label: 'chart_no', name: 'chart_no', width: 150,align:'center',hidden:true},
+	        { label: 'serno', name: 'serno', width: 150,align:'center',hidden:true},
+	        { label: 'keyin_clerk', name: 'keyin_clerk', width: 150,align:'center',hidden:true},//輸入者
+	        { label: 'keyin_clerk_name', name: 'keyin_clerk_name', width: 150,align:'center',hidden:true},//輸入者
+	        { label: 'modify_clerk', name: 'modify_clerk', width: 150,align:'center',hidden:true},//編輯者
+	        { label: 'modify_clerk_name', name: 'modify_clerk_name', width: 150,align:'center',hidden:true},//編輯者
+
+	        
+
+	        
+
+	    ],
+	    viewrecords: true, // show the current page, data rang and total records on the toolbar
+
+	    scrollOffset: 0,
+//	    rowNum: Math.floor(PatListGridHeight/30),	
+//	    rowNum:0,
+//	    rowNum : dataArray.length,
+	    gridComplete: function () {
+
+	    	
+     },
+	    //rowList: [10, 20, 30],
+	    onSelectRow:getSelectedRow,
+	    /**ondblClickRow: function(rowId) {
+	   
+
+	    	var grid = $(tableName);
+		    var rowKey = grid.jqGrid('getGridParam',"selrow");
+		    if(rowKey){
+	
+		    }
+	    	
+       },  **/      
+	    width: null,
+	    shrinkToFit: false,
+//	    sortable: true,
+//		pager: pagerName
+	});		
+//	$(tableName).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" ,clearSearch: false});
+	$(tableName).jqGrid('clearGridData');
+	$(tableName).jqGrid('setGridParam', {data: dataArray});
+	$(tableName).setGridParam({rowNum:dataArray.length});
+	$(tableName).trigger('reloadGrid');
+	
+	
+function getSelectedRow() {
+		
+	    var grid = $(tableName);
+	    var rowKey = grid.jqGrid('getGridParam',"selrow");
+	    if (rowKey){
+	    
+	    	var assess_date = dataArray[rowKey-1].assess_date;
+	    	var assess_time = dataArray[rowKey-1].assess_time;
+	    	var temperature = dataArray[rowKey-1].temperature;
+	    	var systolic_pressure = dataArray[rowKey-1].systolic_pressure;
+	    	var diastolic_pressure = dataArray[rowKey-1].diastolic_pressure;
+	    	var pulse = dataArray[rowKey-1].pulse;
+	    	var respiration = dataArray[rowKey-1].respiration;
+	    	var weight = dataArray[rowKey-1].weight;
+	    	var height = dataArray[rowKey-1].height;
+	    	var iv_fluids = dataArray[rowKey-1].iv_fluids;
+	    	var urine = dataArray[rowKey-1].urine;
+	    	var stool = dataArray[rowKey-1].stool;
+	    	var bleed = dataArray[rowKey-1].bleed;
+	    	var amniotic_fluid = dataArray[rowKey-1].amniotic_fluid;
+	    	var drainage_l = dataArray[rowKey-1].drainage_l;
+	    	var drainage_r = dataArray[rowKey-1].drainage_r;
+
+	    	$("#editRecordDate").val(formatDateTime(assess_date));
+	    	$("#editRecordTime").val(formatDateTime(assess_time));	    	
+	    	$("#editTemp").val(temperature);
+	    	$("#editPulse").val(pulse);	    	
+	    	$("#editResp").val(respiration);	    	
+	    	$("#editWeight").val(weight);
+	    	$("#editSP").val(systolic_pressure);
+	      	$("#editDP").val(diastolic_pressure);
+	      	$("#editHeight").val(height);
+	      	$("#editIFluids").val(iv_fluids);      	
+	      	$("#editBleed").val(bleed);
+	      	$("#editDraL").val(drainage_l);	      	
+	      	$("#editDraR").val(drainage_r);	      	
+	      	$("#editAFluid").val(amniotic_fluid);	      	
+	      	$("#editUrine").val(urine);
+	      	$("#editStool").val(stool);
+	    	
+	    	
+	    
+	    }
+	    else{
+//	        alert("沒有資料被選擇");
+	    }
+	}
+	
+
+}
+
+
+

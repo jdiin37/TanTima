@@ -1,0 +1,229 @@
+
+<div id="OutNoteContent" class="outNoteOutLine">
+
+	<div class="outNoteTopBg">
+	   
+	   <div class="col-sm-12 form-inline row">
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="chartNo">病歷號碼:</label> <span
+				class="spanOutline grayContentText" id="outNote_chartNo"></span>
+		</div>
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="serno">住院序號:</label> <span
+				class="spanOutline grayContentText" id="outNote_serno"></span>
+		</div>
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="transIn">轉入醫院:</label> <span
+				class="spanOutline grayContentText" id="outNote_transIn"></span>
+		</div>
+
+	</div>
+
+	<div class="col-sm-12 form-inline row">
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="ptName">&emsp;&emsp;&emsp;姓名:</label> <span
+				class="spanOutline grayContentText" id="outNote_ptName"></span>
+		</div>
+		<div class="col-sm-4 form-inline hide">
+			<label class="EMRLabel" for="IdNo">身分證字號:</label> <span
+				class="spanOutline grayContentText" id="outNote_idNo"></span>
+		</div>
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="birthDay">出生日期:</label> <span
+				class="spanOutline grayContentText" id="outNote_birthDate"></span>
+		</div>
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="sourceName">住院來源:</label> <span
+				class="spanOutlineMiddle grayContentText" id="outNote_sourceName"></span>
+		</div>
+
+	</div>
+
+	<!--  <div class="col-sm-12 form-inline row">
+
+		<div class="col-sm-12 form-inline">
+			<label class="EMRLabel" for="sourceName">住院來源:&nbsp;</label> <span
+				class="spanOutlineMiddle" id="outNote_sourceName"></span>
+		</div>
+	</div>-->
+	
+	
+
+	<div class="col-sm-12 form-inline row">
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="vsName">主治醫師:</label> <span
+				class="spanOutline grayContentText" id="outNote_vsName"></span>
+		</div>
+		<div class="col-sm-8 form-inline">
+			<label class="EMRLabel" for="mfinishDay">主治醫師完成日期:</label> <span
+				class="spanOutlineMiddle grayContentText" id="outNote_mfinishDay"></span>
+		</div>
+
+	</div>
+
+	<div class="col-sm-12 form-inline row">
+
+		<div class="col-sm-4 form-inline">
+			<label class="EMRLabel" for="rName">住院醫師:</label> <span
+				class="spanOutline grayContentText" id="outNote_rName"></span>
+		</div>
+		<div class="col-sm-8 form-inline">
+			<label class="EMRLabel" for="ifinishDay">住院醫師完成日期:</label> <span
+				class="spanOutlineMiddle grayContentText" id="outNote_mfinishDay"></span>
+		</div>
+		
+	</div>
+	
+	
+	</div>
+
+	
+	<!--Top End -->
+
+	<!-- second part -->
+	<div class="outNoteBodyBg">
+	  <div class="col-sm-12">
+		<h4 class="EMRLabelBold paddingZero">一、入院:</h4>
+		<div class="col-sm-12 form-inline">
+			<div class="col-sm-4 form-inline">
+				<label class="EMRLabel" for="inDate">入院日期:</label> <span
+					class="spanOutline grayContentText" id="outNote_ckinDate"></span>
+			</div>
+			<div class="col-sm-4 form-inline">
+				<label class="EMRLabel" for="divName">&emsp;&emsp;科別:</label>
+				<span class="spanOutline grayContentText" id="outNote_divName"></span>
+			</div>
+			<div class="col-sm-4 form-inline">
+				<label class="EMRLabel" for="bedNo">&emsp;床位號碼:</label> <span
+					class="spanOutline grayContentText" id="outNote_bedNo"></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 paddingZero">
+		<h4 class="EMRLabelBold">二、出院:</h4>
+		<div class="col-sm-12 form-inline">
+			<div class="col-sm-4 form-inline">
+				<label class="EMRLabel" for="inDate">出院日期:</label> <span
+					class="spanOutline grayContentText" id="outNoteDisDate"></span>
+			</div>
+			<div class="col-sm-4 form-inline">
+				<label class="EMRLabel" for="divName">住院天數:</label> <span
+					class="spanOutline grayContentText" id="outNoteInoutDay"></span>
+			</div>
+			<div class="col-sm-4 form-inline">
+				<label class="EMRLabel" for="bedNo">出院時情況:</label> <span
+					class="spanOutline grayContentText" id="outNoteOutName"></span>
+			</div>
+		</div>
+	</div>
+	<!-- second partEnd -->
+	<div id="changeBed_3" class="row form-group" style="display: none;">
+		<div class="col-sm-6 form-inline">
+			<label class="h4">三、轉科(床):</label> <span></span>
+		</div>
+	</div>
+
+	<div class=" form-inline  purple-outline" style="display: none;">
+		<table id="changeBed" class="table table-bordered"></table>
+		<div id="changeBedPager"></div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h4 id="ckinDia_4" class="EMRLabelBold">三、入院診斷:</h4>
+			<div style="white-space: pre;" id="outNoteInDia"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+
+		<div class="col-sm-12">
+			<h4 id="disChargeDia_5" class="EMRLabelBold">四、出院診斷:</h4>
+			<div style="white-space: pre;" id="outNoteOutDia"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+
+		<div class="col-sm-12">
+			<h4 id="mainDia_6" class="EMRLabelBold">五、主訴:</h4>
+			<div style="white-space: normal;" id="outNoteCC"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+
+		<div class="col-sm-12">
+			<h4 id="sickness_7" class="EMRLabelBold">六、病史:</h4>
+			<div style="white-space: normal;" id="outNotePH"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+
+		<div class="col-sm-12">
+			<h4 id="passSickness_8" class="EMRLabelBold">七、體檢發現:</h4>
+			<div style="white-space: normal;" id="outNotePE"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+		<!--  <div class="form-group form-inline table-responsive" style="display:none;">
+												<h4 id="physCheck_9">九、過去史:</h4>
+												<div style="white-space:pre;" id="outNotePH1" class="purple-outline-withCorner">
+
+												</div>
+											</div>-->
+		<div class="col-sm-12">
+			<h4 id="opMethod_10" class="EMRLabelBold">八、手術日期及方法(包括手術發現):</h4>
+			<div style="white-space: pre;" id="outNoteOrDesc"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+		<div class="col-sm-12">
+			<h4 id="ckinHeal_11" class="EMRLabelBold">九、住院治療經過:</h4>
+			<div style="white-space: normal;" id="outNoteTreatment"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+		<div class="col-sm-12">
+			<h4 id="combination_12" class="EMRLabelBold">十、合併症(手術併發症):</h4>
+			<div style="white-space: pre;" id="outNoteComp"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+		<div class="col-sm-12">
+			<h4 class="EMRLabelBold">十一、檢查紀錄:</h4>
+			<p id="checkRecord_13-1" class="subTitleItalic">1.一般檢查(如:尿液、糞便、血液、生化、細菌......之檢查):</p>
+			<div style="white-space: normal;" id="outNoteGeneraLab"
+				class="div-outline-withCorner grayContentText"></div>
+			<br />
+			<p id="checkRecord_13-2" class="subTitleItalic">2.特殊檢查(如:超音波、內視鏡、呼吸、循環、神經、泌尿、耳鼻喉、眼......之檢查):</p>
+			<div style="white-space: normal;" id="outNoteSpecialLab"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+
+		<div class="col-sm-12">
+			<h4 id="xRayReport_14" class="EMRLabelBold">十二、放射線報告:</h4>
+			<!-- <p id="xRayReport14-1" class="EMRSubTitle">放射線報告:</p>-->
+			<div style="white-space: normal;" id="outNoteXrayRep"
+				class="div-outline-withCorner grayContentText"></div>
+			<!--  <br />
+			<p id="xRayReport14-2" class="EMRSubTitle">放射線報告2:</p>
+			<div style="white-space: normal;" id="outNoteXrayRep2"
+				class="div-outline-withCorner"></div>
+			<br />
+			<p id="xRayReport14-3" class="EMRSubTitle">放射線報告3:</p>
+			<div style="white-space: normal;" id="outNoteXrayRep3"
+				class="div-outline-withCorner"></div>-->
+		</div>
+
+		<div class="col-sm-12">
+			<h4 id="sickReport_15" class="EMRLabelBold">十三、病理報告:</h4>
+			<div style="white-space: pre;" id="outNotePathologicRep"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+		<div class="col-sm-12">
+			<h4 id="other_16" class="EMRLabelBold">十四、其它:</h4>
+			<div style="white-space: pre;" id="outNoteOther"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+		<div class="col-sm-12">
+			<h4 id="outNoteDire_17" class="EMRLabelBold">十五、出院指示:</h4>
+			<div style="white-space: normal;" id="outNoteOutDirec"
+				class="div-outline-withCorner grayContentText"></div>
+		</div>
+
+	</div>
+	
+	</div>
+	
+</div>
+<script src="/TanTimaServices/html/OutNote/OutNote.js"></script>

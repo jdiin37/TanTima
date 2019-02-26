@@ -1,0 +1,229 @@
+/**
+ * 護理紀錄畫面 專用 js檔
+ */
+
+$(document).ready(function(){
+	
+	var PatientInfoBarHeight = $(".PatientInfoBar").height();
+    var pageTabSwitchHeight = $("#ul-pageTabSwitch").height();
+    var FocusListHeadHeight = $("#FocusListHead").height();
+    var FocusTopDetailHeight = $("#FocusTopDetail").height();
+    var FocusListHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+70);
+
+    
+//    var FocusDARTAreaHeight = ($(window).height())-(PatientInfoBarHeight+pageTabSwitchHeight+FocusListHeadHeight+FocusTopDetailHeight);
+//	resizePanelBody("FocusDARTArea",FocusDARTAreaHeight);
+	
+//	 if(userHeight<600){
+//		 resizePanelBody("FocusDARTArea",($(window).height())); 
+//	 }else{
+//		 resizePanelBody("FocusDARTArea",FocusDARTAreaHeight); 
+//	 }
+
+
+	
+	$(window).resize(function() {
+		 
+//		 $('#FocusList').setGridHeight(FocusListHeight);
+		 resizePanelBody("FocusRightBody",($('#FocusList').height())); 
+		 
+		 
+//		 if(userHeight<300){
+//			 resizePanelBody("FocusDARTArea",$(window).height()); 
+//		 }else{
+//			 resizePanelBody("FocusDARTArea",FocusDARTAreaHeight); 
+//		 }
+		 
+		 
+		
+		});
+	
+});
+
+function FocusListInputObj(empNo,sessionID,chartNo,serno,method){
+	this.empNo = empNo;
+	this.sessionID = sessionID;
+	this.chartNo = chartNo;
+	this.serno = serno;
+	this.method = method;
+};
+
+function renderFocus(){
+			
+	ajax_getFocusList("NurseProgressService");
+	
+}
+
+
+var ajax_getFocusList = function(serviceName){
+//	
+	var cmParam = new FocusListInputObj(PatInfoObj.empNo,PatInfoObj.sessionID,PatInfoObj.chartNo,PatInfoObj.serno,"getNurseProgressByChartNoSerno");
+
+	var FocusArray = [];
+	$.when(ajax_Post(serviceName,JSON.stringify(cmParam))).done(function(dataList){			
+		if (dataList.status == "Success") {
+			$.each(dataList.resultSet, function(index, obj) {		
+				FocusArray.push(obj);
+			});
+			
+			jqGrid_focusList("#FocusList","#FocusList_Pager",FocusArray);
+
+			
+			
+		} else {
+			var ajaxErrMsg = dataList.errorMessage;
+			noDataFound(ajaxErrMsg,"FocusList");
+			clearFocusDetailData();
+			//暫放 
+			FocusArray = [];
+			jqGrid_focusList("#FocusList","#FocusList_Pager",FocusArray);
+	    	//清空暫存 右側畫面資料
+
+		}
+		
+		
+		
+		
+
+	});
+	
+	
+};	
+
+
+
+
+
+
+/**Focus **/
+//var selectedRows = {};
+
+function jqGrid_focusList(tableName,pagerName,arrayData){	
+	var focusGridHeight = userHeight - (PatientInfoBarHeight+pageTabSwitchHeight+70);
+	resizePanelBody("FocusRightBody",(focusGridHeight+40)); 
+	var tableGrid = $(tableName);
+	$(tableName).jqGrid({
+	    datatype: "local",
+//	    height: Math.floor($(window).height()-255),
+	    height:focusGridHeight,
+	    colModel: [
+//	        { label: '年份', name: 'years', width: 50 },
+	        { label: 'Date', name: 'progress_date', width: 115,formatter: formatDateTime },
+	        { label: 'Time', name: 'progress_time', width: 105,formatter: formatDateTime},
+	        { label: 'Focus', name: 'focus_txt', width: 120},
+	        { label: '住院序號', name: 'serno', width: 50,hidden:true},
+	        { label: 'D', name: 'content_d', width: 50,hidden:true},
+	        { label: 'A', name: 'content_a', width: 50,hidden:true},
+	        { label: 'R', name: 'content_r', width: 50,hidden:true},
+	        { label: 'T', name: 'content_t', width: 50,hidden:true},
+	        { label: '醫師', name: 'order_dr', width: 50,hidden:true},
+	        { label: '醫師', name: 'doctor_name', width: 50,hidden:true},
+	        { label: '護士', name: 'keyin_clerk', width: 50,hidden:true},
+	        { label: '護士', name: 'keyin_clerk_name', width: 50,hidden:true},
+	        { label: 'chart_no', name: 'chart_no', width: 50,hidden:true},
+	        { label: 'serno', name: 'serno', width: 50,hidden:true},
+	        { label: 'focus_no', name: 'focus_no', width: 50,hidden:true},
+	        { label: 'end_date', name: 'end_date', width: 50,hidden:true},
+	        { label: 'end_time', name: 'end_time', width: 50,hidden:true},
+	        { label: 'stop_reason', name: 'stop_reason', width: 50,hidden:true},
+	        { label: 'memo', name: 'memo', width: 50,hidden:true},
+
+	    ],
+	    viewrecords: true, // show the current page, data rang and total records on the toolbar
+	    onSelectRow:getSelectedRow,
+	    pagerpos:'left',
+//	    width: null,
+//	    shrinkToFit: true,
+//	    sortable:true,  //可否拖曳排序
+//	    caption: "Focus護理紀錄",
+//		pager: pagerName,
+		gridComplete: function () {
+
+			$(this).jqGrid('setSelection', 1, true);
+        }
+                
+	});
+//	$(tableName).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false});
+//	searchOperators:true,defaultSearch: "cn"
+	$(tableName).jqGrid('clearGridData');
+	$(tableName).jqGrid('setGridParam', {data: arrayData});
+	$(tableName).setGridParam({rowNum:arrayData.length});
+	$(tableName).trigger('reloadGrid');
+//	$('#currentList').show();
+//	$('#chartBaseList').hide();
+	
+	function getSelectedRow() {
+		
+		 var grid = $(tableName);
+		 var rowKey = grid.jqGrid('getGridParam',"selrow");
+		
+		if(rowKey){
+			//護士
+//			var keyin_clerk = $(tableName).jqGrid('getCell',rowKey,'keyin_clerk');
+			var keyin_clerk_name = $(tableName).jqGrid('getCell',rowKey,'keyin_clerk_name');
+			
+			//醫師
+			var doctor_name =  $(tableName).jqGrid('getCell',rowKey,'doctor_name');
+			
+	    	var progressDate = $(tableName).jqGrid('getCell',rowKey,'progress_date');	    	
+	    	var progressTime = $(tableName).jqGrid('getCell',rowKey,'progress_time');
+	    	var focus = $(tableName).jqGrid('getCell',rowKey,'focus_txt');
+	    	var content_d = $(tableName).jqGrid('getCell',rowKey,'content_d');
+	    	var content_a = $(tableName).jqGrid('getCell',rowKey,'content_a');
+	    	var content_r = $(tableName).jqGrid('getCell',rowKey,'content_r'); 
+	    	var content_t = $(tableName).jqGrid('getCell',rowKey,'content_t'); 
+	    	
+	    	setFocusData("focusNurse",filterNull(keyin_clerk_name));
+	    	setFocusData("focusDoctor",filterNull(doctor_name));
+	    	
+			setFocusData("focusDate",filterNull(progressDate));
+			setFocusData("focusTime",filterNull(progressTime));
+			setFocusData("focusNote",filterNull(focus));
+			
+			
+			setFocusData("content_D",filterNull(content_d));
+			setFocusData("content_A",filterNull(content_a));
+			setFocusData("content_R",filterNull(content_r));
+			setFocusData("content_T",filterNull(content_t));
+
+			
+	    	
+
+		}else{
+//			 alert("沒有資料被選擇");
+		}
+		
+	}  	
+}
+
+//設定 Focus 護理紀錄 DART內文
+function setFocusData(tag,data){
+	document.getElementById(tag).innerText=data
+}
+
+
+//取得護理紀錄 畫面右側資料 
+var clearFocusDetailData = function(){
+	
+	$('#focusNurse').html(""); //護士
+	$('#focusDate').html(""); //日期
+	$('#focusTime').html("");//時間
+	$('#focusDoctor').html("");//訪視醫師
+	$('#focusNote').html("");//focus	
+	$('#content_D').html("");//內容D
+	$('#content_A').html("");//內容A
+	$('#content_R').html("");//內容R
+	$('#content_T').html("");//內容T
+
+
+
+	
+};
+
+
+
+
+
+
+
+

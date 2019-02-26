@@ -1,0 +1,330 @@
+package service;
+
+import abstracts.ServletAdapter;
+import com.google.gson.JsonObject;
+import library.dateutility.DateUtil;
+import library.utility.JDBCUtilities;
+import library.utility.MapUtil;
+import library.utility.TableUtil;
+import model.TPRRecord;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static library.utility.MapUtil.castToInt;
+
+/**
+ * Created by jeffy on 2018/5/4.
+ */
+public class TPRRecordMADService extends ServletAdapter {
+    private List<Map<String, Object>> objects;
+    private Map<String, Object> object;
+    private JsonObject jsonObject = new JsonObject();
+    private TPRRecord tprRecord;
+    private TableUtil tableUtil;
+    private List<String> pkColNames;
+    private List<String> noNullColNames;
+    private List<String> tableColNames;
+    private List<Map<String, Object>> tableMetaData;
+    private String resultString;
+
+    public void getTableConstrains(String tableName, TableUtil tableUtil) throws SQLException {
+        pkColNames = tableUtil.getPKColNames(tableName);
+        tableMetaData =  tableUtil.getTableMetaData(tableName);
+        noNullColNames = tableUtil.getNoNullColNames(tableMetaData);
+        tableColNames = tableUtil.getTableColNames(tableMetaData);
+    }
+
+    public String insertTPRRecord(Map<String, Object> dataParametersMap) {
+        try {
+            int chartNo = MapUtil.castToInteger(dataParametersMap.getOrDefault("chart_no", null));
+            int serno = MapUtil.castToInteger(dataParametersMap.getOrDefault("serno", null));
+            String assessDate = MapUtil.castToStr(dataParametersMap.getOrDefault("assess_date", null));
+            String assessTime = MapUtil.castToStr(dataParametersMap.getOrDefault("assess_time", null));
+            double temperature = MapUtil.castToDouble(dataParametersMap.getOrDefault("temperature", null));
+            int systolicPressure = MapUtil.castToInteger(dataParametersMap.getOrDefault("systolic_pressure", null));
+            int diastolicPressure = MapUtil.castToInteger(dataParametersMap.getOrDefault("diastolic_pressure", null));
+            int pulse = MapUtil.castToInteger(dataParametersMap.getOrDefault("pulse", null));
+            int respiration = MapUtil.castToInteger(dataParametersMap.getOrDefault("respiration", null));
+            double weight = MapUtil.castToDouble(dataParametersMap.getOrDefault("weight", null));
+            int ivFluids = MapUtil.castToInteger(dataParametersMap.getOrDefault("iv_fluids", null));
+            int urine = MapUtil.castToInteger(dataParametersMap.getOrDefault("urine", null));
+            String stool = MapUtil.castToStr(dataParametersMap.getOrDefault("stool", null));
+            String keyinClerk = MapUtil.castToStr(dataParametersMap.getOrDefault("keyin_clerk", null));
+            String keyinDate = MapUtil.castToStr(dataParametersMap.getOrDefault("keyin_date", null));
+            String keyinTime = MapUtil.castToStr(dataParametersMap.getOrDefault("keyin_time", null));
+
+            objects = tprRecord.queryTPRRecordDataByChartNoSernoAssessDateAssessTime(chartNo, serno, assessDate, assessTime);
+
+            // check record exists
+            if (objects.size() == 0) {
+                List<Object> inputObjects = Arrays.asList(chartNo, serno, assessDate, assessTime, temperature, systolicPressure, diastolicPressure, pulse, respiration, weight, ivFluids, urine, stool, keyinClerk, keyinDate, keyinTime);
+                Map<String, Object> map = tprRecord.insertTPRRecord(inputObjects);
+
+                // check insert success
+                if (!map.isEmpty()) {
+                    resultString = "Insert " + castToInt(map.get("count")) + " record. chart_no=" + chartNo + " serno=" + serno + " assess_date=" + assessDate + " assess_time=" + assessTime;
+                    jsonObject = MapUtil.getSuccessResult(resultString);
+                } else {
+                    resultString = "TPRRecord.insertTPRRecord Failed.  inputObjects: " + inputObjects.toString();
+                    jsonObject = MapUtil.getFailureResult(resultString);
+                }
+            } else {
+                resultString = "Insert record exists. chart_no=" + chartNo + " serno=" + serno + " assess_date=" + assessDate + " assess_time=" + assessTime;
+                jsonObject = MapUtil.getFailureResult(resultString);
+            }
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+        return jsonObject.toString();
+
+    }
+
+    public String updateTPRRecordByPrimaryKeys(Map<String, Object> dataParametersMap) {
+        try {
+            int chartNo = MapUtil.castToInteger(dataParametersMap.getOrDefault("chart_no", null));
+            int serno = MapUtil.castToInteger(dataParametersMap.getOrDefault("serno", null));
+            String assessDate = MapUtil.castToStr(dataParametersMap.getOrDefault("assess_date", null));
+            String assessTime = MapUtil.castToStr(dataParametersMap.getOrDefault("assess_time", null));
+            double temperature = MapUtil.castToDouble(dataParametersMap.getOrDefault("temperature", null));
+            int systolicPressure = MapUtil.castToInteger(dataParametersMap.getOrDefault("systolic_pressure", null));
+            int diastolicPressure = MapUtil.castToInteger(dataParametersMap.getOrDefault("diastolic_pressure", null));
+            int pulse = MapUtil.castToInteger(dataParametersMap.getOrDefault("pulse", null));
+            int respiration = MapUtil.castToInteger(dataParametersMap.getOrDefault("respiration", null));
+            double weight = MapUtil.castToDouble(dataParametersMap.getOrDefault("weight", null));
+            int ivFluids = MapUtil.castToInteger(dataParametersMap.getOrDefault("iv_fluids", null));
+            int urine = MapUtil.castToInteger(dataParametersMap.getOrDefault("urine", null));
+            String stool = MapUtil.castToStr(dataParametersMap.getOrDefault("stool", null));
+            String modifyClerk = MapUtil.castToStr(dataParametersMap.getOrDefault("modify_clerk", null));
+            String modifyDate = MapUtil.castToStr(dataParametersMap.getOrDefault("modify_date", null));
+            String modifyTime = MapUtil.castToStr(dataParametersMap.getOrDefault("modify_time", null));
+
+            objects = tprRecord.queryTPRRecordDataByChartNoSernoAssessDateAssessTime(chartNo, serno, assessDate, assessTime);
+
+            // check record exists
+            if (objects.size() > 0) {
+                List<Object> inputObjects = Arrays.asList(temperature, systolicPressure, diastolicPressure, pulse, respiration, weight, ivFluids, urine, stool, modifyClerk, modifyDate, modifyTime, chartNo, serno, assessDate, assessTime);
+                Map<String, Object> map = tprRecord.updateTPRRecordByPrimaryKeys(inputObjects);
+
+                // check update success
+                if (!map.isEmpty()) {
+                    resultString = "Update " + castToInt(map.get("count")) + " record. chart_no=" + chartNo + " serno=" + serno + " assess_date=" + assessDate + " assess_time=" + assessTime;
+                    jsonObject = MapUtil.getSuccessResult(resultString);
+                } else {
+                    resultString = "TPRRecord.updateTPRRecordByPrimaryKeys Failed. inputObjects: " + inputObjects.toString();
+                    jsonObject = MapUtil.getFailureResult(resultString);
+                }
+            } else {
+                resultString = "Update record not exists. chart_no=" + chartNo + " serno=" + serno + " assess_date=" + assessDate + " assess_time=" + assessTime;
+                jsonObject = MapUtil.getFailureResult(resultString);
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+        return jsonObject.toString();
+
+    }
+
+    public String deleteTPRRecordByPrimaryKeys(Map<String, Object> dataParametersMap) {
+        try {
+            int chartNo = MapUtil.castToInteger(dataParametersMap.getOrDefault("chart_no", null));
+            int serno = MapUtil.castToInteger(dataParametersMap.getOrDefault("serno", null));
+            String assessDate = MapUtil.castToStr(dataParametersMap.getOrDefault("assess_date", null));
+            String assessTime = MapUtil.castToStr(dataParametersMap.getOrDefault("assess_time", null));
+
+            objects = tprRecord.queryTPRRecordDataByChartNoSernoAssessDateAssessTime(chartNo, serno, assessDate, assessTime);
+
+            // check record exists
+            if (objects.size() > 0) {
+                List<Object> inputObjects = Arrays.asList(chartNo, serno, assessDate, assessTime);
+                Map<String, Object> map = tprRecord.deleteTPRRecordByPrimaryKeys(inputObjects);
+
+                // check delete success
+                if (!map.isEmpty()) {
+                    resultString = "Delete " + castToInt(map.get("count")) + " record. chart_no=" + chartNo + " serno=" + serno + " assess_date=" + assessDate + " assess_time=" + assessTime;
+                    jsonObject = MapUtil.getSuccessResult(resultString);
+                } else {
+                    resultString = "TPRRecord.deleteTPRRecordByPrimaryKeys Failed. inputObjects: " + inputObjects.toString();
+                    jsonObject = MapUtil.getFailureResult(resultString);
+                }
+
+            } else {
+                resultString = "Delete record not exists. chart_no=" + chartNo + " serno=" + serno + " assess_date=" + assessDate + " assess_time=" + assessTime;
+                jsonObject = MapUtil.getFailureResult(resultString);
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+        return jsonObject.toString();
+
+    }
+
+    @Override
+    public String run(JsonObject parametersJsObj) {
+        Connection myConnection = null;
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        String result = null;
+        int chartNo;
+        int serno;
+        JsonObject dataParametersJsObj;
+        Map<String, Object> dataParametersMap;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            tableUtil = new TableUtil(myConnection);
+            tprRecord = new TPRRecord(myConnection);
+
+            String method = parametersJsObj.get("method").getAsString();
+
+
+            if (method.equals("insertTPRRecord")) {
+                dataParametersJsObj = parametersJsObj.get("dataParameters").getAsJsonObject();
+                dataParametersMap = MapUtil.jsonObjectToMap(dataParametersJsObj);
+                String checkMessages = "";
+
+                this.getTableConstrains("tprrecord", tableUtil);
+
+                noNullColNames.add("keyin_clerk");  // keyin_clerk column check
+                checkMessages = checkMessages
+                        + tableUtil.checkPKColsMissing(pkColNames, dataParametersMap) + " "
+                        + tableUtil.checkNoNullColsMissing(noNullColNames, dataParametersMap) + " "
+                        + tableUtil.checkValueConstrains(tableMetaData, dataParametersMap);
+
+//                System.out.println(checkMessages.trim().isEmpty()
+//                        ? "checkPKColsMissing & checkNoNullColsMissing & dataCheck.checkValueConstrains Passed"
+//                        : "checkMessage: " + checkMessages);
+
+                if (checkMessages.trim().isEmpty()) {
+                    String rocDateTimeString = DateUtil.dateTimeToROCDateTimeString(DateUtil.getSystemDateTime(myConnection).toLocalDateTime());
+                    dataParametersMap.put("keyin_date", rocDateTimeString.split(" ")[0]);
+                    dataParametersMap.put("keyin_time", (rocDateTimeString.split(" ")[1]).substring(0, 4));
+                    result = insertTPRRecord(dataParametersMap);
+                } else {
+                    result = MapUtil.getFailureResult(checkMessages).toString();
+                }
+            }
+
+            if (method.equals("updateTPRRecordByPrimaryKeys")) {
+                dataParametersJsObj = parametersJsObj.get("dataParameters").getAsJsonObject();
+                dataParametersMap = MapUtil.jsonObjectToMap(dataParametersJsObj);
+                String checkMessages = "";
+
+                this.getTableConstrains("tprrecord", tableUtil);
+
+                noNullColNames.add("modify_clerk"); // modify_clerk column check
+                checkMessages = checkMessages
+                        + tableUtil.checkPKColsMissing(pkColNames, dataParametersMap) + " "
+                        + tableUtil.checkNoNullColsMissing(noNullColNames, dataParametersMap) + " "
+                        + tableUtil.checkValueConstrains(tableMetaData, dataParametersMap);
+
+//                System.out.println(checkMessages.trim().isEmpty()
+//                        ? "checkPKColsMissing & checkNoNullColsMissing & dataCheck.checkValueConstrains Passed"
+//                        : "checkMessage: " + checkMessages);
+
+                if (checkMessages.trim().isEmpty()) {
+                    String rocDateTimeString = DateUtil.dateTimeToROCDateTimeString(DateUtil.getSystemDateTime(myConnection).toLocalDateTime());
+                    dataParametersMap.put("modify_date", rocDateTimeString.split(" ")[0]);
+                    dataParametersMap.put("modify_time", (rocDateTimeString.split(" ")[1]).substring(0, 4));
+                    result = updateTPRRecordByPrimaryKeys(dataParametersMap);
+                } else {
+                    result = MapUtil.getFailureResult(checkMessages).toString();
+                }
+            }
+
+            if (method.equals("deleteTPRRecordByPrimaryKeys")) {
+                dataParametersJsObj = parametersJsObj.get("dataParameters").getAsJsonObject();
+                dataParametersMap = MapUtil.jsonObjectToMap(dataParametersJsObj);
+
+                String checkMessages = "";
+
+                this.getTableConstrains("tprrecord", tableUtil);
+
+                checkMessages = checkMessages
+                        + tableUtil.checkPKColsMissing(pkColNames, dataParametersMap) + " "
+                        //+ tableUtil.checkNoNullColsMissing(noNullColNames, dataParametersMap) + " " // check table's noNull cols
+                        + tableUtil.checkValueConstrains(tableMetaData, dataParametersMap);
+
+//                System.out.println(checkMessages.trim().isEmpty()
+//                        ? "checkPKColsMissing & checkNoNullColsMissing & dataCheck.checkValueConstrains Passed"
+//                        : "checkMessage: " + checkMessages);
+
+                if (checkMessages.trim().isEmpty()) {
+                    result = deleteTPRRecordByPrimaryKeys(dataParametersMap);
+                } else {
+                    result = MapUtil.getFailureResult(checkMessages).toString();
+                }
+            }
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) { JDBCUtilities.closeConnection(myConnection); }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        JsonObject jsonObject = new JsonObject();
+        JsonObject dataJsonObject = new JsonObject();
+        //Map<String, String> map = new LinkedHashMap<>();
+        TPRRecordService tprRecordService = new TPRRecordService();
+        String resultStrng;
+
+        jsonObject.addProperty("idNo", "ORCL");
+        jsonObject.addProperty("sessionID", 1806);
+        int chartNo = 176007;  //256047
+        int serno = 297348;    //294946
+        jsonObject.addProperty("chartNo", chartNo);
+        jsonObject.addProperty("serno", serno);
+        String assessDate = "1040802";
+        String assessTime = "1615";
+        double temperature = 37.0;
+        int systolicPressure = 120;
+        int diastolicPressure = 70;
+        int pulse = 68;
+        int respiration = 18;
+        int ivFluids = 200;
+        int urine = 100;
+        dataJsonObject.addProperty("chart_no", chartNo);
+        dataJsonObject.addProperty("serno", serno);
+        dataJsonObject.addProperty("assess_date", assessDate);
+        dataJsonObject.addProperty("assess_time", assessTime);
+        dataJsonObject.addProperty("temperature", temperature);
+        dataJsonObject.addProperty("systolic_pressure", systolicPressure);
+        dataJsonObject.addProperty("diastolic_pressure", diastolicPressure);
+        dataJsonObject.addProperty("pulse", pulse);
+        dataJsonObject.addProperty("respiration", respiration);
+        dataJsonObject.addProperty("iv_fluids", ivFluids);
+        dataJsonObject.addProperty("urine", urine);
+        dataJsonObject.addProperty("keyin_clerk", "ORCL");
+        dataJsonObject.addProperty("modify_clerk", "ORCL");
+
+        jsonObject.add("dataParameters", dataJsonObject);
+
+        jsonObject.addProperty("method", "insertTPRRecord");
+        resultStrng = tprRecordService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nTPRRecordMADService.run insertTPRRecord chartNo=" + chartNo + " serno=" + serno +
+                " assessDate=" + assessDate  + " assessTime= " + assessTime + " : " + resultStrng);
+
+        jsonObject.addProperty("method", "updateTPRRecordByPrimaryKeys");
+        resultStrng = tprRecordService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nTPRRecordMADService.run updateTPRRecordByPrimaryKeys chartNo=" + chartNo + " serno=" + serno +
+                " assessDate=" + assessDate  + " assessTime= " + assessTime + " : " + resultStrng);
+
+        jsonObject.addProperty("method", "deleteTPRRecordByPrimaryKeys");
+        resultStrng = tprRecordService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nTPRRecordMADService.run deleteTPRRecordByPrimaryKeys chartNo=" + chartNo + " serno=" + serno +
+                " assessDate=" + assessDate  + " assessTime= " + assessTime + " : " + resultStrng);
+
+    }
+}

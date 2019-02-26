@@ -1,0 +1,232 @@
+package service;
+
+import abstracts.ServletAdapter;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import library.dateutility.DateComputeUtil;
+import library.dateutility.DateUtil;
+import library.utility.JDBCUtilities;
+import library.utility.MapGroupingUtil;
+import library.utility.MapUtil;
+import library.utility.MatrixUtil;
+import model.Chart;
+import model.LabRecord;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.*;
+
+import static library.utility.MapUtil.*;
+
+/**
+ * Created by jeffy on 2018/5/11.
+ */
+public class LabRecordService extends ServletAdapter {
+    private List<Map<String, Object>> objects;
+    private Map<String, Object> object;
+    private JsonObject jsonObject = new JsonObject();
+    private LabRecord labRecord;
+    private Chart chart;
+
+    private String adObjectToRocDateString(Object adDateObj) {
+        String result = "";
+        if (adDateObj != null) {
+            result = DateUtil.adDateStringToROCDateString(castToStr(adDateObj));
+        }
+        return result;
+    }
+
+    private String getRealNormalRange(String birthDate, int sex, String labDate, String normalRange) {
+        String realNoramlRange = "";
+        int ages = 0;
+        ages = DateComputeUtil.getAgesByYear(birthDate, labDate);
+
+        // 將 異常|正常|最小值
+        String[] range = normalRange.split("\\|", 3);
+
+        if (ages > 6) {
+            realNoramlRange = sex == 1 ? range[0] : range[1];
+        } else {
+            realNoramlRange = range[2];
+        }
+
+        if (range[0].equals("") && range[2].equals("")) realNoramlRange = range[1];
+
+        // replace ' ' -> '' and then '-' -> ' - '
+        realNoramlRange = realNoramlRange.replace(" ", "").replace("/", " - ");
+
+        return realNoramlRange;
+    }
+
+    public String getLabListByChartNoDateRange(int chartNo, String startDate, String endDate) {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        try {
+            objects = labRecord.queryLabListByChartNoDateRange(chartNo, startDate, endDate);
+
+            if (!objects.isEmpty()) {
+                for (Map<String, Object> map : objects) {
+                    map.put("years", adObjectToRocDateString(map.get("lab_date")).substring(0, 3));
+                    map.put("lab_date", adObjectToRocDateString(map.get("lab_date")));
+                    map.put("req_date", adObjectToRocDateString(map.get("req_date")));
+                }
+
+                jsonObject = MapUtil.getSuccessResult(MapUtil.listMapToJsonArray(objects));
+            } else {
+                jsonObject = MapUtil.getFailureResult("LabRecord.queryLabListByChartNoDateRange chart_no= " + chartNo +
+                        " startDate=" + startDate + " endDate=" + endDate + " No Data Found ");
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+
+        return jsonObject.toString();
+    }
+
+    public String getMatrixLabDdataByChartNoLabTypeLabItemsAndRange(int chartNo, String kindId, String startDate, String endDate, String labItems) {
+
+        Map<String, Object> chartMap = new LinkedHashMap<>();
+        List<Map<String, Object>> matrixObjects;
+        List<Map<String, Object>> resultObjects;
+        JsonArray jsonArray;
+
+        try {
+            objects = labRecord.queryLabDdataByChartNoLabTypeLabItemsAndRange(chartNo, kindId, startDate, endDate, labItems);
+            object = chart.queryChartByChartNo(chartNo);
+
+            String normalRange = "";
+            String labDate = "";
+
+            if (objects.size() > 0) {
+                String birthDate = castToStr(object.get("birth_date"));
+                int sex = castToInt(object.get("sex"));
+
+                for (Map<String, Object> map : objects) {
+                    labDate = adObjectToRocDateString(map.get("lab_date"));
+                    // convert lab_date form AD DateString to ROC DateString
+                    map.put("lab_date", labDate);
+
+                    // add real_normal_range result by normal_range & age & sex
+                    normalRange = castToStr(map.get("normal_range"));
+                    map.put("real_normal_range", emptyToNull(getRealNormalRange(birthDate, sex, labDate, normalRange)));
+                }
+
+                // Create Matrix Object => Define xAxialName, yAxialName cellName
+                String xAxialName = "assay_id";
+                String yAxialName = "lab_date";
+                String cellName = "result_val";
+                MatrixUtil matrixUtil = new MatrixUtil(objects, xAxialName, yAxialName, cellName);
+                matrixObjects = matrixUtil.getMatrixObjects();
+                //System.out.println("\nmatrixObjects:" + listMapToJsonArray(matrixObjects));
+
+                // Merge other cols from source 'objects' to target 'matrixObjects'
+                List<String> keyListToAdd = Arrays.asList("chart_no", "lab_reportno", "duplicate_no", "unit",
+                        "normal_range", "report_normalrange", "real_normal_range", "kind_id", "kind_name", "kind_flag", "assay_judgetype", "lab_status",
+                        "result_kind", "result_status", "lab_status");
+                List<String> criteriaKeys = Arrays.asList("assay_id");
+                resultObjects = matrixUtil.mergeMapFromSourceToTarget(objects, matrixObjects, keyListToAdd, criteriaKeys);
+                //System.out.println("\nresultObjects:" + listMapToJsonArray(resultObjects));
+
+                // Convert 'resultObjects' to master-detail shape JsonArray
+                List<String> masterCols = Arrays.asList("assay_id", "chart_no", "lab_reportno", "kind_id", "kind_name", "kind_flag");
+                List<String> detailCols = Arrays.asList("lab_date", "result_val", "duplicate_no", "unit",
+                        "normal_range", "real_normal_range", "report_normalrange", "assay_judgetype",
+                        "lab_status", "result_kind", "result_status", "lab_status" );
+
+                jsonArray = MapGroupingUtil.groupListMapToJsonArray(MapGroupingUtil.getGroupingResultMap(resultObjects, masterCols, detailCols));
+                //System.out.println("\njsonArray:" + jsonArray);
+
+                jsonObject = MapUtil.getSuccessResult(jsonArray);
+            } else {
+                jsonObject = MapUtil.getFailureResult("labRecord.queryLabDdataByChartNoLabTypeAndRange chartNo=" + chartNo
+                        + " kindId='" + kindId + "' startDate='" + startDate + "' endDate='" + endDate
+                        + "' No Data Found ");
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+
+        return jsonObject.toString();
+    }
+
+    @Override
+    public String run(JsonObject parametersJsObj) {
+        Connection myConnection = null;
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        String result = null;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            labRecord = new LabRecord(myConnection);
+            String empNo = parametersJsObj.get("empNo").getAsString();
+            String method = parametersJsObj.get("method").getAsString();
+
+            // get Lab list by chart_no, startDate, endDate, visitType
+            if (method.equals("getLabListByChartNoDateRange")) {
+                int chartNo = parametersJsObj.get("chartNo").getAsInt();
+                String range = parametersJsObj.get("range").getAsString();
+                List<String> dateList = DateComputeUtil.getStartDateEndDate(range);
+                result = getLabListByChartNoDateRange(chartNo, dateList.get(0), dateList.get(1));
+            }
+
+            // get Matrix labrecordd data by chart_no, kind_id, range and assay_id
+            if (method.equals("getMatrixLabDdataByChartNoLabTypeLabItemsAndRange")) {
+                chart = new Chart(myConnection);
+                int chartNo = parametersJsObj.get("chartNo").getAsInt();
+                String kindId = parametersJsObj.get("kindId").getAsString();
+                String range = parametersJsObj.get("range").getAsString();
+                String labItems = parametersJsObj.get("labItems").getAsString();
+                List<String> dateList = DateComputeUtil.getStartDateEndDate(range);
+                result = getMatrixLabDdataByChartNoLabTypeLabItemsAndRange(chartNo, kindId, dateList.get(0), dateList.get(1), labItems);
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) { JDBCUtilities.closeConnection(myConnection); }
+        }
+        return result;
+    }
+
+
+    public static void main(String[] args) {
+
+        String temp = "|4.2/4.9|";
+        String rangeOne = temp.substring(0, 0);
+        String rangeTwo = temp.substring(1, 8);
+        String rangeThree = temp.substring(9, 9);
+
+        JsonObject jsonObject = new JsonObject();
+        //Map<String, String> map = new LinkedHashMap<>();
+        LabRecordService labRecordService = new LabRecordService();
+        String resultStrng;
+
+        jsonObject = new JsonObject();
+        jsonObject.addProperty("empNo", "ORCL");
+        jsonObject.addProperty("sessionID", 1);
+        jsonObject.addProperty("chartNo", 74881);
+        jsonObject.addProperty("range", "1000401|1051230");
+        jsonObject.addProperty("method", "getLabListByChartNoDateRange");
+        resultStrng = labRecordService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nLabRecordService.run getLabListByChartNoDateRange chartNo=74881 range='1000401|1051230' :"  + resultStrng);
+
+        jsonObject = new JsonObject();
+        jsonObject.addProperty("empNo", "ORCL");
+        jsonObject.addProperty("sessionID", 1);
+        jsonObject.addProperty("chartNo", 74881);
+        jsonObject.addProperty("kindId", "A3");
+        jsonObject.addProperty("range", "1000401|1051230");
+        jsonObject.addProperty("labItems", "Hct|Hemoglobin(Hb)|MCH|MCHC|MCV|Plt");
+        jsonObject.addProperty("method", "getMatrixLabDdataByChartNoLabTypeLabItemsAndRange");
+        resultStrng = labRecordService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nLabRecordService.run getMatrixLabDdataByChartNoLabTypeLabItemsAndRange chartNo=74881 kineId='A3' " +
+                "range='1000401|1051230' labItems='Hct|Hemoglobin(Hb)|MCH|MCHC|MCV|Plt' : "  + resultStrng);
+
+    }
+}
+

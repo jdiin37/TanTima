@@ -1,0 +1,62 @@
+body{
+	background:url("img/purple_bg.png");
+}
+
+
+#btn_ipSet:hover{
+	text-decoration: none;
+}
+
+#div_ipSet{
+	display:none;	
+	margin-bottom:40px;
+}
+
+#div_login{
+	border: 2px solid white;
+	box-shadow: -1px -1px 2px hsla(0, 0%, 0%, 0.2), 
+	1px 1px 1px hsla(0, 0%, 0%, 0.15), 
+	1px 1px 1px hsla(0, 0%, 0%, 0.15) inset, 
+	-1px -1px 2px hsla(0, 0%, 0%, 0.2);
+	border-radius: 10px;
+}
+
+#div_login_form{
+	margin:auto;
+	margin-top:40px;
+	margin-bottom:60px;
+	width:240px;
+}
+
+#div_logo{	
+	border-top: 3px solid transparent;
+  	border-image: linear-gradient(to right, transparent  , white ,transparent );
+  	border-image-slice: 1;
+  	padding:20px;
+}
+
+#img_hismax{
+}
+
+.input_underline {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+}
+
+.width60{
+	width:60px;
+	max_width:60px;
+}
+
+
+.form-control:focus{
+	border-width: 2px;
+	border-color: purple;
+	box-shadow: -1px -1px 2px hsla(0, 0%, 0%, 0.2), 
+				1px 1px 1px hsla(0, 0%, 0%, 0.15), 
+				1px 1px 1px hsla(0, 0%, 0%, 0.15) inset, 
+				-1px -1px 2px hsla(0, 0%, 0%, 0.2);
+	outline: 0 none;
+}

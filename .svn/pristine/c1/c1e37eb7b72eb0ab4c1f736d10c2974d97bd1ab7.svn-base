@@ -1,0 +1,55 @@
+<div class="container">
+<!-- 	<span class="btn btn-link" id="btn_ipSet">＊</span> -->
+<!-- 	<div id="div_ipSet" class="text-center"> -->
+<!-- 		<label>IP設定: </label>  -->
+<!-- 		<input id="input_ip1" class="input_underline width60" maxlength="3" type="text"></input>. -->
+<!-- 		<input id="input_ip2" class="input_underline width60" maxlength="3" type="text"></input>. -->
+<!-- 		<input id="input_ip3" class="input_underline width60" maxlength="3" type="text"></input>. -->
+<!-- 		<input id="input_ip4" class="input_underline width60" maxlength="3" type="text"></input>: -->
+<!-- 		<input id="input_ip5" class="input_underline width60" maxlength="4" type="text"></input> -->
+<!-- 		<button class="btn btn-default" id="btn_ipSetOK">確定</button>	 -->
+<!-- 	</div> -->
+	<div id="div_login" style="margin-top:40px;">
+		<div id="div_login_form" class="text-center">
+			<div class="form-group">
+				<select class="form-control">
+					<option>四季台安醫院</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="ID">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="PASSWORD">
+			</div>
+			<div class="form-group">
+				<button class="btn btn-default" id="btn_login">登入</button>
+			</div>
+		</div>
+		<div id="div_logo">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group text-center">
+						<img src="/TanTimaServices/css/img/Hismaxlogo_800x270.png" alt="HisMax Logo" width="200" height="60" id="img_hismax">
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label>客服部 0929-608-186</label>
+					</div>
+					<div class="form-group">
+						<label>系統部 0918-291-631</label>
+					</div>
+					<div class="form-group">
+						<label>工程部 0927-920-070</label>
+					</div>
+					<div class="pull-right">
+						<span style="color:gray;">版本號:0.0</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+<script src="/TanTimaServices/html/login/login.js"></script>
+	

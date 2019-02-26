@@ -1,0 +1,59 @@
+package model;
+
+import library.utility.EntityFactory;
+import library.utility.JDBCUtilities;
+import library.utility.MapUtil;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by jeffy on 2018/5/14.
+ */
+public class NurseProgress {
+
+    private Connection con;
+
+    public NurseProgress(Connection con) {
+        this.con = con;
+    }
+
+    public List<Map<String, Object>> queryNurseProgressByChartNoSerno(int chartNo, int serno) throws SQLException {
+        String queryString =
+                "SELECT a.chart_no, a.serno, a.progress_date, a.progress_time, a.content content_d, " +
+                "       a.order_dr, (SELECT b.emp_name FROM employee b WHERE b.emp_no = a.order_dr) doctor_name, " +
+                "       a.keyin_clerk, (SELECT b.emp_name FROM employee b WHERE b.emp_no = a.keyin_clerk) keyin_clerk_name, " +
+                "       a.content_o content_a, a.content_a content_r, a.content_p content_t, a.question_num, " +
+                "       a.question_txt focus, a.end_date, a.end_time, a.stop_reason, a.memo " +
+                "  FROM nurseprogress a " +
+                " WHERE a.chart_no = ? " +
+                "   AND a.serno = ? " +
+                " ORDER BY a.progress_date desc, a.progress_time desc ";
+
+        EntityFactory nurseProgressEntity = new EntityFactory(con, queryString);
+        return nurseProgressEntity.findMultiple(new Object[]{chartNo, serno});
+    }
+
+    public static void main(String[] args) {
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        Connection myConnection = null;
+        String resultStrng = null;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            NurseProgress nurseProgress = new NurseProgress(myConnection);
+
+            System.out.println("\nNurseProgress.queryNurseProgressByChartNoSerno chartNo=158689 serno=133162 JsonArray: " +
+                    MapUtil.listMapToJsonArray(nurseProgress.queryNurseProgressByChartNoSerno(158689, 133162)));
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) {
+                JDBCUtilities.closeConnection(myConnection);
+            }
+        }
+    }
+}

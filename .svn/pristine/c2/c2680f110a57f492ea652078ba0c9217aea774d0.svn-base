@@ -1,0 +1,285 @@
+<div class="container-fluid container-noPadding">
+<!-- ToolBar  -->
+	<nav class="navbar navbar-light bg-light form-inline PatientInfoBar">
+	<div class="form-group col-sm-1">
+               <img id="img-back-patlist" src="/TanTimaServices/css/img/Menu_36.png" class="toolbar-img-style" alt="回病人清單" title="回病人清單"/>
+          </div>
+	   <div class="form-group col-sm-3">
+               <label for="common_chartNo" class="EMRLabel navbar-custom-text">病歷號碼: </label> 
+               <span class="navbar-custom-text" id="common_chartNo" ></span>
+	   </div>
+	   <div class="form-group col-sm-4">
+	     <label for="common_ckinDate" class="EMRLabel navbar-custom-text">住院日期: </label> 
+	     <span class="navbar-custom-text" id="common_ckinDate" ></span>
+             </div>
+	   <div class="form-group col-sm-2">
+	     <label for="common_zone" class="EMRLabel navbar-custom-text">院區: </label> 
+	     <!-- 這裡須改為 下拉清單 -->
+	     <span class="navbar-custom-text" id="common_zone"></span>
+             </div> 
+             <div class="form-group pull-right col-sm-1">
+               <img id="img-logout" src="/TanTimaServices/css/img/logout_36.png" class="toolbar-img-style" alt="登出" title="登出"/>
+             </div>		 
+          </nav>
+   <div class="abgne_tab">
+		<ul class="tabs" id="ul-pageTabSwitch">
+		          <li id="li-searchHistory"><img src="/TanTimaServices/css/img/searchHistory_48.png" class="toolbar-img-style" alt="查詢病人歷史住院記錄" title="查詢病人歷史住院記錄"/><a href="#searchHistory"></a></li>
+			<li id="li-ud"><img src="/TanTimaServices/css/img/ud_48.png" class="toolbar-img-style" alt="UD用藥記錄" title="UD用藥記錄"/><a href="#ud"></a></li>
+			<li id="li-stat"><img src="/TanTimaServices/css/img/stat_48.png" class="toolbar-img-style" alt="STAT用藥記錄" title="STAT用藥記錄"/><a href="#stat"></a></li>
+			<li id="li-takeHome"><img src="/TanTimaServices/css/img/takeHome_48.png" class="toolbar-img-style" alt="出院帶藥" title="出院帶藥"/><a href="#takeHome"></a></li>
+			<li id="li-lab"><img src="/TanTimaServices/css/img/lab_48.png" class="toolbar-img-style" alt="檢驗檢查" title="檢驗檢查"/><a href="#lab"></a></li>
+			<li id="li-xray"><img src="/TanTimaServices/css/img/xray_48.png" class="toolbar-img-style" alt="X光" title="X光"/><a href="#xray"></a></li>
+			<li id="li-focus"><img src="/TanTimaServices/css/img/focus_48.png" class="toolbar-img-style" alt="護理記錄" title="護理記錄"/><a href="#focus"></a></li>
+			<li id="li-tpr"><img src="/TanTimaServices/css/img/m_Tpr_48.png" class="toolbar-img-style" alt="TPR" title="TPR"/><a href="#tpr"></a></li>
+			<li id="li-outNote"><img src="/TanTimaServices/css/img/outNote_48.png" class="toolbar-img-style" alt="出院病摘" title="出院病摘"/><a href="#outNote"></a></li>
+			
+		</ul>
+ 
+		<div class="tab_container">
+		          <div id="searchHistory" class="tab_content pre-scrollable">
+		           <ul id="recordListView" data-role="listview" data-inset="true" data-filter="true">
+		            <li>
+		              <div class="recordCount">
+		               
+		              </div>
+		              <div class="recordContent">
+		                <div class="re-Ckin"></div>
+		               <div class="re-Dis"></div>
+		               <div class="re-inDays"></div>
+		               <div class="re-doc"></div>
+		               <div class="re-div"></div>
+		               <div class="re-hosp"></div>
+		              </div>
+		            </li>
+		            
+		            <!--  <li>
+		              <div class="recordCount-active"></div>
+		              <div class="recordContent-active"></div>
+		            </li>-->
+		            
+		           </ul>
+			</div>
+			<!--  <div id="ud" class="tab_content" w3-include-html="../UD/UD.html"></div>-->
+			<div id="ud" class="tab_content"></div>
+			<div id="stat" class="tab_content"></div>
+			<div id="takeHome" class="tab_content"></div>
+			<div id="xray" class="tab_content"></div>
+			<div id="lab" class="tab_content"></div>
+			<div id="focus" class="tab_content"></div>
+			<div id="tpr" class="tab_content"></div>
+			<div id="outNote" class="tab_content"></div>
+		
+			<script>
+			
+			var ud = new $.Deferred();
+			var stat = new $.Deferred();			
+			var takeHome = new $.Deferred();			
+			var xray = new $.Deferred();
+			
+			var lab = new $.Deferred();
+			var focus = new $.Deferred();
+			var tpr = new $.Deferred();
+			var outNote = new $.Deferred();
+			
+			var url="";
+			url += '?_=' + (new Date()).getTime();
+			// Set up the chain of events...
+			$.when(ud,stat,takeHome,xray,lab,focus,tpr,outNote).then(function() {
+				
+				//alert("done");
+			});
+
+			// And finally: Make the actual ajax calls:
+			$('#ud').load('../UD/UD.html'+url, function() { ud.resolve(); });
+			$('#stat').load('../STAT/STAT.html'+url, function() { stat.resolve(); });
+			$('#takeHome').load('../TakeHome/TakeHome.html'+url, function() { takeHome.resolve(); });
+			$('#xray').load('../Xray/Xray.html'+url, function() { xray.resolve(); });
+			$('#lab').load('../Lab/Lab.html'+url, function() { lab.resolve(); });
+			$('#focus').load('../Focus/Focus.html'+url, function() { focus.resolve(); });			
+			$('#tpr').load('../TPR/TPR.html'+url, function() { tpr.resolve(); });
+			$('#outNote').load('../OutNote/OutNote.html'+url, function() { outNote.resolve(); });
+			
+			
+			
+			/**$("#ud").load("../UD/UD.html",function(){
+				
+				
+				$("#stat").load("../STAT/STAT.html",function(){
+				  
+				    $("#takeHome").load("../TakeHome/TakeHome.html",function(){
+				    	
+				    	$("#xray").load("../Xray/Xray.html",function(){
+				    	
+				    	   $("#lab").load("../Lab/Lab.html",function(){
+				    		
+				    	       $("#focus").load("../Focus/Focus.html",function(){
+				    	    	   
+				    	       });   
+				    	   }); 
+				    	   
+				    	}); 
+				    }); 
+				    
+				}); 
+				
+							
+				
+							
+				 			
+				$("#tpr").load("../TPR/TPR.html"); 
+				$("#outNote").load("../OutNote/OutNote.html");   
+				
+			}); **/
+			
+			
+			
+			</script>
+			
+			<!-- <div id="stat" class="tab_content" w3-include-html="../STAT/STAT.html"></div>
+		
+			<div id="takeHome" class="tab_content" w3-include-html="../TakeHome/TakeHome.html"></div>
+			
+			<div id="xray" class="tab_content" w3-include-html="../Xray/Xray.html"></div>
+			
+			<div id="lab" class="tab_content" w3-include-html="../Lab/Lab.html"></div>
+			
+			<div id="focus" class="tab_content" w3-include-html="../Focus/Focus.html"></div>
+			
+			<div id="tpr" class="tab_content" w3-include-html="../TPR/TPR.html"></div>
+			
+			<div id="outNote" class="tab_content" w3-include-html="../OutNote/OutNote.html"></div>-->
+			
+		</div>
+	</div>
+
+</div>
+
+<style>
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.abgne_tab {
+	clear: left;
+	width: 100%;
+	margin: 10px 0;
+}
+ul.tabs {
+	width: 100%;
+	height: 32px;
+	border-bottom: 1px solid #999;
+	margin-top: -10px;
+	display: table;
+	margin-left: -2px;
+	/**border-left: 1px solid #999;**/
+}
+ul.tabs li {
+	/**margin-right:1px;**/
+	/**float: left;**/ /**1070517 註解**/
+	/**height: 31px;
+	line-height: 31px;**/
+	overflow: hidden;
+	position: relative;
+	margin-bottom: -1px;	/* 讓 li 往下移來遮住 ul 的部份 border-bottom */
+	/**border: 1px solid #999;**/
+	border-left: none;
+	background: #fff;
+	 -moz-box-shadow: 3px 2px 3px #888888;
+          box-shadow: 3px 2px 3px #888888;
+          border: 1px solid #CCCCCC;
+          height: 55px;
+          width: auto;
+          display: table-cell;
+    	vertical-align: middle;
+    	text-align: center;
+    	padding:5px;
+}
+ul.tabs li a {
+	display: block;
+	padding: 0 20px;
+	color: #000;
+	/**border: 1px solid #fff;**/
+	text-decoration: none;
+}
+
+ul.tabs li img {
+	padding-top:2px;
+}
+
+ul.tabs li a:hover {
+	background: #ccc;
+	
+}
+
+ul.tabs li:nth-child(1){
+	border-bottom: 1px solid #fff;
+	background-color: #8463EA;
+	-moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+}
+
+ul.tabs li.active:nth-child(1)  {
+	border-bottom: 1px solid #fff;
+	background-color: #8463EA;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+	
+}
+
+
+ul.tabs li.active  {
+	border-bottom: 1px solid #fff;
+	background-color: #D6C7FE;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+          /***1070517 新增**/
+          margin-right:1px;
+          overflow: hidden;
+	position: relative;
+	margin-bottom: -1px;
+	 -moz-box-shadow: 3px 2px 3px #888888;
+          box-shadow: 3px 2px 3px #888888;
+          border: 1px solid #CCCCCC;
+          height: 55px;
+          width: auto;
+          display: table-cell;
+    	vertical-align: middle;
+    	text-align: center;
+    	padding:5px;
+	
+}
+
+
+
+ul.tabs li.active a:hover {
+	background: #fff;
+}
+div.tab_container {
+	clear: left;
+	width: 100%;
+	/**border: 1px solid #999;**/
+	border-top: none;
+	/**background: #fff;**/
+}
+div.tab_container .tab_content {
+	padding: 6px;
+}
+div.tab_container .tab_content h2 {
+	margin: 0 0 20px;
+}
+
+</style>
+<script src="/TanTimaServices/html/ContentPage/ContentPage.js"></script>
+<script src="/TanTimaServices/html/UD/UD.js"></script>
+<script src="/TanTimaServices/html/STAT/STAT.js"></script>
+<script src="/TanTimaServices/html/TakeHome/TakeHome.js"></script>
+<script src="/TanTimaServices/html/Xray/Xray.js"></script>
+<script src="/TanTimaServices/html/Lab/Lab.js"></script>
+<script src="/TanTimaServices/html/OutNote/OutNote.js"></script>
+<script src="/TanTimaServices/html/Focus/Focus.js"></script>
+
+<script src="/TanTimaServices/html/ContentPage/ActivityManager.js"></script>

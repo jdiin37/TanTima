@@ -1,0 +1,47 @@
+		
+			<div class="row" id="StatCol">
+						<div class="col-sm-2 jqGridAcnt_BgStyle">
+							<table id="StatList" class="table-hover"></table>
+							<div id="StatList_Pager"></div>
+							
+							<form class="form-inline pageForm" style="margin-top:12px;display:none;">
+					<div class="form-group">
+						第: <select  class="form-control pageSelect" id="StatList_pager"></select> 頁
+					</div>
+					<div class="form-group pageTotal">
+						,共 <span id="StatList_tot"></span> 頁
+					</div>
+				</form>	
+						</div>
+						
+						<div class="col-sm-10">
+						   
+							
+							    <div class="stRadioGroup">
+								    <!-- <label class="radio-inline EMRLabelBold"><input type="radio" name="stRadio" checked="checked" value="全部">全部</label>-->
+								    <!-- <label class="radio-inline EMRLabelBold"><input type="radio" name="stRadio" value="藥品">藥品</label>-->
+								     <!--  <label class="radio-inline EMRLabelBold"><input type="radio" name="stRadio" value="處置">處置</label>-->
+                                                    			    <!-- <label class="radio-inline EMRLabelBold"><input type="radio" name="stRadio" value="材料">材料</label>-->
+							      <input class="EMRRadioButton" type="radio" name="stRadio" checked="checked" value="全部" id="stAll"/><label class="EMRLabel" for="stAll"><span></span>全部</label>
+							      <input class="EMRRadioButton" type="radio" name="stRadio" value="藥品" id="stDrug"/><label class="EMRLabel" for="stDrug"><span></span>藥品</label>
+								    <input class="EMRRadioButton" type="radio" name="stRadio" value="處置" id="stDevice"/><label class="EMRLabel" for="stDevice"><span></span>處置</label>
+								    <input class="EMRRadioButton" type="radio" name="stRadio" value="材料" id="stMaterial"/><label class="EMRLabel" for="stMaterial"><span></span>材料</label>
+                                                    			    <span style="display:none;" id="stRadioValue"></span>
+                                                    			    <span style="display:none;" id="stAcntValue"></span>
+							   </div>
+							
+							<div class="jqGridStList_BgStyle">
+							   <table id="StatDetailList" class="table-hover"></table>
+							   <div id="StatDetailList_Pager"></div>
+							</div> 
+						    
+						</div>
+								
+							
+						</div>
+						
+						<!--區塊3結尾-->
+					
+			
+			
+		

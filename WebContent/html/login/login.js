@@ -1,0 +1,164 @@
+$(document).ready(function(){
+//	$('#btn_ipSet').click(function(){
+//		$('#div_ipSet').toggle();
+//	});
+//	
+//	$('#btn_ipSetOK').click(function(){		
+//		var ip = $('#input_ip1').val() + "." + $('#input_ip2').val() + "." + $('#input_ip3').val() + "." + $('#input_ip4').val();
+//		var port = $('#input_ip5').val();
+//		setServerIP(ip,port)
+//	});	
+	
+	$("#btn_login").click(function(){
+		var empNo = $("#empNo").val().toLocaleUpperCase();
+		var password = $("#password").val().toLocaleUpperCase();
+		var status = document.getElementById("statusMsg");
+		
+		   if(empNo.length==0&&password.length==0){			    
+			   addRemoveClass("statusMsg","failureMsg","successMsg");
+		       status.innerHTML = "請輸入帳號和密碼";
+		       addRemoveClass("btn_login","btn-danger","btn-success");
+				   
+			   }else if(empNo.length==0||password.length==0){  
+			       
+			        addRemoveClass("statusMsg","failureMsg","successMsg");
+			        status.innerHTML = "帳號或密碼不能為空值";
+			        addRemoveClass("btn_login","btn-danger","btn-success");
+	   
+			   }else{
+				   ajax_getLoginData("AuthService","checkPasswd",empNo,password);
+
+			   }
+	});
+	
+	
+	
+});
+
+
+var LoginObj = { 
+	empNo : "",
+	password : "",
+	session_id:0
+		
+};
+
+
+//Login 參數
+var authObj = function(method,empNo,password){
+	this.method = method;
+	this.empNo = empNo;
+	this.password = password;
+}
+
+//ZoneSet 參數
+var zoneSetObj = function(method,empNo,sessionID){
+	this.method = method;
+	this.empNo = empNo;
+	this.sessionID = sessionID;
+}
+
+function addRemoveClass(elementId,addClass,removeClass){
+	$("#"+elementId).addClass(addClass);
+	$("#"+elementId).removeClass(removeClass);
+}
+
+/**
+ * ajax 取得Login 資訊
+ * */
+var ajax_getLoginData = function(serviceName,method,empNo,password){
+	var status = document.getElementById("statusMsg");
+	
+	var Authdata = new authObj(method,empNo,password);
+	
+	var request = $.when(ajax_Post(serviceName,JSON.stringify(Authdata))).done(function(data) {                                
+		if (data.status == "Success") {
+			LoginObj.empNo = data.emp_no;
+			LoginObj.session_id = data.session_id;
+		     addRemoveClass("statusMsg","successMsg","failureMsg");						       
+		     status.innerHTML = data.status;
+		     addRemoveClass("btn_login","btn-success","btn-danger");
+		     
+		     window.localStorage.setItem("empNo",data.emp_no);  //setItem
+		     window.localStorage.setItem("sessionID",data.session_id);  //setItem
+		     window.localStorage.setItem("treat_title",data.treat_title);  //setItem
+		     
+		     
+		     try{
+		    	 var ZoneSetObj = JSON.parse(localStorage.getItem("ZoneSet"));  //getItem 
+		    	  if(ZoneSetObj==undefined){
+					ajax_getZoneSetList("ZoneSetService","getZonSet",LoginObj.empNo,data.session_id);	
+			     }else{
+//			    	 console.log("院區筆數:"+ ZoneSetObj.length);
+//			    	 for(var i=0;i<ZoneSetObj.length;i++){			    		 
+//			    		 console.log(ZoneSetObj[i].zone+" ; "+ZoneSetObj[i].zone_name);
+//			    	 }
+			    	
+			     }
+		     }catch(e){
+		    	 
+		     }
+		     
+		   
+		     if(LoginObj.session_id==undefined){  //取得sessionId失敗
+		    	 alert("無法取得SessionId");
+		     }else{ //成功取得sessionId 跳至 病人清單
+//		    	  setTimeout(function(){ 
+				    	 switchHtml("/TanTimaServices/html/inpPatList/inpPatList.html"); 
+//				     }, 400); 
+		     }
+		     
+		     
+		   
+		     
+		     	
+		} else {
+		  var ajaxErrMsg = data.errorMessage;
+	      addRemoveClass("statusMsg","failureMsg","successMsg");
+	      status.innerHTML = ajaxErrMsg;
+          addRemoveClass("btn_login","btn-danger","btn-success");
+
+		}
+		
+    });
+
+    request.onreadystatechange = null;
+    request.abort = null;
+    request = null;
+};
+
+/**取得院區清單
+ * 
+ * ***/
+
+var ajax_getZoneSetList = function(serviceName,method,empNo,sessionID){
+	
+	var ZoneSetArray = [];
+
+	var zoneSetData = new zoneSetObj(method,empNo,sessionID);
+	
+	var request = $.when(ajax_Post(serviceName,JSON.stringify(zoneSetData))).done(function(data) {                                
+		if (data.status == "Success") {
+			
+			$.each(data.resultSet, function(index, obj) {
+				ZoneSetArray.push(obj);
+			});
+			//設定LocalStorage
+			window.localStorage.setItem("ZoneSet",JSON.stringify(ZoneSetArray));  //setItem
+
+		} else {
+		  var ajaxErrMsg = data.errorMessage;
+	     
+
+		}
+		
+    });
+
+    request.onreadystatechange = null;
+    request.abort = null;
+    request = null;
+};
+
+
+
+

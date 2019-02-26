@@ -1,0 +1,8 @@
+$(document).ready(function(){		
+	if(true){
+		switchHtml("login.html");
+	}else{
+		
+	}
+		
+});

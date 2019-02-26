@@ -1,0 +1,46 @@
+$(document).ready(function(){
+//	$('#btn_ipSet').click(function(){
+//		$('#div_ipSet').toggle();
+//	});
+//	
+//	$('#btn_ipSetOK').click(function(){		
+//		var ip = $('#input_ip1').val() + "." + $('#input_ip2').val() + "." + $('#input_ip3').val() + "." + $('#input_ip4').val();
+//		var port = $('#input_ip5').val();
+//		setServerIP(ip,port)
+//	});	
+	
+	$("#btn_login").click(function(){
+		var empNo = $("#empNo").val().toLocaleUpperCase();
+		var password = $("#password").val();
+
+		var Authdata = new authObj("checkPasswd",empNo,password);
+		var request = $.when(ajax_Post("AuthService",JSON.stringify(Authdata))).done(function(data) {                                
+            if (data.status == "Success") {
+            	console.log(data.emp_no);
+            	console.log(data.session_id);
+            	
+            	switchHtml("/TanTimaServices/html/inpPatList/inpPatList.html");	
+            } else {
+               var ajaxErrMsg = data.errorMessage;
+               console.log(ajaxErrMsg);
+            }   
+        });
+ 
+        request.onreadystatechange = null;
+        request.abort = null;
+        request = null;
+        
+//		if(true){
+//					
+//		}		
+	});
+	
+	
+	
+});
+
+var authObj = function(method,empNo,password){
+	this.method = method;
+	this.empNo = empNo;
+	this.password = password;
+}

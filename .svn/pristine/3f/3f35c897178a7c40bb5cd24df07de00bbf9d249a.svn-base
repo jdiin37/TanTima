@@ -1,0 +1,146 @@
+package library.utility;
+
+import library.dateutility.DateUtil;
+
+import java.math.BigDecimal;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by jeffy on 2017/3/22.
+ */
+
+public class PTListUtil {
+    private Connection con;
+
+    public PTListUtil(Connection con) {
+        this.con = con;
+    }
+
+    public Map<String, Object> getLinkedAdmitDays(int chartNo, int serno) throws SQLException {
+
+        String queryString =
+                "SELECT a.chart_no, a.serno, a.ckin_date, a.ckin_time, a.discharge_date, a.discharge_time,  " +
+                "       a.pt_name, a.pt_type, a.division, a.vs, a.emg_days, a.chronic_days, a.link_serno " +
+                "  FROM admit a " +
+                " WHERE a.chart_no = ? " +
+                "   AND a.serno <= ? " +
+                " ORDER BY a.ckin_date desc";
+
+        EntityFactory linkedAdmitDaysEntity = new EntityFactory(con, queryString);
+        List<Map<String, Object>> objects = linkedAdmitDaysEntity.findMultiple(new Object[]{chartNo, serno});
+
+        int linkSernoBase = 0;
+        int sernoCurrent = 0;
+        int linkSernoCurrent = 0;
+        int emgDays = 0;
+        int chronicDays = 0;
+
+        linkSernoBase = objects.get(0).get("link_serno") != null ? ((BigDecimal)objects.get(0).get("link_serno")).intValueExact() : 0; // first row
+        objects.remove(0);
+
+        for (Map<String, Object> object : objects) {
+            sernoCurrent = object.get("serno") != null? ((BigDecimal)object.get("serno")).intValueExact():0;
+            linkSernoCurrent = object.get("link_serno") != null ? ((BigDecimal)object.get("link_serno")).intValueExact():0;
+
+            if (sernoCurrent == linkSernoBase) {
+                chronicDays += object.get("chronic_days") != null ? ((BigDecimal)object.get("chronic_days")).intValueExact() : 0;
+                emgDays += object.get("emg_days") != null ? ((BigDecimal)object.get("emg_days")).intValueExact() : 0;
+                linkSernoBase = linkSernoCurrent;
+            }
+
+            if (linkSernoCurrent == 0) break;
+        }
+
+        Map<String, Object> results = new LinkedHashMap<>();
+        results.put("chart_no", chartNo);
+        results.put("serno", serno);
+        results.put("emg_days", emgDays);
+        results.put("chronic_days", chronicDays);
+
+        return results;
+    }
+
+    public String getPatinpStatus(int chartNo, int serno,
+                                  String status, int priceType,
+                                  String partNo, String cardSeq,
+                                  int emgDays, int chronicDays,
+                                  String brainFlag, String dischargeReason) {
+        int emgDaysTotal = 0;
+        int chronicDaysTotal = 0;
+        String statusString = "";
+
+        statusString += status.equals("1") ? "未開處方" : "";
+        statusString += status.equals("2") ? "住 院 中" : "";
+        statusString += status.equals("3") ? "準備出院" : "";
+        statusString += status.equals("4") ? "等待結帳" : "";
+
+        statusString += priceType == 2 && cardSeq == null ? "<缺健保卡>" : "";
+        statusString += priceType == 2 && partNo == null ? "<負擔方式未定>" : "";
+
+        try {
+            Map<String, Object> objectMap = getLinkedAdmitDays(chartNo, serno);
+            emgDaysTotal = emgDays + (int)objectMap.get("emg_days");
+            chronicDaysTotal = chronicDays + (int)objectMap.get("chronic_days");
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            emgDaysTotal = emgDays;
+            chronicDaysTotal = chronicDays;
+        }
+        
+        try {
+            statusString += emgDays != 0 ? "<急性病房 " + emgDaysTotal + " 天>" : "";
+            statusString += chronicDays != 0 ? "<慢性病房 " + chronicDaysTotal + " 天>" : "";
+            
+            
+            statusString += (!(brainFlag == null || brainFlag.isEmpty()) && brainFlag.equals("Y")) ? "<急性腦中風>" : "";
+            statusString += !(dischargeReason == null || dischargeReason.isEmpty()) ? "<關帳未列帳單>" : "";            
+        } catch (Exception ex) {
+            System.out.printf("PTListUtil.getPatinpStatus Exception: chart_no=%d, serno=%d ", chartNo, serno);
+            ex.printStackTrace();
+        }
+
+        return statusString;
+    }
+
+    public String getAcntDate(String ckinDate, String closeAcntDate) {
+        if (closeAcntDate != null && !closeAcntDate.isEmpty()) {
+            LocalDate date = DateUtil.rocDateStringToDate(closeAcntDate).plusDays(1);
+            return DateUtil.dateToROCDateString(date);
+        } else {
+            return ckinDate;
+        }
+    }
+
+    public static void main(String[] args) {
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        Connection myConnection = null;
+        String resultString = null;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            PTListUtil ptList = new PTListUtil(myConnection);
+
+            resultString = ptList.getLinkedAdmitDays(1346, 1956).toString();
+            System.out.println("getLinkedAdmitDays: " + resultString);
+
+            System.out.println();
+            System.out.println( "getPatinpStatus: " + ptList.getPatinpStatus(21453, 297882, "3", 2, "", "", 0, 0, "Y", "1"));
+
+            System.out.println(); //259118 297461 1040804 1040804
+            System.out.println("getAcntDate: ckinDate='1051001' closeAcntDate='' acntDate=" + ptList.getAcntDate("1051001", ""));
+            System.out.println("getAcntDate: ckinDate='1051001' closeAcntDate='1051002' acntDate=" + ptList.getAcntDate("1051001", "1051002"));
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) {
+                JDBCUtilities.closeConnection(myConnection);
+            }
+        }
+    }
+
+}

@@ -1,0 +1,38 @@
+$(document).ready(function(){
+//	$('#btn_ipSet').click(function(){
+//		$('#div_ipSet').toggle();
+//	});
+//	
+//	$('#btn_ipSetOK').click(function(){		
+//		var ip = $('#input_ip1').val() + "." + $('#input_ip2').val() + "." + $('#input_ip3').val() + "." + $('#input_ip4').val();
+//		var port = $('#input_ip5').val();
+//		setServerIP(ip,port)
+//	});	
+	
+	$("#btn_login").click(function(){
+		//ajax的部分
+//		var data = new authObj("method","id","pw");
+//		var request = $.when(ajax_Post("serviceName",data)).done(function(data) {                                
+//            if (data.status == "Success") {
+//               
+//            } else {
+//                ajaxErrMsg = data.errorMessage;
+//            }   
+//        });
+// 
+//        request.onreadystatechange = null;
+//        request.abort = null;
+//        request = null;
+        
+		if(true){
+			switchHtml("inpPatList.html");			
+		}		
+	});
+	
+	
+	var authObj = function(method,id,pw){
+		this.method = method;
+		this.id = id;
+		this.pw = pw;
+	}
+});

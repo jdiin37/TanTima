@@ -1,0 +1,13 @@
+dbms = oracle
+driver = oracle.jdbc.driver.OracleDriver
+dbName = shs
+userName = orcl
+password = hakka72574
+serverName = 172.16.1.18
+portNumber = 1521
+urlString = jdbc:oracle:thin:@172.16.1.18:1521:tan
+context = java:/comp/env
+dataSource = jdbc/myOracle
+dbConnectionType=JNDI
+#dbConnectionType=JDBC
+sessionTimeOut=30

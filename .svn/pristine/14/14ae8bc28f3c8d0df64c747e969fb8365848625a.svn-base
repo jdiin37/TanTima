@@ -1,0 +1,6 @@
+$(document).ready(function(){
+	$('#btn_ipSet').click(function(){
+		$('#div_ipSet').toggle();
+	});
+	
+});

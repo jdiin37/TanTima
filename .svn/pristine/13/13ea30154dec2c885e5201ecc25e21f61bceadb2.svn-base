@@ -1,0 +1,31 @@
+$(document).ready(function(){
+	
+	renderAllPage();
+  
+	
+});
+
+
+
+function renderAllPage(){
+	
+//	console.log("renderAllPage");
+	
+renderUD();	
+$('input:radio[name="udRadio"]').val("全部").trigger('change');
+
+renderSTAT();	
+$('input:radio[name="stRadio"]').val("全部").trigger('change');	
+
+renderTakeHome();
+
+renderXray();
+getThisDate(7);
+
+setTimeout(function(){ 
+	ajax_getXrayList("XrayReportService","month"); //預設一個月
+}, 200);
+
+randerOutNote();
+
+}

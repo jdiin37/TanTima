@@ -1,0 +1,46 @@
+$(document).ready(function(){
+	setBlock(500);
+	renderAllPage();
+  
+	
+});
+
+
+
+function renderAllPage(){
+	
+
+//UD	
+renderUD();	
+
+
+//STAT
+renderSTAT();	
+
+
+//TakeHome
+renderTakeHome();
+
+//Xray
+renderXray();
+
+renderLab();
+
+renderFocus();
+
+
+
+//OutNote
+randerOutNote();
+
+getThisDate(7); //影像自訂預設日期
+getLabThisDate(7);//檢驗自訂預設日期
+
+//TPR
+renderTPR();
+
+
+
+
+
+}

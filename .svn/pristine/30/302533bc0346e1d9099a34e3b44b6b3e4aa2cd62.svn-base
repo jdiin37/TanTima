@@ -1,0 +1,136 @@
+   <div class="abgne_tab">
+		<ul class="tprTabs" id="ul-TPRTabSwitch">
+		          <li id="li-Add"><img src="/TanTimaServices/css/img/Add_48.png" class="toolbar-img-style" alt="Add" title="Add"/><a href="#Add"></a></li>
+		          <li id="li-TPR"><img src="/TanTimaServices/css/img/TPR_48.png" class="toolbar-img-style" alt="TPR" title="TPR"/><a href="#TPR"></a></li>
+			<li id="li-T"><img src="/TanTimaServices/css/img/T_48.png" class="toolbar-img-style" alt="T" title="T"/><a href="#T"></a></li>
+			<li id="li-P"><img src="/TanTimaServices/css/img/P_48.png" class="toolbar-img-style" alt="P" title="P"/><a href="#P"></a></li>
+			<li id="li-R"><img src="/TanTimaServices/css/img/R_48.png" class="toolbar-img-style" alt="R" title="R"/><a href="#R"></a></li>
+			<li id="li-BP"><img src="/TanTimaServices/css/img/BP_48.png" class="toolbar-img-style" alt="BP" title="BP"/><a href="#BP"></a></li>
+			<li id="li-Weight"><img src="/TanTimaServices/css/img/Weight_48.png" class="toolbar-img-style" alt="Weight" title="Weight"/><a href="#Weight"></a></li>
+			<li id="li-IO"><img src="/TanTimaServices/css/img/IO_48.png" class="toolbar-img-style" alt="IO" title="IO"/><a href="#IO"></a></li>
+			<li id="li-TPRRecord"><img src="/TanTimaServices/css/img/TPRRecord_48.png" class="toolbar-img-style" alt="TPR明細" title="TPRRecord"/><a href="#TPRRecord"></a></li>
+			
+			
+		</ul>
+ 
+		<div class="tab_container">
+		        
+		          <div id="Add" class="tab_content"></div>
+		          
+			<div id="TPR" class="tab_content"></div>
+			
+			<div id="T" class="tab_content"></div>
+		
+			<div id="P" class="tab_content"></div>
+			
+			<div id="R" class="tab_content"></div>
+			
+			<div id="BP" class="tab_content"></div>
+			
+			<div id="Weight" class="tab_content"></div>
+			
+			<div id="IO" class="tab_content"></div>
+			
+			<div id="TPRRecord" class="tab_content">TPR明細</div>
+			
+		</div>
+	</div>
+<style>
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.tprTabs {
+	/**width: 100%;**/
+	height: 48px;
+	border-bottom: 1px solid #999;
+	margin-top: -15px;
+	display: table;
+	margin-left: -6px;
+	/**border-left: 1px solid #999;**/
+}
+ul.tprTabs li {
+	margin-right:1px;
+	float: left;
+	line-height: 48px;
+	overflow: hidden;
+	position: relative;
+	margin-bottom: -1px;	/* 讓 li 往下移來遮住 ul 的部份 border-bottom */
+	/**border: 1px solid #999;**/
+	border-left: none;
+	background: #fff;
+	 -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+          height: 60px;
+          width: auto;
+          display: table-cell;
+    	vertical-align: middle;
+    	text-align: center;
+    	padding:5px;
+}
+ul.tprTabs li a {
+	display: block;
+	padding: 0 20px;
+	color: #000;
+	/**border: 1px solid #fff;**/
+	text-decoration: none;
+}
+
+ul.tprTabs li img {
+	padding-top:2px;
+}
+
+ul.tprTabs li a:hover {
+	background: #ccc;
+	
+}
+
+/**ul.tprTabs li:nth-child(1){
+	border-bottom: 1px solid #fff;
+	background-color: #8463EA;
+	-moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+}
+
+ul.tprTabs li.active:nth-child(1)  {
+	border-bottom: 1px solid #fff;
+	background-color: #8463EA;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+	
+}**/
+
+
+ul.tprTabs li.active  {
+	border-bottom: 1px solid #fff;
+	background-color: #D6C7FE;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+	
+}
+
+
+ul.tprTabs li.active a:hover {
+	background: #fff;
+}
+div.tab_container {
+	clear: left;
+	width: 100%;
+	/**border: 1px solid #999;**/
+	border-top: none;
+	/**background: #fff;**/
+}
+div.tab_container .tab_content {
+	padding: 6px;
+}
+div.tab_container .tab_content h2 {
+	margin: 0 0 20px;
+}
+
+</style>	

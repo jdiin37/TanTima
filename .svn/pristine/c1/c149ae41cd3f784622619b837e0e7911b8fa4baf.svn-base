@@ -1,0 +1,57 @@
+$(document).ready(function(){
+	
+	renderAllPage();
+  
+	
+});
+
+
+
+function renderAllPage(){
+	
+//	console.log("renderAllPage");
+
+//UD	
+renderUD();	
+
+
+//STAT
+renderSTAT();	
+
+
+//TakeHome
+renderTakeHome();
+
+//Xray
+renderXray();
+
+
+//setTimeout(function(){ 
+//	ajax_getXrayList("XrayReportService","month"); //預設一個月
+//}, 200);
+
+//Lab
+renderLab();
+
+
+//setTimeout(function(){ 
+//	ajax_getLabList("LabRecordService","month"); //預設一個月
+//}, 200);
+
+//Focus 護理紀錄 尚未接API
+//setTimeout(function(){ 
+	renderFocus();
+//}, 200);
+
+
+//OutNote
+randerOutNote();
+
+getThisDate(7); //影像自訂預設日期
+getLabThisDate(7);//檢驗自訂預設日期
+
+
+
+
+
+}

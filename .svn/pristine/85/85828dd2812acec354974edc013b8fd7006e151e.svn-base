@@ -1,0 +1,38 @@
+
+$(document).ready(function(){
+	
+	$(document).on('keyup', 'input[type=number]', function(event) {
+		
+		val = parseFloat($(this).val());
+		min = parseFloat($(this).attr('min'));
+		max = parseFloat($(this).attr('max'));
+		
+			if(isNaN(val)){
+//				console.log("val length = 1"+val);
+				$(this).attr('title', '非數字  請輸入數字').tooltip('fixTitle').tooltip('show');
+				$(this).val("");
+			}
+	
+		
+		
+		
+		console.log(val + ";" + min + ";" +max);
+		
+		if(val > max){
+			$(this).attr('title', '數值太大').tooltip('fixTitle').tooltip('show');
+//			$(this).addClass('text-danger').removeClass('text-danger');
+
+		}else if(val < min){
+			$(this).attr('title', '數值太小').tooltip('fixTitle').tooltip('show');
+			$(this).addClass('text-danger').removeClass('text-danger');
+		}else{			
+			$(this).addClass('text-dark').removeClass('text-danger');
+			$(this).tooltip('destroy');
+		}
+				
+	});
+
+});
+
+
+

@@ -1,0 +1,406 @@
+   <div class="abgne_tab">
+		<ul class="tprTabs" id="ul-TPRTabSwitch">
+		          <li id="li-Add"><img src="/TanTimaServices/css/img/Add_48.png" class="toolbar-img-style" alt="Add" title="Add"/><a href="#Add"></a></li>
+		          <li id="li-TPR"><img src="/TanTimaServices/css/img/TPR_48.png" class="toolbar-img-style" alt="TPR" title="TPR"/><a href="#TPR"></a></li>
+			<li id="li-T"><img src="/TanTimaServices/css/img/T_48.png" class="toolbar-img-style" alt="T" title="T"/><a href="#T"></a></li>
+			<li id="li-P"><img src="/TanTimaServices/css/img/P_48.png" class="toolbar-img-style" alt="P" title="P"/><a href="#P"></a></li>
+			<li id="li-R"><img src="/TanTimaServices/css/img/R_48.png" class="toolbar-img-style" alt="R" title="R"/><a href="#R"></a></li>
+			<li id="li-BP"><img src="/TanTimaServices/css/img/BP_48.png" class="toolbar-img-style" alt="BP" title="BP"/><a href="#BP"></a></li>
+			<li id="li-Weight"><img src="/TanTimaServices/css/img/Weight_48.png" class="toolbar-img-style" alt="Weight" title="Weight"/><a href="#Weight"></a></li>
+			<li id="li-IO"><img src="/TanTimaServices/css/img/IO_48.png" class="toolbar-img-style" alt="IO" title="IO"/><a href="#IO"></a></li>
+			<li id="li-TPRRecord"><img src="/TanTimaServices/css/img/TPRRecord_48.png" class="toolbar-img-style" alt="TPR明細" title="TPRRecord"/><a href="#TPRRecord"></a></li>
+			
+			
+		</ul>
+ 
+		<div class="tab_container">
+		      <div id="Add" class="tab_content">
+		          <div class="panel panel-info" id="AddTPRPanel">
+		              <div class="panel-heading PurpleTitle text-center" id="AddTPRHead"></div>  <!-- 新增 / 編輯 TPR -->
+			       <div class="panel-body" id="AddTPRBody">								
+				      <!-- start ↓ -->
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">日期 </label> <input type="text" class="form-control input-sm inputDateRange EMRLabel form-inline " placeholder="" id="editRecordDate" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">時間</label><input type="text" class="form-control input-sm inputDateRange EMRLabel form-inline " placeholder="" id="editRecordTime" value="">
+		             </div>
+		           </div>
+		           
+		             <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">體溫 </label> <input type="number" min="34.0" max="42.0" step="0.1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editTemp" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">脈搏</label><input type="number" min="30" max="170" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editPulse" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">呼吸</label><input type="number" min="5" max="80" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editResp" value="">
+		             </div>
+		           </div>
+		           
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">體重 </label> <input type="number" min="30.0" max="200.0" step="0.1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editWeight" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">收縮壓</label><input type="number" min="40" max="300" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editSP" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">舒張壓</label><input type="number" min="10" max="300" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editDP" value="">
+		             </div>
+		           </div>
+		           
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">身高 </label> <input type="number" min="140.0" max="300.0" step="0.1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editHeight" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">注射量</label><input type="number" min="0" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editIFluids" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">出血量</label><input type="number" min="0" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editBleed" value="">
+		             </div>
+		           </div>
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">引流(左)</label> <input type="number" min="0" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editDraL" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">引流(右)</label><input type="number" min="0" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editDraR" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">羊水量</label><input type="number" min="0" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editAFluid" value="">
+		             </div>
+		           </div>
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">Urine</label> <input type="number" min="0" step="1" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editUrine" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">大便次數</label><input type="text" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editStool" value="">
+		              <span class="img-numberPicker36" data-toggle="modal" data-target="#Modal_Custom"></span>
+		              <!--  <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#Modal_Custom"></button>-->
+		             </div>		              
+		           </div>
+		            
+		            <!-- 取消 送出 -->
+		          <div class="col-sm-12 form-group text-center">
+		            <button class="btn btn-primary" id="btnCancel">取消</button>
+		            <button class="btn btn-primary" id="btnSend">送出</button>
+		          </div>
+		          <!-- end ↑ -->
+		                 </div>
+	                </div>
+		           
+		           
+		      
+		   </div>
+		          
+			<div id="TPR" class="tab_content">
+			  <div id="TPRChartContainer" class="jqGridTPRRecordList_BgStyle" style="display:block;"></div>
+			</div>
+			
+			<div id="T" class="tab_content">
+			  <div id="TChartContainer" class="jqGridTPRRecordList_BgStyle" style="display:block;"></div>
+			</div>
+		
+			<div id="P" class="tab_content">
+			  <div id="PChartContainer" class="jqGridTPRRecordList_BgStyle" style="display:block;"></div>
+			</div>
+			
+			<div id="R" class="tab_content">
+			  <div id="RChartContainer" class="jqGridTPRRecordList_BgStyle" style="display:block;"></div>
+			</div>
+			
+			<div id="BP" class="tab_content">
+			  <div id="BPChartContainer" class="jqGridTPRRecordList_BgStyle" style="display:block;"></div>	
+			</div>
+			
+			<div id="Weight" class="tab_content">
+			  <div id="WeightChartContainer" class="jqGridTPRRecordList_BgStyle" style="display:block;"></div>
+			</div>
+			
+			<div id="IO" class="tab_content">
+			  <div id="IOChartContainer" class="jqGridTPRRecordList_BgStyle" style="display:block;"></div>
+			</div>
+			
+			<div id="TPRRecord" class="tab_content">
+			  <div class="jqGridTPRRecordList_BgStyle">
+			     <table id="TPRRecordList"></table>
+			     <div id="TPRRecordList_Pager"></div>
+			 </div> 
+			
+			</div>
+			
+		</div>
+	</div>
+	
+	
+	
+	<!-- Modal_Custom 彈跳視窗-->
+	<div class="modal fade" id="Modal_Custom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog"  role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <!--  <span aria-hidden="true" class="img-close36">&times;</span>-->
+			  <span aria-hidden="true" class="img-close36"></span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<div class="form-group row">
+				<label for="stoolTimes" class="col-sm-3 col-form-label PurpleTitle text-right">次數</label>
+				<div class="col-sm-9">
+				  <select class="form-control" id="stoolTimeSelect">
+				   <option value="0">0</option>
+				   <option value="1">1</option>
+				   <option value="2">2</option>
+				   <option value="3">3</option>				   
+				   <option value="4">4</option>
+				   <option value="5">5</option>
+				   <option value="6">6</option>
+				   <option value="7">7</option>
+				   <option value="8">8</option>
+				   <option value="9">9</option>
+				   <option value="10">10</option>
+				   <option value="11">11</option>
+				   <option value="12">12</option>
+				   <option value="13">13</option>
+				   <option value="14">14</option>
+				   <option value="15">15</option>
+				   <option value="16">16</option>
+				   <option value="17">17</option>
+				   <option value="18">18</option>
+				   <option value="19">19</option>
+				   <option value="20">20</option>
+				  </select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="stoolTypes" class="col-sm-3 col-form-label PurpleTitle text-right">類型</label>
+				<div class="col-sm-9">
+				  <select class="form-control" id="stoolTypeSelect">
+				   <option value=""> </option>
+				   <option value="D">D</option>
+				   <option value="E">E</option>
+				  </select>
+				</div>
+			</div>
+			<div class="form-group row">
+		 	  <span class="pull-left img-minus36 col-sm-1" id="minusStool"></span>
+		 	  <span class="pull-center col-sm-9 showStoolText" id="showStoolSelVal"></span>
+		 	  <span class="pull-right img-plus36 col-sm-1" id="plusStool"></span>
+		 	  	
+			</div>
+			<div class="form-group row">			  		 	 
+		 	  <span class="pull-center col-sm-9 showStoolText" id="stoolRecordText"></span>
+		 	  <button id="clearAllStool" style="margin-left:5px;" type="button" class="btn btn-primary col-sm-2">清除</button>
+		 	  		 			 	  	
+			</div>
+			<!-- <div class="form-group">
+				<select class="form-control">
+				  <option>Default select</option>
+				</select>
+			</div>	 -->
+			<!-- <div class="form-group">
+				<label for="formControlRange">Example Range input</label>
+				<input type="range" class="form-control-range" id="formControlRange">
+			</div> -->
+		  </div>
+		  <div class="modal-footer">
+			<!--  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+			<button id="btnConfirmStool" type="button" class="btn btn-primary btn-OK" data-dismiss="modal">確定</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	 <style>
+         .ui-widget-header,.ui-state-default, ui-button{
+            background:#AE78D8;
+            border: 1px solid #AE78D8;
+            color: #49116D;
+            font-weight: bold;
+            font-size:16px;
+            text-align:center;
+         }
+         .ui-dialog-titlebar-close{
+         display:none;
+         }
+      </style>
+	<!-- Modal_Custom 刪除TPR 提示視窗-->
+	<div id="deleteTPRDiv" style="overflow: hidden;display:none;">
+	<div class="row">
+	    <label class="col-sm-12 col-form-label failureMsg text-center">確定要刪除</label>				
+	    <label class="col-sm-12 col-form-label failureMsg text-center">日期: <span id="showTprDelDate"></span></label>
+	    <label class="col-sm-12 col-form-label failureMsg text-center">時間: <span id="showTprDelTime"></span></label>				
+	</div>
+	</div>
+	<!--  <div class="modal fade" id="Modal_DeleteTPR" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog"  role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+		       <div class="row">
+		           <div class="col-sm-11"><h5 class="modal-title PurpleTitle text-center" id="exampleModalCenterTitle">刪除 TPR 生命徵象紀錄單</h5></div>
+		          <div class="col-sm-1">
+ 			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			   <span aria-hidden="true">&times;</span>
+			  </button>			          
+		          </div>
+		       </div>
+		         
+			
+			
+		  </div>
+		  <div class="modal-body">
+			<div class="row">
+				<label class="col-sm-12 col-form-label failureMsg text-center">確定要刪除</label>				
+				<label class="col-sm-12 col-form-label failureMsg text-center">日期: <span id="showTprDelDate"></span></label>
+				<label class="col-sm-12 col-form-label failureMsg text-center">時間: <span id="showTprDelTime"></span></label>
+				
+			</div>
+			
+		  </div>
+		  <div class="modal-footer text-center">
+			<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+			<button type="button" class="btn btn-primary btn-OK" data-dismiss="modal" id="dialog_btnDeleteTPR">確定</button>
+		  </div>
+		</div>
+	  </div>
+	</div>-->
+	
+
+	<script>
+	
+	var showTab = 8;
+	var defaultLi = $('#ul-TPRTabSwitch > li').eq(showTab).addClass('active');
+	$(defaultLi.find('a').attr('href')).siblings().hide();
+	
+		$(document).on('click','#Modal_Custom .btn-OK',function(event) {	
+			$('#editStool').val($('#stoolRecordText').html());
+		});
+	
+		$('#Modal_Custom').on('show.bs.modal', function (event) { //彈跳視窗 跳出時
+			$("#stoolTimeSelect").val("0").trigger('change');	
+			$("#stoolTypeSelect").val("").trigger('change');	
+			var val = $('#editStool').val();
+			if(val.length>0&&val.indexOf(';',0)==-1){
+			   $('#stoolRecordText').html(val+";");	
+			}else{
+			   $('#stoolRecordText').html(val);	
+			}
+		  	
+			
+		  //modal.find('.modal-title').text('New message to ' + recipient)
+		  //modal.find('.modal-body input').val(recipient)
+		});
+	</script>
+	
+	
+	
+	
+	<script src="/TanTimaServices/html/TPR/TPR.js"></script>
+	<script src="/TanTimaServices/html/TPR/verification.js"></script>
+	
+<style>
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.tprTabs {
+	width: 100%;
+	height: 48px;
+	border-bottom: 1px solid #999;
+	margin-top: -16px;
+	display: table;
+	/**margin-left: -7px;**/
+	/**border-left: 1px solid #999;**/
+}
+ul.tprTabs li {
+	margin-right:1.5px;
+	/**float: left;**/ /**1070517 註解**/
+	/**line-height: 48px;**/
+	overflow: hidden;
+	position: relative;
+	margin-bottom: -1px;	/* 讓 li 往下移來遮住 ul 的部份 border-bottom */
+	/**border: 1px solid #999;**/
+	border-left: none;
+	background: #fff;
+	 -moz-box-shadow: 3px 2px 3px #888888;
+          box-shadow: 3px 2px 3px #888888;       
+          border: 1px solid #CCCCCC;
+          height: 55px;
+          width: auto;
+          display: table-cell;
+    	vertical-align: middle;
+    	text-align: center;
+    	/**padding:5px;**/ /**1070517 註解**/
+}
+ul.tprTabs li a {
+	display: block;
+	padding: 0 20px;
+	color: #000;
+	/**border: 1px solid #fff;**/
+	text-decoration: none;
+}
+
+ul.tprTabs li img {
+	padding-top:2px;
+}
+
+ul.tprTabs li a:hover {
+	background: #ccc;
+	
+}
+
+ul.tprTabs li:nth-child(1){
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+	-moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+}
+
+ul.tprTabs li.active:nth-child(1)  {
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+	
+}
+
+
+ul.tprTabs li.active  {
+	border-bottom: 1px solid #fff;
+	background-color: #D6C7FE;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+	
+}
+
+
+ul.tprTabs li.active a:hover {
+	background: #fff;
+}
+div.tab_container {
+	clear: left;
+/* 	width: 100%; */
+	/**border: 1px solid #999;**/
+	border-top: none;
+	/**background: #fff;**/
+}
+div.tab_container .tab_content {
+	/**padding: 6px;**/
+	padding-top: 6px;
+}
+div.tab_container .tab_content h2 {
+	margin: 0 0 20px;
+}
+
+</style>
+	

@@ -1,0 +1,8 @@
+$(document).ready(function(){		
+	if(true){
+		switchHtml("/TanTimaServices/html/login/login.html");
+	}else{
+		
+	}
+		
+});

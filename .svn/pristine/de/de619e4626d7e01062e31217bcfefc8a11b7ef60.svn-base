@@ -1,0 +1,296 @@
+   <div class="abgne_tab">
+		<ul class="tprTabs" id="ul-TPRTabSwitch">
+		          <li id="li-Add"><img src="/TanTimaServices/css/img/Add_48.png" class="toolbar-img-style" alt="Add" title="Add"/><a href="#Add"></a></li>
+		          <li id="li-TPR"><img src="/TanTimaServices/css/img/TPR_48.png" class="toolbar-img-style" alt="TPR" title="TPR"/><a href="#TPR"></a></li>
+			<li id="li-T"><img src="/TanTimaServices/css/img/T_48.png" class="toolbar-img-style" alt="T" title="T"/><a href="#T"></a></li>
+			<li id="li-P"><img src="/TanTimaServices/css/img/P_48.png" class="toolbar-img-style" alt="P" title="P"/><a href="#P"></a></li>
+			<li id="li-R"><img src="/TanTimaServices/css/img/R_48.png" class="toolbar-img-style" alt="R" title="R"/><a href="#R"></a></li>
+			<li id="li-BP"><img src="/TanTimaServices/css/img/BP_48.png" class="toolbar-img-style" alt="BP" title="BP"/><a href="#BP"></a></li>
+			<li id="li-Weight"><img src="/TanTimaServices/css/img/Weight_48.png" class="toolbar-img-style" alt="Weight" title="Weight"/><a href="#Weight"></a></li>
+			<li id="li-IO"><img src="/TanTimaServices/css/img/IO_48.png" class="toolbar-img-style" alt="IO" title="IO"/><a href="#IO"></a></li>
+			<li id="li-TPRRecord"><img src="/TanTimaServices/css/img/TPRRecord_48.png" class="toolbar-img-style" alt="TPR明細" title="TPRRecord"/><a href="#TPRRecord"></a></li>
+			
+			
+		</ul>
+ 
+		<div class="tab_container">
+		      <div id="Add" class="tab_content">
+		          <div class="panel panel-info" id="AddTPRPanel">
+		              <div class="panel-heading PurpleTitle text-center" id="AddTPRHead"></div>  <!-- 新增 / 編輯 TPR -->
+			       <div class="panel-body" id="AddTPRBody">								
+				      <!-- start ↓ -->
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">日期 </label> <input type="text" class="form-control input-sm inputDateRange EMRLabel form-inline " placeholder="" id="editRecordDate" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">時間</label><input type="text" class="form-control input-sm inputDateRange EMRLabel form-inline " placeholder="" id="editRecordTime" value="">
+		             </div>
+		           </div>
+		           
+		             <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">體溫 </label> <input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editTemp" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">脈搏</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editPulse" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">呼吸</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editResp" value="">
+		             </div>
+		           </div>
+		           
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">體重 </label> <input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editWeight" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">收縮壓</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editSP" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">舒張壓</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editDP" value="">
+		             </div>
+		           </div>
+		           
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">身高 </label> <input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editHeight" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">注射量</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editIFluids" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">出血量</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editBleed" value="">
+		             </div>
+		           </div>
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">引流(左)</label> <input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editDraL" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">引流(右)</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editDraR" value="">
+		             </div>
+		              <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">羊水量</label><input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editAFluid" value="">
+		             </div>
+		           </div>
+		           <div class="col-sm-12 form-group">
+		             <div class="col-sm-4 form-inline">
+		             <label class="EMRLabel">Urine</label> <input type="number" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editUrine" value="">
+		             </div>
+		             <div class="col-sm-4 form-inline">
+		              <label class="EMRLabel">大便次數</label><input type="text" class="form-control input-sm EMRLabel form-inline inputDateRange" placeholder="" id="editStool" value="">
+		             </div>		              
+		           </div>
+		            <form class="form-inline">
+						<label for="inputCustom" class="col-form-label">自訂視窗</label>
+						<input type="text" class="form-control" id="inputCustom">		
+						<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#Modal_Custom">!!</button>
+					</form>
+		            <!-- 取消 送出 -->
+		          <div class="col-sm-12 form-group text-center">
+		            <button class="btn btn-primary" id="btnCancel">取消</button>
+		            <button class="btn btn-primary" id="btnSend">送出</button>
+		          </div>
+		          <!-- end ↑ -->
+		                 </div>
+	                </div>
+		           
+		           
+		      
+		   </div>
+		          
+			<div id="TPR" class="tab_content"></div>
+			
+			<div id="T" class="tab_content"></div>
+		
+			<div id="P" class="tab_content"></div>
+			
+			<div id="R" class="tab_content"></div>
+			
+			<div id="BP" class="tab_content"></div>
+			
+			<div id="Weight" class="tab_content"></div>
+			
+			<div id="IO" class="tab_content"></div>
+			
+			<div id="TPRRecord" class="tab_content">
+			  <div class="jqGridTPRRecordList_BgStyle">
+			     <table id="TPRRecordList"></table>
+			     <div id="TPRRecordList_Pager"></div>
+			 </div> 
+			
+			</div>
+			
+		</div>
+	</div>
+	
+	
+	
+	<!-- Modal_Custom 彈跳視窗-->
+	<div class="modal fade" id="Modal_Custom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog"  role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalCenterTitle">自訂視窗</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<div class="form-group row">
+				<label for="inputID" class="col-sm-2 col-form-label">label1</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="inputLabel1" placeholder="label1">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">label2</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="inputLabel2" placeholder="label2">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="inputPassword" class="col-sm-2 col-form-label">label3</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="inputLabel3" placeholder="label3">
+				</div>
+			</div>
+			<!-- <div class="form-group">
+				<select class="form-control">
+				  <option>Default select</option>
+				</select>
+			</div>	 -->
+			<!-- <div class="form-group">
+				<label for="formControlRange">Example Range input</label>
+				<input type="range" class="form-control-range" id="formControlRange">
+			</div> -->
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary btn-OK" data-dismiss="modal">Save changes</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<script>
+	
+		$(document).on('click','#Modal_Custom .btn-OK',function(event) {	
+			$('#inputCustom').val($('#inputLabel3').val());
+		});
+	
+		$('#Modal_Custom').on('show.bs.modal', function (event) { //彈跳視窗 跳出時
+			var val = $('#inputCustom').val();	
+		  	$('#inputLabel3').val(val);
+			
+		  //modal.find('.modal-title').text('New message to ' + recipient)
+		  //modal.find('.modal-body input').val(recipient)
+		});
+	</script>
+	
+	
+	
+	
+	<script src="/TanTimaServices/html/TPR/TPR.js"></script>
+<style>
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.tprTabs {
+	width: 100%;
+	height: 48px;
+	border-bottom: 1px solid #999;
+	margin-top: -16px;
+	display: table;
+	/**margin-left: -7px;**/
+	/**border-left: 1px solid #999;**/
+}
+ul.tprTabs li {
+	margin-right:1.5px;
+	/**float: left;**/ /**1070517 註解**/
+	/**line-height: 48px;**/
+	overflow: hidden;
+	position: relative;
+	margin-bottom: -1px;	/* 讓 li 往下移來遮住 ul 的部份 border-bottom */
+	/**border: 1px solid #999;**/
+	border-left: none;
+	background: #fff;
+	 -moz-box-shadow: 3px 2px 3px #888888;
+          box-shadow: 3px 2px 3px #888888;       
+          border: 1px solid #CCCCCC;
+          height: 55px;
+          width: auto;
+          display: table-cell;
+    	vertical-align: middle;
+    	text-align: center;
+    	/**padding:5px;**/ /**1070517 註解**/
+}
+ul.tprTabs li a {
+	display: block;
+	padding: 0 20px;
+	color: #000;
+	/**border: 1px solid #fff;**/
+	text-decoration: none;
+}
+
+ul.tprTabs li img {
+	padding-top:2px;
+}
+
+ul.tprTabs li a:hover {
+	background: #ccc;
+	
+}
+
+ul.tprTabs li:nth-child(1){
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+	-moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+}
+
+ul.tprTabs li.active:nth-child(1)  {
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+	
+}
+
+
+ul.tprTabs li.active  {
+	border-bottom: 1px solid #fff;
+	background-color: #D6C7FE;
+          -moz-box-shadow: 2px 1px 3px #888888;
+          box-shadow: 2px 1px 3px #888888;
+          border: 1px solid #CCCCCC;
+	
+}
+
+
+ul.tprTabs li.active a:hover {
+	background: #fff;
+}
+div.tab_container {
+	clear: left;
+/* 	width: 100%; */
+	/**border: 1px solid #999;**/
+	border-top: none;
+	/**background: #fff;**/
+}
+div.tab_container .tab_content {
+	/**padding: 6px;**/
+	padding-top: 6px;
+}
+div.tab_container .tab_content h2 {
+	margin: 0 0 20px;
+}
+
+</style>
+	

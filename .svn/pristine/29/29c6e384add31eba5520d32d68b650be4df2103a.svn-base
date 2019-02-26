@@ -1,0 +1,97 @@
+	
+	   <div class="RadioBgStyle col-sm-12 form-inline pull-right">
+	  
+		
+					 
+								    <!-- <label class="radio-inline EMRLabelBold"><input type="radio" name="sumRadio" checked="checked" value="month">1個月</label>-->
+								    <input class="EMRRadioButton" type="radio" name="xrayRadio" checked="checked" value="month" id="xrayMonth"/><label class="purpleLabel" for="xrayMonth"><span></span>1個月</label>
+								    <!--  <label class="radio-inline EMRLabelBold"><input type="radio" name="sumRadio" value="season">3個月</label>-->
+								    <input class="EMRRadioButton" type="radio" name="xrayRadio" value="season" id="xraySeason"/><label class="purpleLabel" for="xraySeason"><span></span>3個月</label>
+                                                    			    <!--  <label class="radio-inline EMRLabelBold"><input type="radio" name="sumRadio" value="halfYear">半年</label>-->
+                                                    			    <input class="EMRRadioButton" type="radio" name="xrayRadio" value="halfYear" id="xrayHalfYear"/><label class="purpleLabel" for="xrayHalfYear"><span></span>半年</label>
+                                                    			    <!--  <label class="radio-inline EMRLabelBold"><input type="radio" name="sumRadio" value="year">1年</label>-->
+                                                    			    <input class="EMRRadioButton" type="radio" name="xrayRadio" value="year" id="xrayYear"/><label class="purpleLabel" for="xrayYear"><span></span>1年</label>
+                                                    			    
+                                                    			    <!--  <label class="radio-inline form-inline text-center EMRLabelBold">
+                                                    			     <input type="radio" name="sumRadio" value="自訂">自訂:
+                                                    			     </label>-->
+                                                    			     <input class="EMRRadioButton" type="radio" name="xrayRadio" value="自訂" id="xrayCustom"/><label class="purpleLabel" for="xrayCustom"><span></span>自訂</label>
+                                                    			     <input  id="inputXraySDate" type="text" name="xrayStart" class="form-inline form-control EMRLabel inputDateRange">
+                                                    			     <input  id="inputXrayEDate" type="text" name="xrayEnd" class="form-inline form-control EMRLabel inputDateRange">
+                                                    			     <span class="img-search36" id="searchXrayRange"></span>
+
+                          
+													
+								
+	    							
+	  </div>
+	
+	
+	  <div class="row" id="XrayCol" >
+	     <div class="col-sm-3 jqGridAcnt_BgStyle">
+		<table id="XrayList" class="table-hover"></table>
+		<div id="XrayList_Pager"></div>
+	     </div>
+						
+	     <div class="col-sm-9">
+	     
+								
+								
+	 <div id="XrayListBody" class="panel panel-info">
+	     <!-- 影像報告 畫面調整 1070319 -->
+	     
+	      <div class="row form-group DataBgTopStyle">				   
+	        <div class="col-sm-12 form-inline">
+	           <div class="col-sm-6">
+	            <span class="EMRLabelBold" for="reportDate">&emsp;報告日期: </span><span class="subTitleFont" id="xray_ReportDate"></span>
+	            
+	           </div>
+	           <div class="col-sm-6">
+	           <span class="EMRLabelBold" for="reportClerk">&nbsp;報告人員: </span><span class="subTitleFont" id="xray_ReportMan"></span>
+	           </div>
+	           
+	           <div class="col-sm-6">
+	           <span class="EMRLabelBold" for="xRayType">&nbsp;&nbsp;X光類別: </span><span class="subTitleFont" id="xray_ReportType"></span>
+	           </div>
+	           
+	           <div class="col-sm-6">
+	           <span class="EMRLabelBold" for="doctor">&emsp;&emsp;&nbsp;&nbsp;&nbsp;醫師: </span><span class="subTitleFont" id="xray_ReportDoctor"></span>
+	           </div>
+		
+		
+		
+	        </div>
+	     </div>						
+								
+																		
+	            
+	            <!-- X光 照射位置  -->
+	            <table id="XrayPosList" class="table-hover"></table>
+		  <div id="XrayPosList_Pager"></div>
+		 
+	            <!-- 醫囑原因 、報告內容 -->
+	           
+		 <fieldset  id="xrayDetailReason">
+	             <div class="row form-group container-fluid"> 
+                         <div class="col-sm-6">
+                           <label for="dianoReason" class="EMRLabelBold">一、醫囑原因:</label>
+                           <div id="xray_dianoReason" class="ContentFont" style="white-space:pre;"></div>
+                         </div>  
+                       </div>
+                       <br/>
+                       <div class="row form-group container-fluid"> 
+                         <div class="col-sm-6">
+                           <label for="finding" class="EMRLabelBold">二、報告內容:</label>
+                          <div id="xray_findingReason" class="ContentFont" style="white-space:pre;"></div>    
+                        </div>
+                       </div>
+                     </fieldset>
+	</div>
+	
+							
+       </div>
+						
+    </div>
+				
+		
+		

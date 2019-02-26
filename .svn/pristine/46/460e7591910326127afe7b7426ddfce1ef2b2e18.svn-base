@@ -1,0 +1,83 @@
+package service;
+
+import abstracts.ServletAdapter;
+import com.google.gson.JsonObject;
+import library.utility.JDBCUtilities;
+import library.utility.MapUtil;
+import model.NurseProgress;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by jeffy on 2017/5/3.
+ */
+public class NurseProgressService extends ServletAdapter {
+    private List<Map<String, Object>> objects;
+    private Map<String, Object> object;
+    private JsonObject jsonObject = new JsonObject();
+    private NurseProgress nurseProgress;
+
+    public String getNurseProgressByChartNoSerno(int chartNo, int serno) {
+        try {
+            objects = nurseProgress.queryNurseProgressByChartNoSerno(chartNo, serno);
+
+            if (objects.size() > 0) {
+                jsonObject = MapUtil.getSuccessResult(MapUtil.listMapToJsonArray(objects));
+            } else {
+                jsonObject = MapUtil.getFailureResult("NurseProgress.queryNurseProgressByChartNoSerno No Data Found ");
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+            jsonObject = MapUtil.getFailureResult(ex.getMessage());
+        }
+
+        return jsonObject.toString();
+    }
+
+    @Override
+    public String run(JsonObject parametersJsObj) {
+        Connection myConnection = null;
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        String result = null;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            nurseProgress = new NurseProgress(myConnection);
+            int chartNo = parametersJsObj.get("chartNo").getAsInt();
+            int serno = parametersJsObj.get("serno").getAsInt();
+            String method = parametersJsObj.get("method").getAsString();
+
+            //  get Nurse progress by chart_no and serno
+            if (method.equals("getNurseProgressByChartNoSerno")) {
+                result = getNurseProgressByChartNoSerno(chartNo, serno);
+            }
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) { JDBCUtilities.closeConnection(myConnection); }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        JsonObject jsonObject = new JsonObject();
+        //Map<String, String> map = new LinkedHashMap<>();
+        NurseProgressService nurseProgressService = new NurseProgressService();
+        String resultStrng;
+
+        jsonObject.addProperty("empNo", "ORCL");
+        jsonObject.addProperty("sessionID", 1);
+        jsonObject.addProperty("chartNo", 170869);
+        jsonObject.addProperty("serno", 147390);
+        jsonObject.addProperty("method", "getNurseProgressByChartNoSerno");
+        resultStrng = nurseProgressService.run(jsonObject);
+        System.out.println("\nParameters JsonObject string: " + jsonObject);
+        System.out.println("\nNurseProgressService.run getNurseProgressByChartNoSerno chartNo='170869' serno='147390' : " + resultStrng);
+        
+    }
+}

@@ -1,0 +1,1356 @@
+body{
+	background:url("img/purple_bg.png");
+	overflow-x:hidden;
+	/**overflow-y:hidden;**/
+	/**font-family:serif,sans-serif,cursive,fantasy,monospace,Microsoft JhengHei;**/
+	font-family:monospace,Microsoft JhengHei;
+}
+
+
+/* .row{ */
+/* 	margin-right:0px; */
+/* 	margin-left:0px; */
+/* } */
+
+
+/* .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 { */
+/*     position: relative; */
+/*     min-height: 1px; */
+/*     padding-right: 0px; */
+/*     padding-left: 0px; */
+/* } */
+
+.container-fluid{
+    padding-right: 50px;
+    padding-left: 50px;
+    margin-right: auto;
+    margin-left: auto;	
+}
+
+
+#btn_ipSet:hover{
+	text-decoration: none;
+}
+
+#div_ipSet{
+	display:none;	
+	margin-bottom:40px;
+}
+
+#div_login{
+	border: 2px solid white;
+	box-shadow: -1px -1px 2px hsla(0, 0%, 0%, 0.2), 
+	1px 1px 1px hsla(0, 0%, 0%, 0.15), 
+	1px 1px 1px hsla(0, 0%, 0%, 0.15) inset, 
+	-1px -1px 2px hsla(0, 0%, 0%, 0.2);
+	border-radius: 10px;
+}
+
+#div_login_form{
+	margin:auto;
+	margin-top:40px;
+	margin-bottom:60px;
+	width:240px;
+}
+
+#div_logo{	
+	border-top: 3px solid transparent;
+  	border-image: linear-gradient(to right, transparent  , white ,transparent );
+  	border-image-slice: 1;
+  	padding:20px;
+}
+
+#img_hismax{
+}
+
+.input_underline {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+}
+
+.width60{
+	width:60px;
+	max_width:60px;
+}
+
+
+.form-control:focus{
+	border-width: 2px;
+	border-color: #9563D3;
+	box-shadow: -1px -1px 2px hsla(0, 0%, 0%, 0.2), 
+				1px 1px 1px hsla(0, 0%, 0%, 0.15), 
+				1px 1px 1px hsla(0, 0%, 0%, 0.15) inset, 
+				-1px -1px 2px hsla(0, 0%, 0%, 0.2);
+	outline: 0 none;
+}
+
+.successMsg{
+color:#1AA260;
+font-size: 20px;
+
+}
+
+.failureMsg{
+color:#E1263B;
+font-size: 20px;
+}
+
+.btn-img40{
+	padding: 20px 20px;
+	border-color: #fff; 
+}
+
+.img40_query{
+	background-image:url(css/../img/40_query.png);
+	
+}
+.img40_query:hover{
+	background-image:url(css/../img/40_query_hover.png);
+}
+.img40_query:active{
+	background-image:url(css/../img/40_query_down.png);
+}
+
+.img-search36{
+	background:url(css/../img/search_36.png) no-repeat transparent;
+	padding: 10px 10px 10px 25px;
+	cursor: pointer;
+}
+
+.img-search36:hover{
+	background:url(css/../img/search_d_36.png) no-repeat transparent;
+	padding: 10px 10px 10px 25px;
+	cursor: pointer;
+}
+
+.img-search36:active{
+	background:url(css/../img/search_d_36.png) no-repeat transparent;
+	padding: 10px 10px 10px 25px;
+	cursor: pointer;
+}
+
+.img-back36{
+          background:url(css/../img/back_36.png) no-repeat transparent;
+	padding: 20px 10px 10px 25px;
+	cursor: pointer;
+	margin-top: -6px;
+          margin-left: -12px;	
+
+}
+
+.img-back36:hover{
+          background:url(css/../img/back_d_36.png) no-repeat transparent;
+	padding: 20px 10px 10px 25px;
+	cursor: pointer;
+	margin-top: -6px;
+          margin-left: -12px;	
+
+}
+
+.img-back36:active{
+          background:url(css/../img/back_d_36.png) no-repeat transparent;
+	padding: 20px 10px 10px 25px;
+	cursor: pointer;
+	margin-top: -6px;
+          margin-left: -12px;	
+
+}
+
+
+
+
+#li-ud .active > img{
+ background:url(css/../img/ud_d_72.png) no-repeat transparent;	
+}
+
+/**CSS Scrollbar 設定 for Chrome***/
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 8px;
+    background:#BCA3E3;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background:#E6DBFB; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    /**-webkit-box-shadow: inset 0 0 6px #BCA3E3;  **/
+}
+
+
+::-moz-scrollbar {
+    width: 16px;
+}
+
+::-moz-scrollbar-track {
+    -moz-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 8px;
+    background:#BCA3E3;
+}
+
+::-moz-scrollbar-thumb {
+    border-radius: 8px;
+    background:#E6DBFB; 
+    -moz-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    
+}
+
+/**Loading***/
+.loading {
+	/**border: 3px solid #3a3;
+	border-right: 3px solid #fff;
+	border-bottom: 3px solid #fff;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	-webkit-animation: loading 1s infinite linear;
+	-moz-animation: loading 1s infinite linear;
+	-o-animation: loading 1s infinite linear;
+	animation: loading 1s infinite linear;**/
+	
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: loading 1s infinite linear;
+  -moz-animation: loading 1s infinite linear;
+  -o-animation: loading 1s infinite linear;
+  animation: loading 1s infinite linear;
+	
+}
+
+@-webkit-keyframes loading {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+@-moz-keyframes loading {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(360deg);
+	}
+}
+@-o-keyframes loading {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(360deg);
+	}
+}
+@keyframes loading {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/**文字樣式定義**/
+.PurpleTitle{
+ font-size:20px;
+ color:#49116D;
+ font-weight:bold;	
+}
+
+
+/**panel 樣式***/
+.panel-info {
+  border-color: #4B1E8A;
+  border-width: 1px;
+  border-radius: 0px;
+}
+.panel-info > .panel-heading {
+  color: #49116D;/***標頭顏色 原 #000 改為  #49116D 修改 1070319 **/
+  border-color: #CCBEE5;
+  background-image: linear-gradient(to bottom, rgba(221,202,255,1) 0%, rgba(221,202,255,1) 60%, rgba(187,163,227,1) 100%);
+  padding: 8px 10px 4px 15px; /**測試 縮小間距 1070326 add***/
+  border-radius: 0px;
+  
+}
+.panel-info > .panel-heading + .panel-collapse > .panel-body {
+  /***border-top-color: #E0CEFF;**/
+  border:1px solid #CDBDEC;
+  border-radius: 0px;	
+}
+.panel-info > .panel-heading .badge {
+  color: #CBBDF0;
+  background-color: #fff;
+}
+.panel-info > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #E0CEFF;
+  
+}
+
+.panel-title {
+  color: #000;
+  font-weight:bold;
+}
+
+/**panelBody**/
+#labListBody{
+    padding-top: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;	
+}
+
+/***button 樣式***/
+/*button 按鈕*/
+.btn-primary {
+    background-color: #611BBD;
+    background: linear-gradient(to bottom, rgba(150,80,231,1) 0%, rgba(150,80,231,1) 50%, rgba(111,41,172,1) 100%);
+    border: 0px solid transparent;
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 2px;
+    margin-top: 2px;
+ 
+}
+.btn-primary:focus,
+.btn-primary.focus {
+  color: #fff;
+  /**background: linear-gradient(to bottom, #FEFEFE 50%, #DBDCDB 100%);**/
+  border: 0px solid transparent;
+  background:linear-gradient(to bottom, rgba(111,41,172,1) 0%, rgba(111,41,172,1) 50%, rgba(150,80,231,1) 100%);
+  /**border-color: #727171; **/
+}
+.btn-primary:hover {
+  color: #fff;
+  background-image: linear-gradient(to bottom, #6F28AC 50%, #954FE6 100%);
+  border: 0px solid transparent;
+  /**background:linear-gradient(to bottom, rgba(201,202,201,1) 100%) rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, ;**/
+  /**border-color: #727171; **/
+}
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  /**background: linear-gradient(to bottom, #FEFEFE 50%, #DBDCDB 100%);**/
+  background:linear-gradient(to bottom, rgba(111,41,172,1) 0%, rgba(111,41,172,1) 50%, rgba(150,80,231,1) 100%);
+  border: 0px solid transparent;
+  /**border-color: #727171; **/
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+  color: #fff;
+  background: linear-gradient(to bottom, #742AB5 50%, #954CE4 100%);
+  border: 0px solid transparent;	
+  /**border-color: #727171;**/ 
+}
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background: linear-gradient(#5F2493, #9753EA, #5F2493);
+}
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus {
+  background-color: #611BBD; 
+  border-color: #130269; 
+}
+
+
+/***nav-tab 樣式**/
+
+/***nav  nav-pills 1070320 add**/
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    /**background: linear-gradient(to bottom, rgba(173,129,227,1) 0%, rgba(142,62,240,1) 50%, rgba(173,129,227,1) 100%);**/
+    font-size:18px;
+    border-radius:15px 15px 0px 0px;
+    margin-left:2px;
+    padding: 6px 6px -1px 0px;/**1070410 add***/
+    width: 150px;
+    text-align: center;
+    height:40px;
+    background: url(css/../img/tabBg_d.png) no-repeat;
+    padding-top: 15px;
+    margin-left: -2px;
+}
+
+
+.nav>li>a {
+    color:#fff;
+    font-size:18px;
+    border-radius:15px 15px 0px 0px;
+    margin-left:2px;
+    padding: 6px 6px -1px 0px;/**1070410 add***/
+    width: 150px;
+    text-align: center;
+    height:40px;
+    background: url(css/../img/tabBg.png) no-repeat;
+    padding-top: 15px;
+    margin-left: -2px;	
+/**padding:3px 43px;
+font-size:18px;
+color:#000;
+border-radius:15px 15px 0px 0px;
+margin-left:2px;
+background:linear-gradient(to bottom, rgba(210,184,255,1) 0%, rgba(181,138,255,1) 100%);
+color:#000000;
+padding: 7px 10px 0px 12px;**/	
+}
+
+.TabContentOutline{
+min-height: 30px;
+padding:5px;
+border: 1px solid #ACACAC;
+border-radius: 5px;
+
+}
+
+/***Custom RadioButton **/
+.EMRRadioButton{
+  display:none;	
+}
+
+input[type="radio"] + label span {
+    display:inline-block;
+    width:36px;
+    height:36px;
+    margin:-2px 5px 0 0;
+    vertical-align:middle;
+    /**background:url(/FangEmrServices/img/ic_check_off.png) left top no-repeat;**/
+    background:url(css/../img/RedioBtn_36.png)no-repeat;
+    cursor:pointer;
+}
+input[type="radio"]:checked + label span {
+    background:url(css/../img/RedioBtn_d_36.png)no-repeat;
+    /**background:url(/FangEmrServices/img/ic_check_on.png) -30px top no-repeat;**/
+}
+
+.RadioBgStyle{
+    border: 1.5px solid #6F4B9E;
+    /**background: white;**/
+    padding: 6px 0px 0px 3px;
+    margin-bottom: 5px;
+    background: linear-gradient(to bottom, #E5E5E5 10%, #fff 80%);	
+}
+
+.DataBgTopStyle{
+    border: 1.3px solid #A499AB;
+    background: white;
+    padding: 6px 0px 0px 3px;
+    /**margin-bottom: 5px;**/
+    border-radius: 3px 3px 3px 3px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    /**background: linear-gradient(to bottom, #E5E5E5 10%, #fff 80%);**/	
+}
+
+.inputDateRange{
+margin-bottom:5px;	
+min-width: 110px;
+max-width: 110px;
+}
+
+/**病人清單頁面 CSS***/
+.EMRCheckBox {
+    display:none;
+}
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:20px;
+    height:20px;
+    margin:-2px 5px 0 0;
+    vertical-align:middle;
+    /**background:url(/FangEmrServices/img/ic_check_off.png) left top no-repeat;**/
+    background:url(css/../img/unchecked.png)no-repeat;
+    cursor:pointer;
+}
+
+input[type="checkbox"]:checked + label span {
+    background:url(css/../img/checked.png)no-repeat;
+    /**background:url(/FangEmrServices/img/ic_check_on.png) -30px top no-repeat;**/
+}
+
+@media (min-width: 768px){
+    .queryPatientInputWidth{
+    	max-width: 120px;
+}
+}
+
+.EMRLabel {
+	font-size:18px;
+	color:#000;
+	
+}
+
+.listViewItemFont{
+    font-size: 20px;
+    color: #000;
+    text-align: left;
+    padding-left: 3px;	
+}
+
+.subTitleFont{
+font-size:19px;
+color:#000;
+}
+
+.subTitleItalic{
+font-size:16px;
+color:#000;
+font-style: italic;	
+}
+
+.grayContentText{
+    font-size: 17px;
+    color: gray;
+    font-weight: bold;	
+}
+    
+
+.ContentFont{
+ font-size:19px;
+ color:#868686;	
+}
+
+.purpleLabel{
+font-size:18px;
+color:#49275D;	
+}
+
+.paddingZero{
+padding:0px;	
+}
+
+.EMRLabelBold {
+	font-size:20px;
+	font-weight:bold;
+	color:#000;
+}
+
+.container-noPadding{
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;	
+}
+
+.input-center{
+  text-align:center;
+  font-size:20px;
+  max-width:60px; 
+  margin: 0px;		
+}
+
+/***jqGrid CSS**/
+.ui-jqgrid{
+	border:1px solid #E1D2ED;
+	font-size:18px;/**可能會導致 Grid的格子變大**/
+	font-weight:bold;
+	color:#000;
+}
+
+.table>thead>tr.ui-jqgrid-labels >th {
+	background-image: linear-gradient(to bottom, #F0E3FD 0, #E1C5FF 100%);
+}
+
+.ui-jqgrid .ui-jqgrid-htable th {
+    height: 35px;
+    padding: 2px;
+    text-align:center;
+     min-height:25px;
+}
+.ui-jqgrid .ui-jqgrid-htable th div {
+    height: 35px;
+    text-align:center;
+    padding-top:1px;
+    min-height:25px;
+} 
+
+.ui-jqgrid-btable>tbody>tr:nth-child(odd)>td {
+	/**background-color: #e4e4e4;**/
+	background-color:#F2F2F2;
+}
+
+.ui-jqgrid-btable>tbody>tr:nth-child(even)>td {
+	/**background-color: #e4e4e4;**/
+	background-color:#FFF;
+}
+
+
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+	border:1px solid #DCC8EE;
+}
+
+.table > thead > tr > td.active,
+.table > tbody > tr > td.active,
+.table > tfoot > tr > td.active,
+.table > thead > tr > th.active,
+.table > tbody > tr > th.active,
+.table > tfoot > tr > th.active,
+.table > thead > tr.active > td,
+.table > tbody > tr.active > td,
+.table > tfoot > tr.active > td,
+.table > thead > tr.active > th,
+.table > tbody > tr.active > th,
+.table > tfoot > tr.active > th {
+  background-color:#BCA3E3;
+  /**background-image: linear-gradient(to bottom, #F0E3FD 0, #E1C5FF 100%);**/
+}
+
+.table > thead > tr > td.success,
+.table > tbody > tr > td.success,
+.table > tfoot > tr > td.success,
+.table > thead > tr > th.success,
+.table > tbody > tr > th.success,
+.table > tfoot > tr > th.success,
+.table > thead > tr.success > td,
+.table > tbody > tr.success > td,
+.table > tfoot > tr.success > td,
+.table > thead > tr.success > th,
+.table > tbody > tr.success > th,
+.table > tfoot > tr.success > th {
+   background-color:#BCA3E3;
+  /**background-image: linear-gradient(to bottom, #F0E3FD 0, #E1C5FF 100%);**/
+}
+.table-hover > tbody > tr > td.success:hover,
+.table-hover > tbody > tr > th.success:hover,
+.table-hover > tbody > tr.success:hover > td,
+.table-hover > tbody > tr:hover > .success,
+.table-hover > tbody > tr.success:hover > th {
+   background-color:#BCA3E3;
+   /**background-image: linear-gradient(to bottom, #F0E3FD 0, #E1C5FF 100%);**/
+}
+
+.table-hover > tbody > tr > td.active:hover,
+.table-hover > tbody > tr > th.active:hover,
+.table-hover > tbody > tr.active:hover > td,
+.table-hover > tbody > tr:hover > .active,
+.table-hover > tbody > tr.active:hover > th {
+ background-color:#BCA3E3;
+  /**background-image: linear-gradient(to bottom, #F0E3FD 0, #E1C5FF 100%);**/
+}
+
+.ui-jqgrid .ui-jqgrid-bdiv tr.jqgrow td {
+white-space: normal !important;
+height:auto;
+}
+
+.ui-jqgrid {
+white-space: normal !important;
+/**height:auto;**/
+}
+
+.ui-jqgrid tr.jqgrow td {
+	padding: 2px 2px 2px 8px;
+}
+
+.ui-search-toolbar th {
+	padding: 2px 2px 2px 4px !important;
+}
+
+.ui-search-clear {
+	display: none;
+}
+
+.ui-jqgrid tr.ui-search-toolbar td>input {
+	height: 30px;
+	padding: 2px 2px 2px 8px !important;
+	font-size: 16px;
+	border-radius: 3px;
+}
+
+/***自訂jqGrid th height***/
+
+#jqgh_TPRRecordList_systolic_pressure{
+  height:50px;	
+}
+
+#jqgh_TPRRecordList_pulse{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_temperature{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_respiration{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_height{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_weight{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_iv_fluids{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_bleed{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_bleed{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_urine{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_drainage_l{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_amniotic_fluid{
+height:50px;	
+}
+
+#jqgh_TPRRecordList_stool{
+height:50px;	
+}
+
+
+/**jqGrid 背景 框線***/
+
+.jqGridPatList_BgStyle{
+    /**background: white;
+    border: 1px solid #AEA0CD;
+    margin-left: 5px;
+    margin-right: 6px;
+    padding: 0px 0px 10px 0px;
+    opacity: 0.8;**/
+    
+    /**1070517 修改↓***/
+    background: white;
+    border: 1px solid #AEA0CD;
+    /**margin-left: 14px;**/
+    /* margin-right: 16px; */
+    padding: 0px 0px 10px 0px;
+    opacity: 0.8;
+    /* margin-right: -18px; */
+    /**margin-top: -6px;**/
+   
+   
+    	
+}
+
+.jqGridUDList_BgStyle{
+    background: white;
+    border: 1px solid #977ED1;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px 0px 10px 0px;
+    opacity: 0.7;
+   
+   
+    	
+}
+
+.jqGridStList_BgStyle{
+    background: white;
+    border: 1px solid #977ED1;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px 0px 10px 0px;
+    opacity: 0.7;
+   
+   
+    	
+}
+
+
+.jqGridTakeHomeList_BgStyle{
+    background: white;
+    border: 1px solid #977ED1;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px 0px 10px 0px;
+    opacity: 0.7;
+   
+}
+
+.jqGridTPRRecordList_BgStyle{
+    background: white;
+    border: 1px solid #977ED1;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px 0px 10px 0px;
+    opacity: 0.7;
+   
+}
+
+.jqGridAcnt_BgStyle{
+ /**margin-left: 0px;
+ margin-right: 0px;
+ opacity: 0.9;	
+ background-image:url(css/../img/ListBG.png);
+ background-repeat: no-repeat; **/
+ 
+ 
+    margin-left: 0px;
+    margin-right: 0px;
+    opacity: 0.9;
+    background-image: url(css/../img/ListBG.png);
+    background-repeat: no-repeat;
+    padding-top: 5px;
+    margin-top: -6px;
+    padding-left: 25px;
+ 
+	
+
+}   
+    
+
+/**圖片滑過效果 測試***/
+.hover_img {position:relative;}
+
+.hover_img img {
+  position:absolute;
+  /* CSS3淡出淡入效果,1秒 */  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+.hover_img img:nth-of-type(2):hover{
+  opacity:0; /*滑鼠滑入時，透明度變0*/}
+  
+  
+/**ToolBar****/ 
+
+
+@media (min-width: 992px){
+	.navbar{
+	background: #6E4CC4;
+          border-radius:0px;
+          padding-left: 10px;
+          padding-top: 5px;
+          margin: 0px 0px 6px 0px;
+          line-height: 35px;
+          position: relative;
+          vertical-align: middle;
+          min-height: 45px;       
+	}
+}
+
+
+@media (min-width: 768px){
+	.navbar{
+	background: #6E4CC4;
+	border-radius:0px;
+	padding-left: 10px;
+          padding-top: 5px;
+          margin: 0px 0px 6px 0px;
+          line-height: 35px;
+          position: relative;
+          vertical-align: middle;
+          min-height: 45px;
+	}
+}
+
+
+/**ToolBar Text Style***/ 
+
+.navbar-custom-text{
+ color:#fff;
+ font-size:18px;
+ font-weight:bold;
+ margin-top:0px;
+ margin-bottom:0px;
+ 	
+}
+
+/***UD STAT ... Toolbar 比例***/
+
+
+@media (min-width: 992px){
+	.PatientInfoBar .col-sm-3{
+	 width: 30%;       
+	}
+}
+
+
+@media (min-width: 768px){
+	.PatientInfoBar .col-sm-3{
+	width: 30%;
+	}
+}
+
+
+@media (min-width: 992px){
+	.PatientInfoBar .col-sm-2{
+	 width: 15%;
+	 padding-left: 0px;
+           padding-right: 0px;      
+	}
+}
+
+
+@media (min-width: 768px){
+	.PatientInfoBar .col-sm-2{
+	width: 15%;
+	padding-left: 0px;
+          padding-right: 0px;
+	}
+}
+
+@media (min-width: 992px){
+	.PatientInfoBar .col-sm-4{
+	 width: 38%;
+	 padding-left: 0px;
+           padding-right: 0px;      
+	}
+}
+
+
+@media (min-width: 768px){
+	.PatientInfoBar .col-sm-4{
+	width: 38%;
+	padding-left: 0px;
+          padding-right: 0px;
+	}
+}
+
+.toolbar-img-style{
+ margin-top: -5px;	
+}
+
+/**UD***/
+
+@media (min-width: 768px){
+ .pageSelect{
+    display: inline-block;
+    width: auto;
+    vertical-align: baseline;
+    padding: 0px 7px 0px 10px;
+  }
+ 	
+}
+
+
+@media (min-width: 992px){
+ .pageSelect{
+    display: inline-block;
+    width: auto;
+    vertical-align: baseline;
+    padding: 0px 7px 0px 10px;
+  }
+ 	
+}
+
+/**STAT***/
+@media (min-width: 992px){
+	#StatCol .col-sm-2{
+		padding-right:2px;
+		min-width:18%;
+		max-width:18%;
+	}
+}
+
+
+
+@media (min-width: 992px){
+	#StatCol .col-sm-10{
+		min-width:82%;
+		max-width:82%;
+		/**width: 90%;**/
+		padding-left:0px;
+		padding-right:2px;	
+	}
+}
+
+@media (min-width: 768px){
+	#StatCol .col-sm-2{
+		padding-right:2px;
+		min-width:18%;
+		max-width:18%;
+	}
+}
+
+
+
+@media (min-width: 768px){
+	#StatCol .col-sm-10{
+		min-width:82%;
+		max-width:82%;
+		/**width: 90%;**/
+		padding-left:0px;
+		padding-right:2px;	
+	}
+}
+
+
+#StatCol{
+  padding-right:10px;	
+}
+
+
+/**出院帶藥***/
+@media (min-width: 992px){
+	#TakeHomeCol .col-sm-2{
+		padding-right:2px;
+		min-width:18%;
+		max-width:18%;
+	}
+}
+
+
+
+@media (min-width: 992px){
+	#TakeHomeCol .col-sm-10{
+		min-width:82%;
+		max-width:82%;
+		/**width: 90%;**/
+		padding-left:0px;
+		padding-right:2px;	
+	}
+}
+
+
+@media (min-width: 768px){
+	#TakeHomeCol .col-sm-1{
+		padding-right:2px;
+		min-width:18%;
+		max-width:18%;
+	}
+}
+
+
+
+@media (min-width: 768px){
+	#TakeHomeCol .col-sm-10{
+		min-width:82%;
+		max-width:82%;
+		/**width: 90%;**/
+		padding-left:0px;
+		padding-right:2px;	
+	}
+}
+
+
+#TakeHomeCol{
+  padding-right:10px;	
+}
+
+/**影像報告**/
+#XrayListBody{
+    background: white;
+    border: 1px solid #76648D;
+    padding-top: 5px;	
+}
+
+
+@media (min-width: 992px){
+	#XrayCol .col-sm-3{
+		/**width: 30%;**/
+		padding-right:2px;	
+	}
+}
+
+@media (min-width: 992px){
+	#XrayCol .col-sm-9{
+		/**width: 30%;**/
+		padding-left:0px;	
+	}
+}
+
+
+@media (min-width: 768px){
+	#XrayCol .col-sm-3{
+		/**width: 30%;**/
+		padding-right:2px;	
+	}
+}
+
+@media (min-width: 768px){
+	#XrayCol .col-sm-9{
+		/**width: 30%;**/
+		padding-left:0px;	
+	}
+}
+
+#xrayDetailReason{
+    border: 1.3px solid #A499AB;
+    background: white;
+    padding: 6px 0px 0px 3px;
+    border-radius: 3px 3px 3px 3px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    overflow-y: scroll;
+    margin-bottom: 3px;	
+}
+
+/***檢驗 畫面 CSS***/
+
+@media (min-width: 992px){
+	#LabCol .col-sm-3{
+		/**width: 30%;**/
+		padding-right:2px;	
+	}
+}
+
+@media (min-width: 992px){
+	#LabCol .col-sm-9{
+		/**width: 30%;**/
+		padding-left:0px;	
+	}
+}
+
+
+@media (min-width: 768px){
+	#LabCol .col-sm-3{
+		/**width: 30%;**/
+		padding-right:2px;	
+	}
+}
+
+@media (min-width: 768px){
+	#LabCol .col-sm-9{
+		/**width: 30%;**/
+		padding-left:0px;	
+	}
+}
+
+#Lab_lineChartContent{
+ margin-left:5px;
+ margin-right:5px;
+}
+
+#Lab_SumLineChartContent{
+ margin-left:3px;
+ margin-right:3px;	
+}
+
+
+/**護理記錄**/
+#FocusListBody{
+ padding:5px;	
+}
+
+@media (min-width: 992px){
+	#FocusCol .col-sm-3{
+		width: 30%;
+		padding-right:2px;	
+	}
+}
+
+
+
+@media (min-width: 992px){
+	#FocusCol .col-sm-9{
+		width: 70%;
+		/**padding-left:0px;**/	
+	}
+}
+
+@media (min-width: 768px){
+	#FocusCol .col-sm-3{
+		width: 30%;
+		padding-right:2px;	
+	}
+}
+
+
+
+@media (min-width: 768px){
+	#FocusCol .col-sm-9{
+		width: 70%;
+		/**padding-left:0px;**/	
+	}
+}
+
+
+/**出院病摘***/
+.outNoteTopBg{	
+    border: 1px solid #CABECD;
+    background: #fff;
+    min-height: 125px;
+    border-radius: 2px 2px 2px 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 3px 3px 3px 3px;
+
+}
+
+.outNoteBodyBg{	
+    border: 1px solid #CABECD;
+    background: #fff;
+    border-radius: 2px 2px 2px 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 3px 3px 3px 3px;
+    overflow-y: scroll;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+
+}
+
+.outNoteOutLine{
+	border: 1px solid #86779D;
+	background: #fff;
+	border-radius: 3px;
+ 	
+}
+
+.div-outline-withCorner{
+  border-radius: 5px;
+  border:1.5px solid #B292D0;	
+  font-size:18px;
+  padding-left:5px;
+  padding-right:5px;
+  /**min-width:90%;**/
+  display: inline-block;
+  min-height: 30px;
+  margin-bottom:5px;
+  /**margin:0px auto;**/
+  position:relative;
+  line-height: 30px;
+  vertical-align: middle;
+  width: 100%;
+  /**font-weight:bold;**/
+}
+
+
+/***查詢病人歷史清單***/
+.recordCount{
+ border:1px solid #56327D;	
+ background-image: linear-gradient(to bottom, rgba(200,166,249,1) 0%, rgba(199,163,249,1) 75%, rgba(190,136,251,1) 100%);
+ height: 30px;
+ border-radius: 10px 10px 0px 0px;
+ margin-top: 5px;
+ width: 120px;
+ padding-left: 5px;
+ font-size: 20px;
+ color:#000;
+}
+
+.recordContent{
+ border: 1px solid #56327D;
+ background: #fff;
+ height: 200px;
+ border-radius: 0px 0px 10px 10px;
+ border-bottom: 1px solid #3A1E55;
+ border-top: 0px solid transparent;
+ margin-bottom: 10px;
+ width: 120px;
+     cursor: pointer;
+}
+
+
+.recordCount-active{
+ border:1px solid #300B54;	
+ background-image: linear-gradient(to bottom, rgba(153,74,244,1) 0%, rgba(140,64,225,1) 51%, rgba(116,45,189,1) 80%);
+ height: 30px;
+ border-radius: 10px 10px 0px 0px;
+ margin-top: 5px;
+ width: 120px;
+ padding-left: 5px;
+ font-size: 20px;
+ color:#fff;
+     cursor: pointer;
+}
+
+.recordContent-active{
+ border: 1px solid #300B54;
+ background: #fff;
+ height: 200px;
+ border-radius: 0px 0px 10px 10px;
+ border-bottom: 1px solid #63477E;
+ border-top: 0px solid transparent;
+ margin-bottom: 10px;
+ width: 120px;
+ cursor: pointer;
+}
+
+
+
+/**TPR ***/
+.modify-tpr{
+  background:url(css/../img/modify_36.png)no-repeat;
+  background-repeat: no-repeat; 
+  margin: -5px;
+  margin-bottom: -2px;
+}
+
+.modify-tpr:hover{
+  background:url(css/../img/modify_d_36.png)no-repeat;
+  background-repeat: no-repeat; 
+  margin: -5px;
+  margin-bottom: -2px;
+}
+
+.delete-tpr{
+ background:url(css/../img/delete_36.png)no-repeat;
+ background-repeat: no-repeat;
+ margin: -5px;
+ margin-bottom: -2px; 	
+}
+
+.delete-tpr:hover{
+ background:url(css/../img/delete_d_36.png)no-repeat;
+ background-repeat: no-repeat; 
+ margin: -5px;
+ margin-bottom: -2px;	
+}
+
+#AddTPRPanel{ /**TPR Page 外框*/
+     margin-top: -18px;	
+}
+
+/***切換頁籤CSS***/
+
+/**background: transparent url(img/nextCM.png) no-repeat center;**/
+
+/**#mainFeatures li#wishlist {
+    list-style-image:url(images/wishListImage.png);
+    list-style-position:outside;
+}
+#mainFeatures li#sharing {
+    list-style-image:url(images/sharingListImage.png);
+    list-style-position:outside;
+}
+#mainFeatures li#linking {
+    list-style-image:url(images/linkingListImage.png);
+    list-style-position:outside;
+}**/
+
+
+
+
+
+
+

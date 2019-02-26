@@ -1,0 +1,233 @@
+		<!-- 護理紀錄  build by IvyLin -->
+           <div class="panel panel-info" id="focusAddContent">
+              <div class="panel-heading PurpleTitle text-center" id="AddFocusHead"></div>
+              <div class="panel-body panel-focus-body">
+             
+				     <!-- <div class="text-center PurpleTitle panel-info" id="focusAddTitle">新增 DART 記錄</div>-->
+				     <div class="col-sm-12">
+		                           <div class="col-sm-3 form-inline">
+		                              <label class="EMRLabel">日期 </label> <input disabled type="number" class="form-control input-sm inputDateRange EMRLabel form-inline " placeholder="" id="inputProgressDate" value="">
+		                           </div>
+		                           <div class="col-sm-3 form-inline">
+		                              <label class="EMRLabel">時間 </label><input disabled type="number" class="form-control input-sm inputDateRange EMRLabel form-inline " placeholder="" id="inputProgressTime" value="">
+		                           </div>
+		                           <div class="col-sm-4 form-inline">
+		                              <label class="EMRLabel">問題或診斷 </label><input type="text" class="form-control input-sm inputDateRange EMRLabel form-inline " placeholder="" id="inputFocusTxt" value="">
+		                           
+		                           <img id="openFocusTxtList" src="/TanTimaServices/css/img/ic_select_down_click.png" class="toolbar-img-style ic_select-icon" alt="問題或診斷清單" title="問題或診斷清單">
+		                           </div>
+		                           <div class="col-sm-2 form-inline"> <button class="btn btn-primary" id="btnDartzDemo">片語/範本</button></div>
+		                        </div>
+		                        
+		                      <div class="form-group pre-scrollable col-sm-12" id="scrollBody-DART">
+		                        <div class="col-sm-12 form-group">
+		                          <div class="col-sm-1 form-inline"><label class="EMRLabel">D:&nbsp;</label></div>
+		                          <div class="col-sm-9 form-inline">
+		                             <textarea class="DARTOutline EMRContentFont div-outline-withCorner ContentFont" rows="3" cols="60" id="input-contentD"></textarea>
+		                          </div>
+		                          <div class="col-sm-2 form-inline hide"> <button class="btn btn-primary" id="phrase-D">片語 D</button></div>
+		                        </div>
+		                        <div class="col-sm-12 form-group">
+		                          <div class="col-sm-1 form-inline"><label class="EMRLabel">A:&nbsp;</label></div>
+		                          <div class="col-sm-9 form-inline">
+		                             <textarea class="DARTOutline EMRContentFont div-outline-withCorner ContentFont" rows="3" cols="60" id="input-contentA"></textarea>
+		                          </div>
+		                          <div class="col-sm-2 form-inline hide"> <button class="btn btn-primary" id="phrase-A">片語 A</button></div>
+		                        </div>
+		                        <div class="col-sm-12 form-group">
+		                          <div class="col-sm-1 form-inline"><label class="EMRLabel">R:&nbsp;</label></div>
+		                          <div class="col-sm-9 form-inline">
+		                             <textarea class="DARTOutline EMRContentFont div-outline-withCorner ContentFont" rows="3" cols="60" id="input-contentR"></textarea>
+		                          </div>
+		                          <div class="col-sm-2 form-inline hide"> <button class="btn btn-primary" id="phrase-R">片語 R</button></div>
+		                        </div>
+		                        <div class="col-sm-12 form-group">
+		                          <div class="col-sm-1 form-inline"><label class="EMRLabel">T:&nbsp;</label></div>
+		                          <div class="col-sm-9 form-inline">
+		                             <textarea class="DARTOutline EMRContentFont div-outline-withCorner ContentFont" rows="3" cols="60" id="input-contentT"></textarea>
+		                          </div>
+		                          <div class="col-sm-2 form-inline hide"> <button class="btn btn-primary" id="phrase-T">片語 T</button></div>
+		                        </div>
+		                        <div class="col-sm-12 form-group">
+		                          <div class="col-sm-1 form-inline"><label class="EMRLabel">Z:&nbsp;</label></div>
+		                          <div class="col-sm-9 form-inline">
+		                             <textarea class="DARTOutline EMRContentFont div-outline-withCorner ContentFont" rows="3" cols="60" id="input-contentZ"></textarea>
+		                          </div>
+		                          <div class="col-sm-2 form-inline hide"> <button class="btn btn-primary" id="phrase-Z">片語 Z</button></div>
+		                        </div>
+		                       </div> 
+		                       
+		                        <div class="col-sm-12 form-group text-center">
+		                          <button class="btn btn-primary" id="btnFocusCancel">取消</button>
+		                          <button class="btn btn-primary" id="btnFocusSend">送出</button>
+		                        </div>
+	
+              </div>
+           </div>
+           		      
+		      <div class="row" id="FocusCol">
+			<div class="col-sm-5 jqGridAcnt_BgStyle">			
+			    <table id="FocusList" class="table-hover"></table>
+			    <div id="FocusList_Pager"></div>
+			</div>
+		<div class="col-sm-7">
+			   <div class="panel panel-info" id="FocusRightBody" style="background:#fff;">
+		                <div class="panel-heading PurpleTitle text-center" id="FocusListHead">Progress Note</div>
+			         <div class="panel-body panel-focus-body" id="FocusListBody">								
+				 <!-- 護理紀錄內容 start -->
+				
+		    	 
+				 <div class="row" id="FocusTopDetail">				   
+				  <div class="col-sm-12 form-inline form-group">
+				      <button class="btn btn-primary" title="新增" id="btnAddFocus">新增</button>
+				      <button class="btn btn-primary" id="btnCopyPreOne" title="Copy 上一筆記錄">Copy 上一筆記錄</button>
+				    <!--  <button class="btn btn-primary"><img src="/TanTimaServices/css/img/Add_48.png" class="toolbar-img-style" alt="Add" title="Add"></button>-->
+				    
+				  </div>
+				  <div class="col-sm-12 form-inline form-group">
+				   <div class="col-sm-4"><span class="EMRLabelBold" >Date:&nbsp; </span><span class="grayContentText" id="focusDate"></span></div>
+				   <div class="col-sm-4"><span class="EMRLabelBold" >Time:&nbsp; </span><span class="grayContentText" id="focusTime"></span></div>
+				   <div class="col-sm-4"><span class="EMRLabelBold" >Focus:&nbsp; </span><span class="grayContentText" id="focusNote"></span></div>
+				  </div>
+				  <div class="col-sm-12 form-inline form-group">
+				    <div class="col-sm-6"><span class="EMRLabelBold" >護士:&nbsp; </span><span class="grayContentText" id="focusNurse"></span></div> 
+				    <div class="col-sm-6"><span class="EMRLabelBold" >訪視醫師:&nbsp; </span><span class="grayContentText" id="focusDoctor"></span></div>				    				  
+				  </div>				  
+				 </div>		 		          
+	            <!-- DARTZ -->
+	           <div class="col-sm-12 row pre-scrollable" id="FocusDARTArea">
+	             <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">D:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_D" ></div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">A:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_A" ></div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">R:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_R" ></div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline  form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">T:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="content_T" ></div></div>					
+		  </div>
+		  <div class="col-sm-12 form-inline  form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">Z:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="memo" ></div></div>					
+		  </div>	              	             
+	          </div>    
+	             
+	
+		</div>
+	      </div>
+							
+	         </div>
+						
+               </div>
+<!-- Modal_Custom 刪除 護理記錄 提示視窗-->
+	<div id="deleteFocusDiv" style="overflow: hidden;display:none;">
+	<div class="row">
+	    <label class="col-sm-12 col-form-label failureMsg text-center">確定要刪除</label>				
+	    <label class="col-sm-12 col-form-label failureMsg text-center">訪視日期: <span id="showFocusDelDate"></span></label>
+	    <label class="col-sm-12 col-form-label failureMsg text-center">時間: <span id="showFocusDelTime"></span></label>				
+	</div>
+	</div>
+<!-- 問題或診斷 提示視窗 jqGrid -->      
+          <div id="focusTxtListDialog"  class="form-group" style="overflow: hidden;display:none;">
+              <table id="focusTxtList" class="table-hover"></table>
+	    <div id="focusTxtList_Pager"></div>
+         </div>
+   	
+<!-- 片語 / 範本   彈跳視窗-->
+	<div id="phraseSampleDialog" style="overflow: hidden;display:none;">
+	   <ul  class="nav nav-pills">
+	      <li class="active"><a data-toggle="pill" href="#phraseTab">片語</a></li>
+	      <li class=""><a data-toggle="pill" href="#sampleTab">範本</a></li>
+            </ul>
+            <!-- 主要頁面 -->
+            <div class="tab-content TabContentOutline">
+                <!-- 片語 -->
+                <div id="phraseTab" class="tab-pane fade in active">
+                   <div class="form-group row">
+		   <label for="dartz" class="col-sm-3 col-form-label PurpleTitle text-right">DARTZ</label>
+		       <div class="col-sm-9">
+			<select class="form-control" id="dartzSelect">
+			   <option value="D">D</option>
+			   <option value="A">A</option>
+			   <option value="R">R</option>
+		             <option value="T">T</option>				   
+		             <option value="Z">Z</option>
+			</select>
+		       </div>
+		</div>
+		<div class="form-group">
+		   <table id="dartzList" class="table-hover"></table>
+	             <div id="dartzList_Pager"></div>
+		</div>
+		
+		<div class="form-group text-center" style="padding-top:10px;">
+		    <button class="btn btn-primary" id="btnPhraseOk">帶入</button>
+		    <button class="btn btn-primary ClosePhraseSampleDialog" id="btnPhraseCancel">放棄</button>
+		 </div> 
+                </div>
+                <!-- 範本 -->
+                <div id="sampleTab" class="tab-pane fade in">
+                   <div class="form-group row">
+		   <label for="sampler" class="col-sm-3 col-form-label PurpleTitle text-right">範本人員</label>
+		       <div class="col-sm-9">
+			<select class="form-control" id="samplerSelect"></select>
+		       </div>
+		</div>
+		<div class="form-group row">
+		   <label for="focusType" class="col-sm-3 col-form-label PurpleTitle text-right">類別</label>
+		       <div class="col-sm-9">
+			<select class="form-control" id="sampleTypeSelect">		
+			</select>
+		       </div>
+		</div>
+		<div class="form-group row">
+		   <div class="col-sm-12 row pre-scrollable" id="sampleDartzContent">
+	             <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">D:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="sample_D" >sampleD</div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">A:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="sample_A" >sampleA</div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">R:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="sample_R" >sampleR</div></div>					
+		  </div>
+		  
+		  <div class="col-sm-12 form-inline  form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">T:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="sample_T" >sampleT</div></div>					
+		  </div>
+		  <div class="col-sm-12 form-inline  form-group ">
+		     <div class="col-sm-1 form-inline"><label class="EMRLabel">Z:&nbsp;</label></div>
+	               <div class="col-sm-11 form-inline"><div  style="white-space:normal;" class="DARTOutline EMRContentFont div-outline-withCorner ContentFont"  id="sample_Z" >sampleZ</div></div>					
+		  </div>	              	             
+	          </div>
+	          <div class="col-sm-12 form-group text-center" style="padding-top:10px;">
+		    <button class="btn btn-primary" id="btnSampleOk">帶入</button>
+		    <button class="btn btn-primary ClosePhraseSampleDialog" id="btnSampleCancel">放棄</button>
+		 </div> 
+		</div>
+		
+		 
+	
+                </div>
+            </div>
+	</div>
+
+<script src="/TanTimaServices/html/Focus/Focus.js"></script>			
+				<!-- </div> -->
+		
+		

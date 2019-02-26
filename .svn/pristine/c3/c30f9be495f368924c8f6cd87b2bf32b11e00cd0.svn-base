@@ -1,0 +1,54 @@
+function switchHtml(htmlFile){
+
+	$("#root").load(htmlFile);
+}
+
+
+
+var ajax_url = function() {
+//	return "/TanTimaServices/servlets/ServletAgent";	
+		//return 'servlets/ServletAgent';
+//		return "http://172.168.1.60:8888/TanTimaServices/servlets/ServletAgent";//暫時
+		return "http://172.16.2.189:8080/TanTimaServices/servlets/ServletAgent";//主要
+
+}
+
+var getAjaxData = function (serviceName,pcsParam){
+	return{
+		serviceName : serviceName,
+		parameters : pcsParam
+	};
+};
+
+function ajax_Post(serviceName,paramData){			
+	return $.ajax({
+				method : "POST",
+				url : ajax_url(),
+				data : getAjaxData(serviceName,paramData),
+				dataType : "json",
+				error: function(jqXHR, textStatus, errorThrown) {
+					if(jqXHR.status==500){  //500 Error
+						alert(" 500 Error ");
+					}   
+				}
+			});	
+}
+
+number_regex = /^\d+$/;
+years_regex = /^([1-9]?\d|100)$/;
+ROCdata_regex = /^\d{3}\d{2}\d{2}$/;
+char_regex = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
+
+function stateChange(state, objID, msg) {
+	if (state) {
+		// $(objID).parent().removeClass('has-error').addClass('has-success');
+		$(objID).parent().removeClass('has-error')
+		$(objID).tooltip('destroy');
+	} else {
+		$(objID).parent().removeClass('has-success').addClass('has-error');
+		$(objID).tooltip({
+			title : msg,
+			placement : "bottom"
+		}).tooltip('show');
+	}
+}

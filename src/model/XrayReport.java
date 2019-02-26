@@ -1,0 +1,65 @@
+package model;
+
+import library.utility.EntityFactory;
+import library.utility.JDBCUtilities;
+import library.utility.MapUtil;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by jeffy on 2018/5/14.
+ */
+public class XrayReport {
+    private Connection con;
+
+    public XrayReport(Connection con) {
+        this.con = con;
+    }
+
+    public List<Map<String, Object>> queryXrayReportByChartNoDateRange(int chartNo, String startDate, String endDate) throws SQLException {
+        String queryString =
+                "SELECT a.xray_type, b.form_name xray_name, a.inp_opd, a.view_date, a.chart_no, a.serno, a.seq_no, a.req_no, " +
+                "       a.doctor_no, (SELECT emp_name FROM employee b WHERE b.emp_no = a.doctor_no) doctor_name, " +
+                "       a.diagnosis, a.xray_date, a.xray_time, a.report_date, a.report_time, " +
+                "       a.reporter, (SELECT emp_name FROM employee b WHERE b.emp_no = a.reporter) reporter_name, " +
+                "       a.report, a.complaint, a.findings, a.req_no access_no " + // for tan access_no = req_no, for others get requisition.access_no
+                "  FROM xrayrpt a, xryform b, requisition c " +
+                " WHERE a.chart_no = ? " +
+                "   AND a.view_date BETWEEN ? AND ? " +
+                "   AND a.xray_type = b.form_no(+) " +
+                "   AND a.req_no = c.req_no(+) ";
+
+        EntityFactory xrayReportEntity = new EntityFactory(con, queryString);
+        return xrayReportEntity.findMultiple(new Object[]{chartNo, startDate, endDate});
+    }
+
+
+    public static void main(String[] args) {
+        Connection myConnection = null;
+        JDBCUtilities jdbcUtil = new JDBCUtilities();
+        String resultStrng;
+
+        try {
+            myConnection = jdbcUtil.getConnection();
+            XrayReport xrayReport = new XrayReport(myConnection);
+
+            int chartNo = 74881;
+            String startDate = "1000401";
+            String endDate = "1051230";
+
+            System.out.printf("\nXrayReport.queryXrayReportByChartNoDateRange chartNo=%d startDate=%s endDate=%s JsonArray:%s ",
+                    chartNo, startDate, endDate, MapUtil.listMapToJsonArray(xrayReport.queryXrayReportByChartNoDateRange(chartNo, startDate, endDate)).toString());
+
+
+        } catch (SQLException ex) {
+            JDBCUtilities.printSQLException(ex);
+        } finally {
+            if (myConnection != null) {
+                JDBCUtilities.closeConnection(myConnection);
+            }
+        }
+    }
+}
